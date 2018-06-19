@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Audio_Entry_Menu", "Audio_Entry_Menu\Audio_Entry_Menu.pyproj", "{521A5ED7-C737-41DE-8ECC-7F003900002C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{521A5ED7-C737-41DE-8ECC-7F003900002C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{521A5ED7-C737-41DE-8ECC-7F003900002C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A67EC97-DB93-4C23-9FE2-F5BDA5B4D017}
+	EndGlobalSection
+EndGlobal
