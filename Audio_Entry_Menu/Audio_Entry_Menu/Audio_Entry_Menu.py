@@ -41,18 +41,24 @@ class MainWindow(wx.Frame):
         print"\niterkeys: ",input_string.iterkeys()
 
 
+
         print len(input_string)                             #prints 1 key
         print len(input_string["Audio"])                    #prints 5 keys
         print len(input_string["Audio"]["Dictionaries"])    #prints 2 keys
 
         x = 0
         selections = []
-        for key in input_string["Audio"]:
-            selections[x].append(input_string["Audio"][x])
-            x += 1
+        #for key in input_string["Audio"]:
+            #print input_string["Audio"]
+            #print dict.iterkeys(input_string["Audio"])
+            #x +=1
 
-        print selection
-        print "\n",input_string["Audio"]["Music"][0]
+       # print selection
+
+
+       #here, I am triyng to extract all values that are under the "file" key in the YAML
+
+        print "\n",input_string["Audio"]["Music"]
         holding_list = {}
         holding_list = input_string["Audio"]["Music"]
         print "\n",input_string["Audio"]["Voice"]
@@ -108,13 +114,6 @@ class MainWindow(wx.Frame):
         #default constructions
         
         self.makeToolBar()
-        
-    
-
-
-
-    def get_ChoiceStrings(self):
-        return choicestrings
 
     def makeToolBar(self):
         #create a menu bar you typcally see at the top
