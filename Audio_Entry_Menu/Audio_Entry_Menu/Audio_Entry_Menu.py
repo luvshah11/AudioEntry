@@ -14,7 +14,27 @@ def yaml_dump(filepath, data):
     #WRITES DATA BACK TO FILE
     with open(filepath, "w") as file_desc:
         yaml.dump(data, file_desc)
+       
+def value_for_key(data, keypath, default = None, exception_on_miss = False):
+        """Returns the value at the given *keypath* within :attr:`values`.
 
+        A key path is a list of components delimited by dots (periods).  The components are interpreted
+        as dictionary keys within the structure.
+        For example, the key path ``'a.b'`` would yield ``'c'`` with the following :attr:`values` dictionary: ::
+
+        {'a':{'b':'c'}}
+
+        If the key path does not exist *default* will be returned.
+        """
+        v = data
+        for component in keypath.split('.'):
+            if v != None and hasattr(v,'has_key') and v.has_key(component):
+                v = v[component]
+            else:
+                if(exception_on_miss):
+                    raise KeyError, "Could not locate required tag: '%s'" % component
+                v = default 
+        return v
 class MainWindow(wx.Frame):
 
     def setChoices(self, strings):
@@ -25,14 +45,14 @@ class MainWindow(wx.Frame):
                  style = ~wx.RESIZE_BORDER, name = ""):
         super(MainWindow, self).__init__( parent, id, title, pos, size, style, name)
 
+        
+
         #load the YAML to Mem and into list of strings
-
-
-
         file_path = "test.yml"
         input_string = {}
         input_string = yaml_loader(file_path)
-        
+        in_keys = input_string["Audio"].keys()
+        #value = value_for_key(input_string, in_keys)
 
         print input_string
         #getKeys = input_string.keys("Audio") only pulls 'Audio'
@@ -60,7 +80,43 @@ class MainWindow(wx.Frame):
 
         print "\n",input_string["Audio"]["Music"]
         holding_list = {}
-        holding_list = input_string["Audio"]["Music"]
+        Dictionaries_keys = {}
+        Audio_keys = {}
+        
+        Dictionaries_keys = input_string["Audio"]["Dictionaries"]
+        print "\n\nDictionaires List: ", Dictionaries_keys #shows now_showing and houdinin_letters
+        print"\nDictionaries Keys only: ", Dictionaries_keys.keys()
+
+        Audio_keys = input_string["Audio"]
+        print "\n\n Audio list: ", Audio_keys
+        print "\nAudio keys only: ", Audio_keys.keys() #gets all keys 'Fanfare', 'Voice', 'Music', 'Effects', 'Dictionaries'
+
+        print "\nStoring Values of Audio_keys in list"
+        key_list = []   #stores only key values in the dictionary,5 total 
+        key_list = Audio_keys.keys()
+        print key_list
+        
+        print"iterating thorugh dictionary to print keys and values"
+
+        x = 0
+        while x < len(key_list):
+            print "\nKey at index ",x,"is", key_list[x]
+            print "\n", Audio_keys[key_list[x]]
+            print len(Audio_keys[key_list[x]])
+            if len(Audio_keys[key_list[x]]) > 0: #if a sub dictionary exists at key in 'key_list[x]' index, loop a nested loop and print keys only
+                #grab the keys in sub dictionary
+                sub_dict = Audio_keys[key_list[x]] #sub_dict is actually a list, but it's "values" are ALL INDIVUDUAL DICTIONARIES
+                print sub_dict
+                y = 0
+                while y < len(sub_dict):
+                    temp_dict = {}
+                    temp_dict = sub_dict[y]
+                   #print "Element ",y," is :",temp_dict["key"], "\n\tfile: ", temp_dict["file"], "\n\tvolume: ", temp_dict["volume"], "\n\tDuck: ", temp_dict["duck"], "\n\tunduck_duration_offset: ", temp_dict["unduck_duration_offset"]
+                    print "Elememt ",y," is File :", temp_dict["file"]
+                    y +=1 
+            x += 1
+
+        
         print "\n",input_string["Audio"]["Voice"]
         print "\n",input_string["Audio"]["Fanfare"]
         print "\n",input_string["Audio"]["Effects"]
@@ -114,6 +170,8 @@ class MainWindow(wx.Frame):
         #default constructions
         
         self.makeToolBar()
+
+    
 
     def makeToolBar(self):
         #create a menu bar you typcally see at the top

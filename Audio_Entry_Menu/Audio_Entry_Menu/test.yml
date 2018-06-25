@@ -916,10 +916,6 @@ Audio:
     - key: escape_shot_sydney_short
       file: JEHU_SydneyShot_KeyTarget.wav
       duck: .51
-
-
-
-
     - key: seance_fail
       file: Gypsy/SMB_EndBad_NonBelieversWillNeverFind.wav
       duck: .51
@@ -1027,9 +1023,6 @@ Audio:
     - key: shoot_stage
       file: SecretMission_Rule_ShootStage.wav
       duck: .51
-
-
- 
     
     - key: escape_death_intro
       file: BFTD_Intro_HereIsYourChanceToComeBac.wav
@@ -3105,20 +3098,19 @@ Audio:
       file: SMB_LetterReTrigger02.wav
       duck: .5
       unduck_duration_offset: -1
-
-
-
-
+      
     - key: tilt
       file: Gen_Tilt.wav
       duck: .51
       volume: 1
       unduck_duration_offset: -1
+      
     - key: tilt_warning
       file: Gen_TiltWarning.wav
       duck: .51
       volume: 1
       unduck_duration_offset: -1
+      
     - key: TMB_TrunkOpen
       file: TMB_TrunkOpen.wav
       duck: .51
