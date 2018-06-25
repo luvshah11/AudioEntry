@@ -2,8 +2,12 @@ import wx
 import yaml
 
 
+def stinr_allign(in_srting):
+    return in_srting
 
-#frame = wx.Frame(parent, id, title, position, size, style, name)
+
+
+#frame = wx.Frame(parent, :id, title, position, size, style, name)
 def yaml_loader(filepath):
     #load yaml file
     with open(filepath, "r") as file_desc:
@@ -45,7 +49,9 @@ class MainWindow(wx.Frame):
                  style = ~wx.RESIZE_BORDER, name = ""):
         super(MainWindow, self).__init__( parent, id, title, pos, size, style, name)
 
-        
+        #title
+        #StaticText(parent, id=ID_ANY, label="", pos=DefaultPosition, size=DefaultSize, style=0, name=StaticTextNameStr)
+        text = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t\tSounds(s) Menu", (1,1), (350,35))
 
         #load the YAML to Mem and into list of strings
         file_path = "test.yml"
@@ -98,6 +104,8 @@ class MainWindow(wx.Frame):
         
         print"iterating thorugh dictionary to print keys and values"
 
+        peakKeyStrLen = 0
+        peakFileStrLen = 0
         x = 0
         while x < len(key_list):
             print "\nKey at index ",x,"is", key_list[x]
@@ -115,17 +123,22 @@ class MainWindow(wx.Frame):
                         temp_dict = {}
                         temp_dict = sub_dict[y]
                         #print "Element ",y," is :",temp_dict["key"], "\n\tfile: ", temp_dict["file"], "\n\tvolume: ", temp_dict["volume"], "\n\tDuck: ", temp_dict["duck"], "\n\tunduck_duration_offset: ", temp_dict["unduck_duration_offset"]
-                        print "Elememt ",y," is File :", temp_dict["file"]
-                        holding_list.append(temp_dict["file"])
-                        y +=1 
+                       
+                        print temp_dict["key"] , temp_dict["file"]
+                        if len(temp_dict["key"]) > peakKeyStrLen:
+                            peakKeyStrLen = len(temp_dict["key"])
+                        if len(temp_dict["file"]) > peakFileStrLen:
+                            peakFileStrLen = len(temp_dict["file"])
+
+                        string_line = "{:47s} {:<70s}".format(temp_dict["key"], temp_dict["file"])
+                        holding_list.append(string_line) 
+                        y += 1 
             x += 1
 
-        
-        testinglist =[]
-        testinglist.append("one")
-        testinglist.append("two")
-        testinglist.append("three")
-        self.makeAudioPanel(testinglist)
+        print "\n\n\n Peak Key string : ", peakKeyStrLen
+        print "\n\n\n Peak File string: ", peakFileStrLen
+   
+        self.makeAudioPanel(holding_list)
        
         #testDict = {
         #    "First Dict":{"one":"red", "two":"blue", "three":"green"},
@@ -197,7 +210,7 @@ class MainWindow(wx.Frame):
 
     def makeAudioPanel(self, in_string):
         print "firing off audiopanel"
-        self.choicebox = wx.Choice(self,1, (50,25), (500,100),in_string)        
+        self.choicebox = wx.Choice(self,-1, (25,50), (700,20),in_string)        
         #audioMenuListBox.AppendAndEnsureVisible('hello')
  
         
@@ -213,7 +226,7 @@ def main():
 
     global frame
     app = wx.App()
-    frame = MainWindow( None, 1, "Pinball Audio Entry Menu",(200,200), (600,500),wx.DEFAULT_FRAME_STYLE, "Sound(s) Collection")
+    frame = MainWindow( None, 1, "Pinball Audio Entry Menu",(200,200), (800,500),wx.DEFAULT_FRAME_STYLE, "Sound(s) Collection")
     frame.CenterOnScreen
     #frame.input_string = yString
     #frame.setChoices(yString)
