@@ -79,7 +79,7 @@ class MainWindow(wx.Frame):
        #here, I am triyng to extract all values that are under the "file" key in the YAML
 
         print "\n",input_string["Audio"]["Music"]
-        holding_list = {}
+        holding_list = []
         Dictionaries_keys = {}
         Audio_keys = {}
         
@@ -109,23 +109,23 @@ class MainWindow(wx.Frame):
                 print sub_dict
                 y = 0
                 while y < len(sub_dict):
-                    temp_dict = {}
-                    temp_dict = sub_dict[y]
-                   #print "Element ",y," is :",temp_dict["key"], "\n\tfile: ", temp_dict["file"], "\n\tvolume: ", temp_dict["volume"], "\n\tDuck: ", temp_dict["duck"], "\n\tunduck_duration_offset: ", temp_dict["unduck_duration_offset"]
-                    print "Elememt ",y," is File :", temp_dict["file"]
-                    y +=1 
+                    if key_list[x] == "Dictionaries":
+                        break
+                    else:
+                        temp_dict = {}
+                        temp_dict = sub_dict[y]
+                        #print "Element ",y," is :",temp_dict["key"], "\n\tfile: ", temp_dict["file"], "\n\tvolume: ", temp_dict["volume"], "\n\tDuck: ", temp_dict["duck"], "\n\tunduck_duration_offset: ", temp_dict["unduck_duration_offset"]
+                        print "Elememt ",y," is File :", temp_dict["file"]
+                        holding_list.append(temp_dict["file"])
+                        y +=1 
             x += 1
 
         
-        print "\n",input_string["Audio"]["Voice"]
-        print "\n",input_string["Audio"]["Fanfare"]
-        print "\n",input_string["Audio"]["Effects"]
-        print"first element"
-        #print"second element", self.input_string[1]
-        #print"third element", self.input_string[2]
-        #print"fourth element", self.input_string[3]
-        #print"fifth element", self.input_string[4]
-        self.makeAudioPanel(holding_list)
+        testinglist =[]
+        testinglist.append("one")
+        testinglist.append("two")
+        testinglist.append("three")
+        self.makeAudioPanel(testinglist)
        
         #testDict = {
         #    "First Dict":{"one":"red", "two":"blue", "three":"green"},
