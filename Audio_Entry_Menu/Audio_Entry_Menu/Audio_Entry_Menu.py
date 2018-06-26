@@ -19,69 +19,41 @@ def yaml_dump(filepath, data):
     with open(filepath, "w") as file_desc:
         yaml.dump(data, file_desc)
        
-def value_for_key(data, keypath, default = None, exception_on_miss = False):
-        """Returns the value at the given *keypath* within :attr:`values`.
 
-        A key path is a list of components delimited by dots (periods).  The components are interpreted
-        as dictionary keys within the structure.
-        For example, the key path ``'a.b'`` would yield ``'c'`` with the following :attr:`values` dictionary: ::
-
-        {'a':{'b':'c'}}
-
-        If the key path does not exist *default* will be returned.
-        """
-        v = data
-        for component in keypath.split('.'):
-            if v != None and hasattr(v,'has_key') and v.has_key(component):
-                v = v[component]
-            else:
-                if(exception_on_miss):
-                    raise KeyError, "Could not locate required tag: '%s'" % component
-                v = default 
-        return v
 class MainWindow(wx.Frame):
 
-    def setChoices(self, strings):
-        self.input_string = strings
-        print self.input_string
-
+  
     def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, 
                  style = ~wx.RESIZE_BORDER, name = ""):
         super(MainWindow, self).__init__( parent, id, title, pos, size, style, name)
+        
+        #members
+        self.holding_list = []
+        self.finalKeyList = []
+        self.finalFileList= []
 
         #title
         #StaticText(parent, id=ID_ANY, label="", pos=DefaultPosition, size=DefaultSize, style=0, name=StaticTextNameStr)
-        text = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t\tSounds(s) Menu", (1,1), (350,35))
+        text = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t\tSound(s) Menu", (1,1), (350,35))
 
         #load the YAML to Mem and into list of strings
         file_path = "test.yml"
         input_string = {}
-        input_string = yaml_loader(file_path)
+        selinput_string = yaml_loader(file_path)
         in_keys = input_string["Audio"].keys()
         #value = value_for_key(input_string, in_keys)
 
         print input_string
-        #getKeys = input_string.keys("Audio") only pulls 'Audio'
-        print "\n\n\n"
-        print"\niteritems: ", input_string.iteritems()
-        print"\niterkeys: ",input_string.iterkeys()
+        #getKeys = input_string.keys("Audio") only pulls 'Audio
 
 
 
-        print len(input_string)                             #prints 1 key
-        print len(input_string["Audio"])                    #prints 5 keys
-        print len(input_string["Audio"]["Dictionaries"])    #prints 2 keys
+        #print len(input_string)                             prints 1 key
+        #print len(input_string["Audio"])                    prints 5 keys
+        #print len(input_string["Audio"]["Dictionaries"])    prints 2 keys
 
         x = 0
         selections = []
-        #for key in input_string["Audio"]:
-            #print input_string["Audio"]
-            #print dict.iterkeys(input_string["Audio"])
-            #x +=1
-
-       # print selection
-
-
        #here, I am triyng to extract all values that are under the "file" key in the YAML
 
         print "\n",input_string["Audio"]["Music"]
@@ -107,6 +79,8 @@ class MainWindow(wx.Frame):
         peakKeyStrLen = 0
         peakFileStrLen = 0
         x = 0
+        z = 0
+        isFiredOff = False
         while x < len(key_list):
             print "\nKey at index ",x,"is", key_list[x]
             print "\n", Audio_keys[key_list[x]]
@@ -118,7 +92,18 @@ class MainWindow(wx.Frame):
                 y = 0
                 while y < len(sub_dict):
                     if key_list[x] == "Dictionaries":
-                        break
+                        if not isFiredOff:
+                            isFiredOff = True
+                            terror_list = sub_dict["now_showing_terror"]
+                            letter_list = sub_dict["houdini_letter"]
+                            combo_list = terror_list + letter_list
+                            z = 0
+                            while z < len(combo_list):
+                                temp_dict = combo_list[z]
+                                string_line = temp_dict["key"]
+                                self.finalKeyList.append(string_line)
+                                holding_list.append(string_line)
+                                z += 1
                     else:
                         temp_dict = {}
                         temp_dict = sub_dict[y]
@@ -130,60 +115,23 @@ class MainWindow(wx.Frame):
                         if len(temp_dict["file"]) > peakFileStrLen:
                             peakFileStrLen = len(temp_dict["file"])
 
-                        string_line = "{:47s} {:<70s}".format(temp_dict["key"], temp_dict["file"])
-                        holding_list.append(string_line) 
-                        y += 1 
+                        string_line = "{:70s} {:<80s}".format(temp_dict["key"], temp_dict["file"])
+                        self.finalFileList.append(temp_dict["file"])
+                        self.finalKeyList.append(temp_dict["key"])
+                        self.holding_list.append(string_line) 
+                    y += 1 
+                  
             x += 1
 
         print "\n\n\n Peak Key string : ", peakKeyStrLen
         print "\n\n\n Peak File string: ", peakFileStrLen
    
-        self.makeAudioPanel(holding_list)
        
-        #testDict = {
-        #    "First Dict":{"one":"red", "two":"blue", "three":"green"},
-            
-        #    "Second Dict":{"first": "dog", "second":"cat", "third":"bird"},
-            
-        #    "Third Dict":{
-        #        "Nested Dict":{"bee":"hive" , "lion":"den"},
-        #        "Another Nest":{"ant":"hill", "kanye":"his ego"}       
-        #                }
-        #    }
-        ##self.menuText = wx.StaticText(self, 1, "Sound(s)")
-        #self.choicebox = wx.Choice(self,1, (50,25), (500,100)) 
-        #keys = self.input_string.keys()
-        #print testDict
-        #print"\nIs testDict a dictionary?", type(testDict)
-        #print testDict.itervalues()
-        #keys = {}
-        #keys = testDict.keys()
-        #print "\nAll Keys:",  keys
-        #firstkey = keys[0]
-        #print "Key[0]:", firstkey
-        #print "\nNested dictionaries :"
-       
-        #print "Key[0] Contents:" ,firstDict
-        #secondKey = keys[1]
-        #print "\nKey[1]",secondKey
-        #secondDict = testDict[secondKey]
-        #print "Key[1] Contents:",secondDict
-        #thirdKey = keys[2]
-        #print "\nKey[2]",thirdKey
-        #thirdDict = testDict[thirdKey]
-        #print "Key[2] Conents:",thirdDict
-        #firstNestKey = keys[1][1]
-       
-        #print "Recursive Iteration"
-        #recursive_dict_print(testDict)
-
-
-        
-        
+     
         #default constructions
-        
+        self.makeAudioPanel(self.holding_list)
         self.makeToolBar()
-
+        self.makeButtons()
     
 
     def makeToolBar(self):
@@ -210,27 +158,43 @@ class MainWindow(wx.Frame):
 
     def makeAudioPanel(self, in_string):
         print "firing off audiopanel"
-        self.choicebox = wx.Choice(self,-1, (25,50), (700,20),in_string)        
+        self.choicebox = wx.Choice(self,1, (25,50), (800,20),in_string)        
+        self.Bind(wx.EVT_CHOICE, self.audioPanelScript, self.choicebox)
         #audioMenuListBox.AppendAndEnsureVisible('hello')
  
+    def audioPanelScript(self,event):
+        print "\nYou selected: ",self.holding_list[self.choicebox.GetCurrentSelection()]
         
-     
+
+    def makeButtons(self):
+        print "making buttons"
+        playButton = wx.Button(self, 1, "Play", (830,50), (35,25))
+        editButton = wx.Button(self, 1, "Edit", (875,50), (35,25))
+        deleteBttn = wx.Button(self, 1, "Delete", (920,50), (45,25))        
+
+        #bind script to buttons
+        self.Bind(wx.EVT_BUTTON, self.playButtonScript, playButton)
+        self.Bind(wx.EVT_BUTTON, self.editButtonScript, editButton)
+        self.Bind(wx.EVT_BUTTON, self.playButtonScript, deleteBttn)
+
+
+    def playButtonScript(self, in_string):
+        print "Play Button Clicked", self.holding_list[self.choicebox.GetCurrentSelection()]
+        print "Playing file: ", self.finalFileList[self.choicebox.GetCurrentSelection()]
+
+    def editButtonScript(self, in_string):
+        print "Edit Button Clicked"
+        print 
 def main():
     
     #uncomment below to run legit
 
     #test out reading YAML
 
-    #print yString
-    #yString = ["Testing", "1", "2","3"]
-
     global frame
     app = wx.App()
-    frame = MainWindow( None, 1, "Pinball Audio Entry Menu",(200,200), (800,500),wx.DEFAULT_FRAME_STYLE, "Sound(s) Collection")
+    frame = MainWindow( None, 1, "Pinball Audio Entry Menu",(200,200), (1000,500),wx.DEFAULT_FRAME_STYLE, "Sound(s) Collection")
     frame.CenterOnScreen
-    #frame.input_string = yString
-    #frame.setChoices(yString)
-    #frame.makeAudioPanel(yString)
     frame.Show()
 
     #put this in at the very  bottom of the main()
