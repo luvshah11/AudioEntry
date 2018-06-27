@@ -14,10 +14,10 @@ def yaml_loader(filepath):
         data = yaml.safe_load(file_desc)
     return data
 
-def yaml_dump(filepath, data):
+def yaml_dump(data):
     #WRITES DATA BACK TO FILE
-    with open(filepath, "w") as file_desc:
-        yaml.dump(data, file_desc)
+    with open("exported_test.yml", "w") as file_desc:
+        yaml.dump(data, file_desc, default_flow_style= False)
        
 
 class MainWindow(wx.Frame):
@@ -31,19 +31,19 @@ class MainWindow(wx.Frame):
         self.holding_list = []
         self.finalKeyList = []
         self.finalFileList= []
-
+        self.input_string = {}
         #title
         #StaticText(parent, id=ID_ANY, label="", pos=DefaultPosition, size=DefaultSize, style=0, name=StaticTextNameStr)
         text = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t\tSound(s) Menu", (1,1), (350,35))
 
         #load the YAML to Mem and into list of strings
         file_path = "test.yml"
-        input_string = {}
-        selinput_string = yaml_loader(file_path)
-        in_keys = input_string["Audio"].keys()
+        
+        self.input_string = yaml_loader(file_path)
+        in_keys = self.input_string["Audio"].keys()
         #value = value_for_key(input_string, in_keys)
 
-        print input_string
+        print self.input_string
         #getKeys = input_string.keys("Audio") only pulls 'Audio
 
 
@@ -56,17 +56,18 @@ class MainWindow(wx.Frame):
         selections = []
        #here, I am triyng to extract all values that are under the "file" key in the YAML
 
-        print "\n",input_string["Audio"]["Music"]
+        print "\n",self.input_string["Audio"]["Music"]
         holding_list = []
         Dictionaries_keys = {}
         Audio_keys = {}
         
-        Dictionaries_keys = input_string["Audio"]["Dictionaries"]
+        Dictionaries_keys = self.input_string["Audio"]["Dictionaries"]
         print "\n\nDictionaires List: ", Dictionaries_keys #shows now_showing and houdinin_letters
         print"\nDictionaries Keys only: ", Dictionaries_keys.keys()
 
-        Audio_keys = input_string["Audio"]
+        Audio_keys = self.input_string["Audio"]
         print "\n\n Audio list: ", Audio_keys
+
         print "\nAudio keys only: ", Audio_keys.keys() #gets all keys 'Fanfare', 'Voice', 'Music', 'Effects', 'Dictionaries'
 
         print "\nStoring Values of Audio_keys in list"
@@ -168,23 +169,43 @@ class MainWindow(wx.Frame):
 
     def makeButtons(self):
         print "making buttons"
-        playButton = wx.Button(self, 1, "Play", (830,50), (35,25))
-        editButton = wx.Button(self, 1, "Edit", (875,50), (35,25))
-        deleteBttn = wx.Button(self, 1, "Delete", (920,50), (45,25))        
+        playButton = wx.Button(self, 1, "Play", (830,50), (35,25), name = "playButton")
+        editButton = wx.Button(self, 1, "Edit", (875,50), (35,25), name = "editButton")
+        deleteBttn = wx.Button(self, 1, "Delete", (920,50), (45,25), name = "deleteBttn")        
 
         #bind script to buttons
-        self.Bind(wx.EVT_BUTTON, self.playButtonScript, playButton)
-        self.Bind(wx.EVT_BUTTON, self.editButtonScript, editButton)
-        self.Bind(wx.EVT_BUTTON, self.playButtonScript, deleteBttn)
+        self.Bind(wx.EVT_BUTTON, self.buttonEventHandler, playButton)
+            
+    def playbttnFunc(self, file):
+        print "playing file", file
+
+    def editBttnFunc(self, file):
+        print "editting file", self.input_string
+        yaml_dump(self.input_string)
+
+    def dletBttnFunc(self, file):
+        print "deleting file",file
+
+    def buttonEventHandler(self, event):
+        button = event.GetEventObject()
+      
+        if button.GetName() == "playButton":
+            #playButtonFunc
+            print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
+            self.playbttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])         
+           
+        if button.GetName() == "editButton":
+            #editButtonFunc
+            print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
+            self.editBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])
+            
+        
+        if button.GetName() == "deleteBttn":
+            #deleteButtonFunc
+            print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
+            self.dletBttnFunc,(self.finalFileList[self.choicebox.GetCurrentSelection()])  
 
 
-    def playButtonScript(self, in_string):
-        print "Play Button Clicked", self.holding_list[self.choicebox.GetCurrentSelection()]
-        print "Playing file: ", self.finalFileList[self.choicebox.GetCurrentSelection()]
-
-    def editButtonScript(self, in_string):
-        print "Edit Button Clicked"
-        print 
 def main():
     
     #uncomment below to run legit

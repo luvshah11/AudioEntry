@@ -1,0 +1,2894 @@
+Audio:
+  Dictionaries:
+    houdini_letter:
+    - channel: 3
+      key: SMBullet_EndSuccess
+    - channel: 1
+      delay: 0.75
+      key: houdini_letter
+    now_showing_terror:
+    - channel: 3
+      key: Movies_Activated
+    - channel: 1
+      delay: 0.75
+      key: now_showing
+    - channel: 1
+      delay: 1
+      key: terror_next
+  Effects:
+  - duck: 0.51
+    file: MSHU_RockNRoll.wav
+    key: MSHU_RockNRoll
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.5
+    file: Gen_ShooterLane.wav
+    key: shooter_sound
+    volume: 1.1
+  - file: SMCards_ButtonHold.wav
+    key: SMCards_ButtonHold
+    volume: 1
+  - file: SMCards_ButtonRelease.wav
+    key: SMCards_ButtonRelease
+    volume: 1
+  - file: Gen_Kickers1c.wav
+    key: Kicker
+    volume: 1
+  - file: Gen_BigHits01.wav
+    key: bighit_1
+    volume: 1
+  - file: Gen_BigHits02.wav
+    key: bighit_2
+    volume: 1
+  - file: Gen_BigHits03.wav
+    key: bighit_3
+    volume: 1
+  - file: Gen_BigHits04.wav
+    key: bighit_4
+    volume: 1
+  - file: Gen_BigHits05.wav
+    key: bighit_5
+    volume: 1
+  - file: Gen_BigHits06.wav
+    key: bighit_6
+    volume: 1
+  - file: Gen_BigHits07.wav
+    key: bighit_7
+    volume: 1
+  - file: Gen_BigHits08.wav
+    key: bighit_8
+    volume: 1
+  - file: Gen_BigHits09.wav
+    key: bighit_9
+    volume: 1
+  - file: Gen_Orbit01.wav
+    key: orbit_1
+    volume: 1
+  - file: Gen_Orbit02.wav
+    key: orbit_2
+    volume: 1
+  - file: Gen_Orbit03.wav
+    key: orbit_3
+    volume: 1
+  - file: Gen_Orbit04.wav
+    key: orbit_4
+    volume: 1
+  - file: Gen_Orbit05.wav
+    key: orbit_5
+    volume: 1
+  - file: Gen_Orbit06.wav
+    key: orbit_6
+    volume: 1
+  - file: Gen_Ramps01.wav
+    key: ramp_1
+    volume: 1
+  - file: Gen_Ramps02.wav
+    key: ramp_2
+    volume: 1
+  - file: Gen_Ramps03.wav
+    key: ramp_3
+    volume: 1
+  - file: Gen_Ramps04.wav
+    key: ramp_4
+    volume: 1
+  - file: Gen_Ramps05.wav
+    key: ramp_5
+    volume: 1
+  - file: Gen_Ramps06.wav
+    key: ramp_6
+    volume: 1
+  - file: laser.wav
+    key: alaser
+  - file: Gen_Credit.wav
+    key: credit_awarded
+  - file: laser.wav
+    key: orbit_sound
+  - file: test_tone.wav
+    key: test_tone
+  - file: Gen_HitCurtain.wav
+    key: curtain_hit
+  - file: q_hit.wav
+    key: q_hit
+  - file: q_walking.wav
+    key: q_walking
+    volume: 0.2
+  - file: cow.wav
+    key: cow
+  - file: busy_signal.wav
+    key: busy signal
+  - file: needle_ting.wav
+    key: needle_sound
+    volume: 0.7
+  - file: giggle1.wav
+    key: Giggle
+  - file: giggle2.wav
+    key: Giggle
+  - file: Gen_BigHits01.wav
+    key: Hit
+  - file: Gen_BigHits02.wav
+    key: Hit
+  - file: Gen_BigHits03.wav
+    key: Hit3
+  - file: MSHU_Ready.wav
+    key: magic_intro_effect
+  - file: SMBullet_Fire.wav
+    key: gunshot
+    volume: 0.9
+  - file: SMBullet_LoadBullet.wav
+    key: load_bullet
+    volume: 0.9
+  - file: applause1.wav
+    key: applause
+    volume: 0.9
+  - file: MilkCanX_DropLevel.wav
+    key: MilkCanX_DropLevel
+  - file: MilkCanX_Ready.wav
+    key: MilkCanX_Ready
+  - file: Gen_Spinner.wav
+    key: spinner
+    volume: 0.5
+  - file: FX_MBS_LetterLit02.wav
+    key: SeanceLetterUnlit
+  - file: FX_MBS_LetterLit01.wav
+    key: SeanceLetterUnlit
+  - file: FX_MBS_LetterUnlit01.wav
+    key: SeanceLetterLit
+  - file: FX_MBS_LetterUnlit02.wav
+    key: SeanceLetterLit
+  - file: FX_HUJE_LetterUnlit01.wav
+    key: EscapeLetterLit
+  - file: FX_HUJE_LetterUnlit02.wav
+    key: EscapeLetterLit
+  - file: FX_HUJE_LetterUnlit03.wav
+    key: EscapeLetterLit
+  - file: FX_HUJE_LetterLit01.wav
+    key: EscapeLetterUnlit
+  - file: FX_HUJE_LetterLit02.wav
+    key: EscapeLetterUnlit
+  - file: FX_HUJE_LetterLit03.wav
+    key: EscapeLetterUnlit
+  - file: Gen_OpenCurtain.wav
+    key: Gen_OpenCurtain
+    volume: 0.5
+  - file: scratch.wav
+    key: scratch
+  - file: TMB_B1Locked.wav
+    key: TMB_Locked
+  - file: Gen_CoinDrop.wav
+    key: coin_drop
+  - file: Film1_QHit1.wav
+    key: q_hit
+  - file: Film1_QHit2.wav
+    key: q_hit
+  - file: Film1_QHit3.wav
+    key: q_hit
+  - file: TMB_LockWordsHit
+    key: TMB_LockWordsHit
+  - file: TMB_TrunkClose.wav
+    key: trunk_close
+  - file: SMHandcuffs_ScreenTravel.wav
+    key: screen_travel
+  - file: Film2_IceHit1.wav
+    key: ice_hit
+  - file: Film2_IceHit2.wav
+    key: ice_hit
+  - file: Film2_IceHit3.wav
+    key: ice_hit
+  - file: upper_catapult.wav
+    key: upper_catapult
+  Fanfare:
+  - duck: 0.51
+    file: SMCards_Activated.wav
+    key: SMCards_Activated
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: Gen_ChestPoints.wav
+    key: Gen_ChestPoints
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMMorph_Activated.wav
+    key: SMMorph_Activated
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_Activated.wav
+    key: SMHandcuffs_Activated
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_EndSuccess.wav
+    key: SMHandcuffs_EndSuccess
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: Gen_GameStart.wav
+    key: Gen_GameStart
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMCards_Score1.wav
+    key: card_score_1
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMCards_Score2.wav
+    key: card_score_2
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMCards_Score3.wav
+    key: card_score_3
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMCards_Score4.wav
+    key: card_score_4
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMCards_Score5.wav
+    key: card_score_5
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: SMCards_Score6.wav
+    key: card_score_6
+    unduck_duration_offset: -.5
+    volume: 1
+  - file: Gen_MagicTarget.wav
+    key: magic_target
+    volume: 1.0
+  - file: Gen_OutlaneDrain.wav
+    key: outlane_drain
+  - file: knocker.wav
+    key: knocker
+    volume: 2
+  - duck: 0.51
+    file: SMMorph_Activated.wav
+    key: SMMorph_Activated
+    volume: 1
+  - duck: 0.51
+    file: SMBullet_Activated.wav
+    key: SMBullet_Activated
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_BonusDisplay1.wav
+    key: handcuff_hit_1
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_BonusDisplay2.wav
+    key: handcuff_hit_2
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_BonusDisplay3.wav
+    key: handcuff_hit_3
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_BonusDisplay4.wav
+    key: handcuff_hit_4
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_BonusDisplay5.wav
+    key: handcuff_hit_5
+    volume: 1
+  - duck: 0.51
+    file: SMHandcuffs_BonusTrigger.wav
+    key: handcuff_trigger
+    volume: 1
+  - file: Movies_Activated.wav
+    key: Movies_Activated
+  - file: SMWalls_Activated.wav
+    key: SMWalls_Activated
+  - file: SMWalls_EndSuccess.wav
+    key: SMWalls_EndSuccess
+  - file: SMWater_Activated.wav
+    key: SMWater_Activated
+  - duck: 0.7
+    file: SMBullet_EndSuccess.wav
+    key: SMBullet_EndSuccess
+  - duck: 0.7
+    file: SMMorph_EndSuccess.wav
+    key: SMMorph_EndSuccess
+  - duck: 0.7
+    file: SMWater_EndSuccess.wav
+    key: SMWater_EndSuccess
+  - duck: 0.7
+    file: EOBScore_HIt01.wav
+    key: eob_hit_1
+  - duck: 0.7
+    file: EOBScore_HIt02.wav
+    key: eob_hit_2
+  - duck: 0.7
+    file: EOBScore_HIt03.wav
+    key: eob_hit_3
+  - duck: 0.7
+    file: EOBScore_HIt04.wav
+    key: eob_hit_4
+  - duck: 0.7
+    file: EOBScore_HIt05.wav
+    key: eob_hit_5
+  - duck: 0.7
+    file: EOBScore_HIt06.wav
+    key: eob_hit_6
+  - duck: 0.7
+    file: EOBScore_HIt07.wav
+    key: eob_hit_7
+  - duck: 0.7
+    file: EOBScore_HIt08.wav
+    key: eob_hit_8
+  - duck: 0.05
+    file: Film1Alt_End.wav
+    key: film_fanfare1
+  - duck: 0.05
+    file: Film2Alt_End.wav
+    key: film_fanfare2
+  - duck: 0.51
+    file: SMElephant_Activated.wav
+    key: SMElephant_Activated
+    unduck_duration_offset: -.3
+    volume: 0.8
+  - duck: 0.51
+    file: SMElephant_EndNoSuccess.wav
+    key: SMElephant_EndNoSuccess
+    unduck_duration_offset: -.3
+    volume: 0.8
+  - duck: 0.51
+    file: SMElephant_EndSuccess.wav
+    key: SMElephant_EndSuccess
+    unduck_duration_offset: -.3
+    volume: 0.8
+  - duck: 0.51
+    file: MS_PrizeReveal.wav
+    key: magic_shop_award
+    unduck_duration_offset: -.3
+    volume: 0.8
+  - duck: 0.05
+    file: SMNeedles_EndSuccess.wav
+    key: needles_success
+    unduck_duration_offset: -.3
+  - duck: 0.05
+    file: SMNeedles_EndNoSuccess.wav
+    key: needles_fail
+    unduck_duration_offset: -.3
+  - duck: 0.05
+    file: SMNeedles_Emerge01.wav
+    key: SMNeedles_Emerge01
+    unduck_duration_offset: -.3
+  - duck: 0.05
+    file: SMNeedles_Emerge02.wav
+    key: SMNeedles_Emerge02
+    unduck_duration_offset: -.3
+  - duck: 0.05
+    file: JEHU_DoorSlam2.wav
+    key: jail_door
+    unduck_duration_offset: -.3
+  - duck: 0.05
+    file: JEHU_DoorSlam.wav
+    key: jail_door
+    unduck_duration_offset: -.3
+  - duck: 0.05
+    file: MSHU_Activated.wav
+    key: magic_shop_open_fanfare
+    unduck_duration_offset: -.5
+  - duck: 0.05
+    file: JEHU_Ready.wav
+    key: escape_open
+    unduck_duration_offset: -1
+  - duck: 0.05
+    file: JEHU_Activated.wav
+    key: escape_start
+    unduck_duration_offset: -1
+  - duck: 0.05
+    file: MilkCanX_Activated.wav
+    key: MilkcanX_Activated
+    unduck_duration_offset: -.5
+  - duck: 0.05
+    file: MilkCanX_LevelOver.wav
+    key: MilkcanX_LevelOver
+    unduck_duration_offset: -1
+  - duck: 0.05
+    file: SMB_End.wav
+    key: SMB_End
+    unduck_duration_offset: -1
+  - duck: 0.51
+    file: Gen_ExtraBall.wav
+    key: Gen_ExtraBall_FF
+    unduck_duration_offset: -1
+  - duck: 0.51
+    file: Gen_SkillShot.wav
+    key: Gen_SkillShot
+    unduck_duration_offset: -1.3
+  - duck: 0.05
+    file: JEHU_EndSuccess.wav
+    key: JEHU_EndSuccess
+    unduck_duration_offset: -.35
+  - duck: 0.05
+    file: JEHU_EndNoSuccess.wav
+    key: JEHU_EndNoSuccess
+    unduck_duration_offset: -.35
+  - duck: 0.5
+    file: SMB_LetterReTrigger03.wav
+    key: SMB_LetterReTrigger
+    unduck_duration_offset: -1
+  - duck: 0.05
+    file: SMB_SJackpot.wav
+    key: SMB_SJackpot
+    unduck_duration_offset: -3
+  - duck: 0.1
+    file: SMB_Jackpot.wav
+    key: SMB_Jackpot
+    unduck_duration_offset: -2.5
+  - duck: 0.05
+    file: SMB_Activated.wav
+    key: SMB_Activated
+    unduck_duration_offset: -2
+  - duck: 0.5
+    file: SMB_LetterReTrigger01.wav
+    key: SMB_LetterReTrigger
+    unduck_duration_offset: -1
+  - duck: 0.5
+    file: SMB_LetterReTrigger02.wav
+    key: SMB_LetterReTrigger
+    unduck_duration_offset: -1
+  - duck: 0.51
+    file: Gen_Tilt.wav
+    key: tilt
+    unduck_duration_offset: -1
+    volume: 1
+  - duck: 0.51
+    file: Gen_TiltWarning.wav
+    key: tilt_warning
+    unduck_duration_offset: -1
+    volume: 1
+  - duck: 0.51
+    file: TMB_TrunkOpen.wav
+    key: TMB_TrunkOpen
+    unduck_duration_offset: -1
+    volume: 1
+  - duck: 0.51
+    file: Movies_GetFilmLetter.wav
+    key: film_ready
+    unduck_duration_offset: -1
+    volume: 1
+  - duck: 0.51
+    file: Movies_AdvanceStage1.wav
+    key: Movies_AdvanceStage1
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: Movies_AdvanceStage2.wav
+    key: Movies_AdvanceStage2
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: Movies_AdvanceStage3.wav
+    key: Movies_AdvanceStage3
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: Movies_AdvanceStage4.wav
+    key: Movies_AdvanceStage4
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: Movies_AdvanceStage5.wav
+    key: Movies_AdvanceStage5
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: Film2_Spotlight.wav
+    key: Film2_Spotlight
+    unduck_duration_offset: -.5
+    volume: 1
+  - duck: 0.51
+    file: mission_complete_fanfare.wav
+    key: mission_complete_fanfare
+  - duck: 0.5
+    file: TMB_Jackpot.wav
+    key: TMB_Jackpot
+    unduck_duration_offset: -1
+  - duck: 0.5
+    file: TMB_SJackpot.wav
+    key: TMB_SJackpot
+    unduck_duration_offset: -1
+  - duck: 0.5
+    file: TMB_EndSuccess.wav
+    key: TMB_EndSuccess
+    unduck_duration_offset: -1
+  - duck: 0.5
+    file: TMB_EndNoSuccess.wav
+    key: TMB_EndNoSuccess
+    unduck_duration_offset: -1
+  - duck: 0.5
+    file: Gen_PlayerShootAgain.wav
+    key: Gen_PlayerShootAgain
+    unduck_duration_offset: -1
+  Music:
+  - file: match_sequence.wav
+    key: match_sequence
+  - file: ultimate_mission.wav
+    key: ultimate_mission
+    volume: 1.2
+  - file: SMHandcuffs_BG.wav
+    key: SMHandcuffs_BG
+  - file: SMWalls_BG.wav
+    key: SMWalls_BG
+  - file: SMBullet_BG.wav
+    key: SMBullet_BG
+  - file: SMWater_BG.wav
+    key: SMWater_BG
+  - file: SMMorph_BG.wav
+    key: SMMorph_BG
+  - file: EOBScore_BG_Riser.wav
+    key: EOBScore_BG_Riser
+  - file: SMElephant_BG.wav
+    key: SMElephant_BG
+  - file: Film1Alt_BG.wav
+    key: film1
+  - file: Film2Alt_BG.wav
+    key: film2
+  - file: SMMilkcan_BG.wav
+    key: SMMilkcan_BG
+  - file: JEHU_BG.wav
+    key: hurryup
+  - file: MU_Gen_P1.wav
+    key: main_p1
+  - file: MU_Gen_P2.wav
+    key: main_p2
+  - file: MU_Gen_P3.wav
+    key: main_p3
+  - file: MU_Gen_P4.wav
+    key: main_p4
+  - file: Gen_EndBallBonusBG.wav
+    key: Gen_EndBallBonusBG
+  - file: SMB_BG.wav
+    key: SMB_BG
+  - file: MilkCanX_BG.wav
+    key: cardking
+  - file: TMB_BG.wav
+    key: TMB_BG
+  - file: SJMB_BG.wav
+    key: straitjacket_BG
+  - file: SMNeedles_BG.wav
+    key: SMNeedles
+  - file: MSHU_AnimationBG.wav
+    key: MagicShop
+  Voice:
+  - duck: 0.51
+    file: Gen_Aud_Houdini01.wav
+    key: aud_houdini_1
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini02.wav
+    key: aud_houdini_2
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini03.wav
+    key: aud_houdini_3
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini04.wav
+    key: aud_houdini_4
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini05.wav
+    key: aud_houdini_5
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini06.wav
+    key: aud_houdini_6
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini07.wav
+    key: aud_houdini_7
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini08.wav
+    key: aud_houdini_8
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini09.wav
+    key: aud_houdini_9
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini10.wav
+    key: aud_houdini_10
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini11.wav
+    key: aud_houdini_11
+    volume: 1
+  - duck: 0.51
+    file: Gen_Aud_Houdini12.wav
+    key: aud_houdini_12
+    volume: 1
+  - duck: 0.9
+    file: Gen_Count01.wav
+    key: count_1
+  - duck: 0.8
+    file: Gen_Count02.wav
+    key: count_2
+    volume: 0.9
+  - duck: 0.8
+    file: Gen_Count03.wav
+    key: count_3
+    volume: 0.8
+  - duck: 0.8
+    file: Gen_Count04.wav
+    key: count_4
+    volume: 0.7
+  - duck: 0.8
+    file: Gen_Count05.wav
+    key: count_5
+    volume: 0.6
+  - duck: 0.8
+    file: Gen_Count06.wav
+    key: count_6
+    volume: 0.5
+  - duck: 0.8
+    file: Gen_Count07.wav
+    key: count_7
+    volume: 0.5
+  - duck: 0.8
+    file: Gen_Count08.wav
+    key: count_8
+    volume: 0.5
+  - duck: 0.8
+    file: Gen_Count09.wav
+    key: count_9
+    volume: 0.7
+  - duck: 0.9
+    file: Gen_Count10.wav
+    key: count_10
+  - duck: 0.51
+    file: BFTD_Rule_HaveOnly30FlipsToSpellSea.wav
+    key: return_from_beyond_rule
+  - duck: 0.51
+    file: BFTD_Intro_HereIsYourChanceToComeBac.wav
+    key: return_from_beyond_intro
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum_One02.wav
+    key: gypsy_count_1
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum2_Two02.wav
+    key: gypsy_count_2
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum3_Three02.wav
+    key: gypsy_count_3
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum4_Four02.wav
+    key: gypsy_count_4
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum5_Five.wav
+    key: gypsy_count_5
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum6_Six.wav
+    key: gypsy_count_6
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum7_Seven.wav
+    key: gypsy_count_7
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum8_Eight.wav
+    key: gypsy_count_8
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum9_Nine.wav
+    key: gypsy_count_9
+  - duck: 0.8
+    file: Gypsy/Gen_GypsyNum10_Ten.wav
+    key: gypsy_count_10
+  - duck: 0.8
+    file: gypsy/Gen_OutOfTime_YourTimeIsAlmostOver.wav
+    key: almost_out_of_time
+  - duck: 0.51
+    file: SecretMission_Complete_MissionComplete.wav
+    key: mission_complete
+  - duck: 0.51
+    file: SecretMission_Ready_SecretMissionIsLit.wav
+    key: mission_lit
+  - duck: 0.51
+    file: Gen_BallSave_LetsTryThatAgain.wav
+    key: bad_magic_shop
+  - duck: 0.51
+    file: Gen_Start_LetShowBegin.wav
+    key: LetTheShowBegin
+  - duck: 0.51
+    file: Movies_RuleFilm1_InMasterMysteryMustStopQA.wav
+    key: q_intro
+  - duck: 0.51
+    file: Gen_ShootAgain_DontGoAnwhereHaveAnExtraB.wav
+    key: shoot_again
+  - duck: 0.51
+    file: Gen_ShootAgain_DontGoAnywhere.wav
+    key: shoot_again
+  - duck: 0.51
+    file: Gen_ShootAgain_DontMove.wav
+    key: shoot_again
+  - duck: 0.51
+    file: Gen_ShootAgain_SameMagicianShootAgain.wav
+    key: shoot_again
+  - duck: 0.51
+    file: Gen_Count01.wav
+    key: Gen_Count01
+  - duck: 0.51
+    file: Gen_Count02.wav
+    key: Gen_Count02
+  - duck: 0.3
+    file: Gen_Count03.wav
+    key: Gen_Count03
+  - duck: 0.4
+    file: Gen_Count04.wav
+    key: Gen_Count04
+  - duck: 0.5
+    file: Gen_Count05.wav
+    key: Gen_Count05
+  - duck: 0.8
+    file: Gen_Count06.wav
+    key: Gen_Count06
+  - duck: 0.8
+    file: Gen_Count07.wav
+    key: Gen_Count07
+  - duck: 0.8
+    file: Gen_Count08.wav
+    key: Gen_Count08
+  - duck: 0.8
+    file: Gen_Count09.wav
+    key: Gen_Count09
+  - duck: 0.51
+    file: Gen_Count10.wav
+    key: Gen_Count10
+  - duck: 0.51
+    file: Gen_Ready_Ready.wav
+    key: Gen_Ready_Ready
+  - duck: 0.51
+    file: Gen_XtraBallLit_ExtraBallIsLit.wav
+    key: extraball_lit
+  - duck: 0.51
+    file: Gen_XtraBallLit_ExtraBallReady.wav
+    key: extraball_lit
+  - duck: 0.51
+    file: Gen_XtraBallLit_GoForExtraBall.wav
+    key: extraball_lit
+  - duck: 0.51
+    file: Gen_ExtraBall_combined.wav
+    key: Gen_ExtraBall
+  - duck: 0.51
+    file: Gen_XtraBall_AnotherExtraBallNicelyDon.wav
+    key: another_extraball
+  - duck: 0.51
+    file: Gen_JackpotNarr_Jackpot.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_SuperJackpotNarr_SuperJackpot.wav
+    key: super_jackpot
+  - duck: 0.51
+    file: Gen_BallSave_GiveAnotherTry.wav
+    key: ballsave
+  - duck: 0.51
+    file: Gen_BallSave_LetsTryThatAgain.wav
+    key: ballsave
+  - duck: 0.51
+    file: Gen_GenericBad_GotToBeKiddingMe.wav
+    key: generic_bad
+  - duck: 0.51
+    file: Gen_GenericBad_Really.wav
+    key: generic_bad
+  - duck: 0.51
+    file: Gen_GenericBad_DontGiveUpYourDayJob.wav
+    key: generic_bad
+  - duck: 0.51
+    file: Gen_GenericBad_ISeeNoMagicInYou.wav
+    key: generic_bad
+  - duck: 0.51
+    file: Gen_GenericBad_ISeeNoMagicInYou.wav
+    key: tilt_message
+  - duck: 0.51
+    file: Gen_GenericBad_ReallyNeedToPractice.wav
+    key: generic_bad
+  - duck: 0.51
+    file: Gen_GenericBad_WowReallyStink.wav
+    key: generic_bad
+  - duck: 0.51
+    file: Gen_GenericBad_Seriously.wav
+    key: generic_bad
+  - duck: 0.51
+    file: Gen_GenericGood_GreatJob.wav
+    key: generic_good
+  - duck: 0.51
+    file: Gen_GenericGood_NiceShot.wav
+    key: generic_good
+  - duck: 0.51
+    file: Gen_Start_AreNext.wav
+    key: player_added_1
+  - duck: 0.51
+    file: Gen_Start_LetShowBegin.wav
+    key: show_begin
+  - duck: 0.51
+    file: Gen_Start_LetsPerformSomeMagic.wav
+    key: player_added_1
+  - duck: 0.51
+    file: Gen_Start_SoThinkCanPerformMagicLet.wav
+    key: player_added_1
+  - duck: 0.51
+    file: Gen_Start_WillNowTeachMagic.wav
+    key: player_added_1
+  - duck: 0.51
+    file: Gen_P1Add_WelcomeMagicianOneAnyoneE.wav
+    key: player_added_1
+  - duck: 0.5
+    file: Gen_P2Add_SecondMagicianWillPerform.wav
+    key: player_added_2
+  - duck: 0.5
+    file: Gen_P2Add_WelcomeMagicianTwoAnyoneE.wav
+    key: player_added_2
+  - duck: 0.5
+    file: Gen_P2Add_ThatMakesTwoWeHaveTwoSpot.wav
+    key: player_added_2
+  - duck: 0.5
+    file: Gen_P3Add_WelcomeMagicianThreeAnyon.wav
+    key: player_added_3
+  - duck: 0.5
+    file: Gen_P3Add_ThirdMagicianWillPerform.wav
+    key: player_added_3
+  - duck: 0.5
+    file: Gen_P4Add_FourthMagicianWillPerform.wav
+    key: player_added_4
+  - duck: 0.51
+    file: Gen_P1Up_Magician1IsYourTurn.wav
+    key: player_up_1
+  - duck: 0.51
+    file: Gen_P1Up_Magician1YoureUp.wav
+    key: player_up_1
+  - duck: 0.51
+    file: Gen_P2Up_Magician2YoureUp.wav
+    key: player_up_2
+  - duck: 0.51
+    file: Gen_P2Up_Magician2IsYourTurn.wav
+    key: player_up_2
+  - duck: 0.51
+    file: Gen_P3Up_Magician3YoureUp.wav
+    key: player_up_3
+  - duck: 0.51
+    file: Gen_P3Up_Magician3IsYourTurn.wav
+    key: player_up_3
+  - duck: 0.51
+    file: Gen_P4Up_Magician4YoureUp.wav
+    key: player_up_4
+  - duck: 0.51
+    file: Gen_P4Up_Magician4IsYourTurn.wav
+    key: player_up_4
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_WillGetOutOfChicagoJailWh.wav
+    key: escape_intro_chicago
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_BuiltForCapone.wav
+    key: escape_intro_chicago
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_TheseJailsWereBuiltToHold3.wav
+    key: escape_intro_chicago
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_WillNeverBreakOutOfJail.wav
+    key: escape_intro_chicago
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_WillNeverBreakOutOfJail.wav
+    key: escape_open_chicago
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_JailEscapeIsOpen.wav
+    key: escape_open_chicago
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_JailEscapeIsReady.wav
+    key: escape_open_chicago
+  - duck: 0.51
+    file: Chicago/JEHU_ChiIntro_JailIsReadyForYou.wav
+    key: escape_open_chicago
+  - file: Chicago/JEHU_ChiWrap_AbsolutelyBrilliantMostIm.wav
+    key: escape_success_chicago
+  - file: Chicago/JEHU_Summary_ThisGuyIsRealDeal.wav
+    key: escape_success_chicago
+  - file: Chicago/JEHU_ChiFail_LooksLikeThatGuyIsGoingTo.wav
+    key: escape_fail_chicago
+  - file: Chicago/JEHU_ChiFail_NotSureThisGuyCouldEscape.wav
+    key: escape_fail_chicago
+  - file: Chicago/JEHU_ChiShot_ShootMilkCan.wav
+    key: escape_shot_chicago
+  - duck: 0.51
+    file: Gen_LockLit_LockIsLit.wav
+    key: lock_is_lit
+  - duck: 0.51
+    file: fire.wav
+    key: fire
+  - duck: 0.51
+    file: MSHU_Open_MagicShopIsNowOpen.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Closed_ShootSpinnerToOpenMagicSh.wav
+    key: shop_closed_spins
+  - duck: 0.51
+    file: MSHU_Intro_CanSeeWeHaveAnEmptyHat.wav
+    key: shop_intro1
+  - duck: 0.51
+    file: MSHU_Intro_LetsSeeWhatHatHolds.wav
+    key: shop_intro2
+  - duck: 0.51
+    file: MSHU_Intro2nd_LetsSeeWhatHatHoldsThisTi.wav
+    key: shop_intro2
+  - duck: 0.51
+    file: MSHU_Intro2nd_AmazingHowManyThingsThisH.wav
+    key: shop_intro2
+  - duck: 0.51
+    file: MSHU_ExtraBallLit_ExtraBallIsLit.wav
+    key: shop_extraball_lit
+  - duck: 0.51
+    file: MSHU_BallSave_20SecondsOfBallSave.wav
+    key: shop_ballsave
+  - duck: 0.51
+    file: MSHU_Points_MagicalPoints.wav
+    key: shop_magicalpoints
+  - duck: 0.51
+    file: MSHU_StageOpen_LetsStartAnIllusion.wav
+    key: shop_stageopen
+  - duck: 0.51
+    file: MSHU_EscapeLetter_EscapeLetterAdded.wav
+    key: shop_escapeletter
+  - duck: 0.51
+    file: MSHU_SeanceLetter_SeanceLetterAdded.wav
+    key: shop_seanceletter
+  - duck: 0.51
+    file: MSHU_EscapeStart_StartingJailEscape.wav
+    key: shop_startescape
+  - duck: 0.51
+    file: MSHU_EscapeDeath_EscapeFromDeathIsNowLit.wav
+    key: escape_death_lit
+  - duck: 0.51
+    file: MilkCanX_Advance_MilkcanMulitplierAdvances.wav
+    key: MilkCanX_Advance_MilkcanMulitplierAdvances
+  - duck: 0.51
+    file: Stage_Water_WillNextPerformHisOneOfHi.wav
+    key: stage_next_water_torture
+  - duck: 0.51
+    file: Stage_WalkWalls_WeCurrentlyHaveLocalBrick.wav
+    key: stage_next_walk_through_walls
+  - file: shoot_right_or_left_orbit.wav
+    key: shoot_right_or_left_orbit
+  - duck: 0.51
+    file: Stage_Rule_ShootKey3TimesToOpenStage.wav
+    key: stage_shoot_key
+  - duck: 0.51
+    file: Stage_Rule2x_ShootKey2MoreTimes.wav
+    key: stage_keys_needed_2
+  - duck: 0.51
+    file: Stage_Rule1x_ShootKey1MoreTime.wav
+    key: stage_keys_needed_1
+  - duck: 0.51
+    file: Stage_ElephantIntro_NextIllusionWillBeToMake1.wav
+    key: stage_next_elephant
+  - duck: 0.4
+    file: Stage_ElephantRule_ShootRampThreeTimesThenSt.wav
+    key: stage_rule_elephant
+  - duck: 0.4
+    file: Houdini/Stage_ElephantHoudini_WatchCarefullyIWalkThisEl.wav
+    key: stage_houdini_elephant
+  - duck: 0.51
+    file: Stage_NeedlesIntro_WillNextPerformHisFamousS.wav
+    key: stage_next_needles
+  - duck: 0.5
+    file: Stage_NeedlesRule_AllSwitchesScorePointsHit.wav
+    key: stage_rule_needles
+  - duck: 0.51
+    file: Houdini/Stage_NeedlesHoudini_CanSeeIHaveNothingInMyMou_short.wav
+    key: stage_houdini_needles
+  - duck: 0.51
+    file: Stage_Metamorph_UpNextOnMainStageWillBeWo.wav
+    key: stage_next_metamorph
+  - duck: 0.51
+    file: Stage_MilkCan_StageIsNowSetForUnbelieve.wav
+    key: stage_next_milkcan
+  - duck: 0.51
+    file: Stage_StraightJIntro_WillNextBeSuitingUpInStra.wav
+    key: stage_next_straitjacket
+  - duck: 0.51
+    file: Stage_StraightJRule_HoldRightOrLeftFlipperBut.wav
+    key: stage_rule_straitjacket
+  - duck: 0.51
+    file: Houdini/Stage_StraightJHoudini_WatchIEscapeThisStaritjac.wav
+    key: stage_houdini_straitjacket
+  - duck: 0.51
+    file: Stage_BulletIntro_IsNowAtMainStagePreparing.wav
+    key: stage_next_bullet
+  - duck: 0.51
+    file: Stage_BulletRule_ShootForRightInnerLoopToL.wav
+    key: stage_rule_bullet
+  - duck: 0.51
+    file: Houdini/Stage_BulletHoudini_IWillNowCatchBulltWithMyT.wav
+    key: stage_houdini_bullet
+  - duck: 0.51
+    file: TMB_Ready_ShootFlashingLockToStartM.wav
+    key: trunk_mb_ready
+  - duck: 0.51
+    file: TMB_Ball1Locked_TrunkMultiballIsLocked.wav
+    key: trunk_ball_locked_1
+  - duck: 0.51
+    file: TMB_TrunkMBAwarded_TrunkMulitballLockIsAward.wav
+    key: trunk_lock_awarded
+  - duck: 0.51
+    file: TMB_TrunkMBStart_StartTrunkMultiball.wav
+    key: trunk_start_mb
+  - duck: 0.51
+    file: TMB_TrunkMBAwarded_TrunkMulitballLockIsAward.wav
+    key: TMB_TrunkMBAwarded_TrunkMulitballLockIsAward
+  - duck: 0.51
+    file: TMB_TrunkMBStart_StartTrunkMultiball.wav
+    key: TMB_TrunkMBStart_StartTrunkMultiball
+  - duck: 0.51
+    file: TMB_Ball1Locked_Ball1IsLocked.wav
+    key: trunk_ball_locked_1
+  - duck: 0.51
+    file: TMB_Ball1Locked_Ball2IsLocked.wav
+    key: trunk_ball_locked_2
+  - duck: 0.51
+    file: TMB_Jackpot.wav
+    key: trunk_jackpot
+  - duck: 0.51
+    file: TMB_Ready_GetReadyForTrunkMultiBall.wav
+    key: trunk_start_mb
+  - duck: 0.51
+    file: TMB_Ready_ShootFlashingLockToStartM.wav
+    key: trunk_shoot_to_start
+  - duck: 0.51
+    file: TMB_Ready_ShootRightInnerLoopToStar.wav
+    key: trunk_shoot_to_start
+  - duck: 0.51
+    file: TMB_Ready_ShootTrunkToStartMultibal.wav
+    key: trunk_shoot_to_start
+  - duck: 0.51
+    file: TMB_Ready_TrunkMulitball.wav
+    key: trunk_start_mb
+  - duck: 0.51
+    file: TMB_SJackpot.wav
+    key: trunk_super_jackpot
+  - duck: 0.51
+    file: TMB_TrunkMBAwarded_TrunkMulitballLockIsAward.wav
+    key: trunk_award_lock
+  - duck: 0.51
+    file: MilkCanX_Activated.wav
+    key: milkcan_advances
+  - duck: 0.51
+    file: MilkCanX_Extend_MilkcanMultiplierExtended.wav
+    key: milkcan_extend
+  - duck: 0.51
+    file: MilkCanX_At2x_MilkcanMulitplierNowAt2x.wav
+    key: milkcan_2x
+  - duck: 0.51
+    file: MilkCanX_At3x_MilkcanMulitplierNowAt3x.wav
+    key: milkcan_3x
+  - duck: 0.51
+    file: MilkCanX_At4x_MilkcanMulitplierNowAt4x.wav
+    key: milkcan_4x
+  - duck: 0.51
+    file: NowAt2x.wav
+    key: NowAt2x
+  - duck: 0.51
+    file: NowAt3x.wav
+    key: NowAt3x
+  - duck: 0.51
+    file: NowAt4x.wav
+    key: NowAt4x
+  - duck: 0.51
+    file: MilkCanX_TimerMax_MilcanCanMultiplierTimerA.wav
+    key: milkcan_timer_max
+  - duck: 0.51
+    file: London/JEHU_LondonFail_HeyLooksLikeHaveGivenUpEs.wav
+    key: escape_fail_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonFail_IGuessJailsAreBetterThanW.wav
+    key: escape_fail_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonFail_NotSoGreat.wav
+    key: escape_fail_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_AreWelcomeToTryToEscapeJa.wav
+    key: escape_open_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_EscapeJailNotUnderMyWatch.wav
+    key: escape_intro_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_IsWelcomeAtJail.wav
+    key: escape_open_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_JailEscapeIsOpen.wav
+    key: escape_open_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_JailEscapeIsReady.wav
+    key: escape_open_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_JailIsReadyForYou2.wav
+    key: escape_open_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_LondonJailsHaveSuccesfull.wav
+    key: escape_intro_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_NoOneCanEscapeLondonJailI.wav
+    key: escape_intro_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_SoCanSpellEscapeButCanAct.wav
+    key: escape_intro_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonIntro_WillNotBreakOutOfJail.wav
+    key: escape_intro_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonShot_ShootRightOrbit.wav
+    key: escape_shot_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonShot_ShootRightOrbit3.wav
+    key: escape_shot_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonShot_ShootRightOrbit5.wav
+    key: escape_shot_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonWrap_AbsolutelyBrilliantMostIm.wav
+    key: escape_success_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonWrap_AbsolutelyBrilliantThisIs.wav
+    key: escape_success_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonWrap_IDontBelieveIt.wav
+    key: escape_success_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonWrap_KnockMeDownWithFeather.wav
+    key: escape_success_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonWrap_WhatDevil.wav
+    key: escape_success_london
+    volume: 1
+  - duck: 0.51
+    file: London/JEHU_LondonWrap_WhatInBlazes.wav
+    key: escape_success_london
+    volume: 1
+  - duck: 0.51
+    file: JEHU_ParisIntro_MaybeCanEscapeFromAmerica.wav
+    key: escape_intro_paris
+  - duck: 0.51
+    file: JEHU_SydneyIntro_WasHereInSydneyThatBotany.wav
+    key: escape_intro_sydney
+  - duck: 0.51
+    file: JEHU_ParisWrap_FelicitationsCongratulati.wav
+    key: escape_success_paris
+  - duck: 0.51
+    file: JEHU_ParisWrap_Felicitations.wav
+    key: escape_success_paris
+  - duck: 0.51
+    file: JEHU_SydneyWrap_HeyGoodJobNotBadWayToMake.wav
+    key: escape_success_sydney
+  - duck: 0.51
+    file: JEHU_SydneyWrap_GetOnYaMateHopeThatMakesN.wav
+    key: escape_success_sydney
+  - duck: 0.51
+    file: JEHU_SydneyWrap_GreatJobMusBeGrinningLike.wav
+    key: escape_success_sydney
+  - duck: 0.51
+    file: JEHU_ParisShot_ShootRightInnerLoop.wav
+    key: escape_shot_paris
+  - duck: 0.51
+    file: JEHU_ParisShot_RightInnerLoop.wav
+    key: escape_shot_paris_short
+  - duck: 0.51
+    file: JEHU_SydneyShot_ShootKeyTarget.wav
+    key: escape_shot_sydney
+  - duck: 0.51
+    file: JEHU_SydneyShot_KeyTarget.wav
+    key: escape_shot_sydney_short
+  - duck: 0.51
+    file: Gypsy/SMB_EndBad_NonBelieversWillNeverFind.wav
+    key: seance_fail
+  - duck: 0.51
+    file: Gypsy/SMB_EndGood_OnlyTrueBelieversWillFind.wav
+    key: seance_fail
+  - duck: 0.51
+    file: Gypsy/SMB_EndGood_SeanceWasSuccess.wav
+    key: seance_success
+  - duck: 0.51
+    file: Gypsy/SMB_EndGood_SuccessOnlyTrueBelieversW.wav
+    key: seance_success
+  - duck: 0.51
+    file: Gypsy/SMB_EndGood_SuccessOnlyTrueBelieversW02.wav
+    key: seance_success
+  - duck: 0.51
+    file: Gypsy/SMB_EndGood_WeveMadeContactSeanceWasS.wav
+    key: seance_success
+  - duck: 0.51
+    file: Gypsy/SMB_End_MaybeNextTimeWillSucceed.wav
+    key: seance_fail
+  - duck: 0.51
+    file: Gypsy/SMB_End_SeanceHasNowComeToItsEnd.wav
+    key: seance_end
+  - duck: 0.51
+    file: Gypsy/SMB_End_ThisBringsSeanceToAnEnd.wav
+    key: seance_end
+  - duck: 0.51
+    file: Gypsy/SMB_End_ThisConcludesSeance.wav
+    key: seance_end
+  - duck: 0.51
+    file: Gypsy/SMB_Intro_SeanceMultiballHasStarted.wav
+    key: seance_intro
+  - duck: 0.51
+    file: Gypsy/SMB_Intro_WelcomeToSeanceAreReadyTo.wav
+    key: seance_intro
+  - duck: 0.51
+    file: Gypsy/SMB_Jackpot_ConnectionHasBeenMadeEarn.wav
+    key: seance_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_Jackpot_GotJackpot01.wav
+    key: seance_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_Jackpot_GotJackpot02.wav
+    key: seance_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_Jackpot_IFeelPresenceJackpot.wav
+    key: seance_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_Jackpot_IFeelYourLovedOneIsHereJa.wav
+    key: seance_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_Jackpot_TheresPresenceInRoomJackp.wav
+    key: seance_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_Jackpot_YourLovedOneIsHereJackpot.wav
+    key: seance_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_Ready_MayNowStartSceanceByShoot.wav
+    key: seance_ready
+  - duck: 0.51
+    file: Gypsy/SMB_Ready_ShootPlanchetteToStartSea.wav
+    key: seance_ready
+  - duck: 0.51
+    file: Gypsy/SMB_Ready_ToStartMultiballShootBegi.wav
+    key: seance_ready
+  - duck: 0.51
+    file: Gypsy/SMB_Rule_SpellSeance.wav
+    key: seance_rules
+  - duck: 0.51
+    file: Gypsy/SMB_SJackpot_GotSuperJackpot01.wav
+    key: seance_super_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_SJackpot_IFeelTheirPresenceSuperJa.wav
+    key: seance_super_jackpot
+  - duck: 0.51
+    file: Gypsy/SMB_SJackpot_SpiritIsHereSuperJackpot.wav
+    key: seance_super_jackpot
+  - duck: 0.51
+    file: JEHU_Rule_SpellEscapeToStartHurryup.wav
+    key: spell_escape
+  - duck: 0.51
+    file: SecretMission_Rule_ShootRamp.wav
+    key: shoot_ramp
+  - duck: 0.51
+    file: SecretMission_Rule_ShootKeyLane.wav
+    key: shoot_keylane
+  - duck: 0.51
+    file: SecretMission_Rule_ShootRightInnerLoop.wav
+    key: shoot_rightInnerLoop
+  - duck: 0.51
+    file: SecretMission_Rule_ShootScoop.wav
+    key: shoot_lowerVuk
+  - duck: 0.51
+    file: SecretMission_Rule_ShootStage.wav
+    key: shoot_stage
+  - duck: 0.51
+    file: BFTD_Intro_HereIsYourChanceToComeBac.wav
+    key: escape_death_intro
+  - duck: 0.51
+    file: BFTD_Rule_CompleteEscapeLettersToKe.wav
+    key: escape_death_rule
+  - duck: 0.51
+    file: BFTD_Rule_QuicklySpellEscapeToStayA.wav
+    key: escape_death_rule
+  - duck: 0.51
+    file: Gen_2x_2x.wav
+    key: Gen_2x_2x
+  - duck: 0.51
+    file: Gen_2x_3x.wav
+    key: Gen_2x_3x
+  - duck: 0.51
+    file: Gen_2x_4x.wav
+    key: Gen_2x_4x
+  - duck: 0.51
+    file: Gen_ExtraBall_combined.wav
+    key: Gen_ExtraBall_combined
+  - duck: 0.51
+    file: Gen_Match_NumberFromGreatBeyondIs.wav
+    key: Gen_Match_NumberFromGreatBeyondIs
+  - duck: 0.51
+    file: Gen_P1DoBetter_Magician1LetsSeeIfCanDoBe.wav
+    key: Gen_P1DoBetter_Magician1LetsSeeIfCanDoBe
+  - duck: 0.51
+    file: Gen_P1DoingGood_Magician1DidWellOnYourLas.wav
+    key: Gen_P1DoingGood_Magician1DidWellOnYourLas
+  - duck: 0.51
+    file: Gen_P1Up_NowLetsSeeHowMagician1Can.wav
+    key: Gen_P1Up_NowLetsSeeHowMagician1Can
+  - duck: 0.51
+    file: Gen_P2Up_NowLetsSeeHowMagician2Can.wav
+    key: Gen_P2Up_NowLetsSeeHowMagician2Can
+  - duck: 0.51
+    file: Gen_P3Add_ThatMakesThreeWeHaveOneSp.wav
+    key: Gen_P3Add_ThatMakesThreeWeHaveOneSp
+  - duck: 0.51
+    file: Gen_P3Up_NowLetsSeeHowMagician3Can.wav
+    key: Gen_P3Up_NowLetsSeeHowMagician3Can
+  - duck: 0.51
+    file: Gen_P4Add_WelcomeMagicianFourLetGam.wav
+    key: Gen_P4Add_WelcomeMagicianFourLetGam
+  - duck: 0.51
+    file: Gen_XtraBall_DontMoveKeepShooting.wav
+    key: Gen_XtraBall_DontMoveKeepShooting
+  - duck: 0.51
+    file: Gen_XtraBall_ExtraBall.wav
+    key: Gen_XtraBall_ExtraBall
+  - duck: 0.51
+    file: Gen_XtraBall_ExtraBallDontMove.wav
+    key: Gen_XtraBall_ExtraBallDontMove
+  - duck: 0.51
+    file: JEHU_Rule_SpellEscapeToStartAJailEs.wav
+    key: JEHU_Rule_SpellEscapeToStartAJailEs
+  - duck: 0.51
+    file: JEHU_Rule_SpellEscapeToStartJailEsc.wav
+    key: JEHU_Rule_SpellEscapeToStartJailEsc
+  - duck: 0.51
+    file: MilkCanX_Extend_MilkcanMultiplierWillLast.wav
+    key: MilkCanX_Extend_MilkcanMultiplierWillLast
+  - duck: 0.51
+    file: MilkCanX_RuleSpinner_ShootSpinnerToAddTimeToMi.wav
+    key: MilkCanX_RuleSpinner_ShootSpinnerToAddTimeToMi
+  - duck: 0.51
+    file: MilkCanX_RuleStandUps_ShooterLowerStand-upsToEn.wav
+    key: MilkCanX_RuleStandUps_ShooterLowerStand-upsToEn
+  - duck: 0.51
+    file: Movies_Intro_HasStarOnHollywoodWalkOfF.wav
+    key: Movies_Intro_HasStarOnHollywoodWalkOfF
+  - duck: 0.51
+    file: MSHU_EscapeLetter_EscapeLetterAdded.wav
+    key: MSHU_EscapeLetter_EscapeLetterAdded
+  - duck: 0.51
+    file: SecretMission_Ready_SecretMissionIsLit.wav
+    key: SecretMission_Ready_SecretMissionIsLit
+  - duck: 0.51
+    file: SecretMission_Rule_DontForgetAboutSecretMiss.wav
+    key: SecretMission_Rule_DontForgetAboutSecretMiss
+  - duck: 0.51
+    file: SecretMission_Rule_ShootComboToCompleteMissi.wav
+    key: SecretMission_Rule_ShootComboToCompleteMissi
+  - duck: 0.51
+    file: SecretMission_Rule_ShootScoopToStartSecretMi.wav
+    key: SecretMission_Rule_ShootScoopToStartSecretMi
+  - duck: 0.51
+    file: SecretMission_Rule_ShootStage02.wav
+    key: SecretMission_Rule_ShootStage02
+  - duck: 0.51
+    file: SMB_RuleNarr_ShootFlashingLight.wav
+    key: SMB_RuleNarr_ShootFlashingLight
+  - duck: 0.51
+    file: SP_HUJE_Rule_SpellEscapeToStartAJailEs.wav
+    key: SP_HUJE_Rule_SpellEscapeToStartAJailEs
+  - duck: 0.51
+    file: TMB_Ready_ShootBlinkingLaneToStartT.wav
+    key: TMB_Ready_ShootBlinkingLaneToStartT
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaA_A.wav
+    key: gypsy_a
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaB_B.wav
+    key: gypsy_b
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaC_C.wav
+    key: gypsy_c
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaD_D.wav
+    key: gypsy_d
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaE_E.wav
+    key: gypsy_e
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaF_F02.wav
+    key: gypsy_f
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaG_G.wav
+    key: gypsy_g
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaH_H.wav
+    key: gypsy_h
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaI_I.wav
+    key: gypsy_i
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaJ_J.wav
+    key: gypsy_j
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaK_K.wav
+    key: gypsy_k
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaL_L.wav
+    key: gypsy_l
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaM_M.wav
+    key: gypsy_m
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaN_N.wav
+    key: gypsy_n
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaO_O.wav
+    key: gypsy_o
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaP_P.wav
+    key: gypsy_p
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaQ_Q.wav
+    key: gypsy_q
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaR_R.wav
+    key: gypsy_r
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaS_S.wav
+    key: gypsy_s
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaT_T.wav
+    key: gypsy_t
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaU_U.wav
+    key: gypsy_u
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaV_V.wav
+    key: gypsy_v
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaW_W.wav
+    key: gypsy_w
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaX_X.wav
+    key: gypsy_x
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaY_Y.wav
+    key: gypsy_y
+  - duck: 0.51
+    file: Gypsy/Gen_GypsyAlphaZ_Z.wav
+    key: gypsy_z
+  - duck: 0.51
+    file: Gen_Jackpot_Jackpot.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_Jackpot_Jackpot2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_Jackpot_Jackpot3.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Amazing2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_AmazingJackpot.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Awesome2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Bahzinga2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Bazinga2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_BooYa2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Fantastic2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Hazzah2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_HolyBeep.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Incredible2.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Jackpot.wav
+    key: jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_Superjackpot.wav
+    key: super_jackpot
+  - duck: 0.51
+    file: Gen_JackpotNarr_ThatsWhatIAmTalkingAbout.wav
+    key: super_jackpot
+  - duck: 0.51
+    file: Gen_SuperJackpot_SuperJackpot.wav
+    key: super_jackpot
+  - duck: 0.51
+    file: Gen_SuperJackpot_SuperJackpot2.wav
+    key: super_jackpot
+  - duck: 0.51
+    file: MilkCanX_Rules_HelpEscapeByShootingMilkC.wav
+    key: stage_rule_milkcan
+  - duck: 0.51
+    file: MilkCanX_Rules_ShootMilkcanLoopToHelpEsc.wav
+    key: stage_rule_milkcan
+  - duck: 0.51
+    file: MilkCanX_Rules_ShootMilkcanToFreeEachSho.wav
+    key: stage_rule_milkcan
+  - duck: 0.51
+    file: MSHU_Intro_EnterMagicShopIfDare.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Intro_FlashingYellowArrowIsPoin.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Intro_GoodStuffAvailableAtMagic.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Intro_LookingForLittleMagicToda.wav
+    key: shop_intro2
+  - duck: 0.51
+    file: MSHU_Intro_ShouldGoVisitMatciShop.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Intro_WelcomeToMagicShop2.wav
+    key: shop_intro2
+  - duck: 0.51
+    file: MSHU_Open_MagicShopIsNowOpen2.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Return_BackToMagicShop.wav
+    key: shop_open_return
+  - duck: 0.51
+    file: MSHU_Return_DoorsAreNowOpenAtMagicSho.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Return_ForgetSomething.wav
+    key: shop_intro2
+  - duck: 0.51
+    file: MSHU_Return_GoVisitMagicShop.wav
+    key: shop_open
+  - duck: 0.51
+    file: MSHU_Return_ItsMagicShopAgain.wav
+    key: shop_open_return
+  - duck: 0.51
+    file: MSHU_Return_LetsGoBackToMagicShop.wav
+    key: shop_open_return
+  - duck: 0.51
+    file: MSHU_Return_MagicShopIsOpenAgain.wav
+    key: shop_open_return
+  - duck: 0.51
+    file: MSHU_Return_RabbitDiedBackToMagicShop.wav
+    key: shop_open_return
+  - duck: 0.51
+    file: MSHU_Return_TimeForNewWand.wav
+    key: TBD
+  - duck: 0.51
+    file: MSHU_Reveal_DialMeOut1.wav
+    key: shop_phone
+  - duck: 0.51
+    file: MSHU_Reveal_DialMeOut2.wav
+    key: shop_phone
+  - duck: 0.51
+    file: MSHU_Reveal_EveryoneLovesCowButLetsFi2.wav
+    key: shop_cow
+  - duck: 0.51
+    file: MSHU_Reveal_HoldBonusMultiplier.wav
+    key: shop_hold_bonus
+  - duck: 0.51
+    file: MSHU_Reveal_HowDidThatGetInThere1.wav
+    key: shop_bad_generic
+  - duck: 0.51
+    file: MSHU_Reveal_IncreaseBonusMulitplier.wav
+    key: shop_increase_multiplier
+  - duck: 0.51
+    file: MSHU_Reveal_LactoseGivesMeGas.wav
+    key: shop_cow
+  - duck: 0.51
+    file: MSHU_Reveal_LionmanHeRulesButWeNeedSo.wav
+    key: shop_lionman
+  - duck: 0.51
+    file: MSHU_Reveal_NoThatsSpooky.wav
+    key: shop_spooky
+  - duck: 0.51
+    file: MSHU_Reveal_NowThatsSpooky.wav
+    key: shop_spooky
+  - duck: 0.51
+    file: MSHU_Reveal_NuclearAnnilationGoodPinb.wav
+    key: shop_tna
+  - duck: 0.51
+    file: MSHU_Reveal_NuclearAnnilationLetsTryT.wav
+    key: shop_tna
+  - duck: 0.51
+    file: MSHU_Reveal_OopsWrongGame.wav
+    key: shop_bad_generic
+  - duck: 0.51
+    file: MSHU_Reveal_SpookyIsGoodButThatIsNotR.wav
+    key: shop_spooky
+  - duck: 0.51
+    file: MSHU_Reveal_TotalAnnilation.wav
+    key: shop_tna
+  - duck: 0.51
+    file: MSHU_Reveal_UghThatIsOneUglyAlienLets.wav
+    key: shop_alien
+  - duck: 0.51
+    file: MSHU_Reveal_WasntThereSomeMooseTrying.wav
+    key: shop_rabbit
+  - duck: 0.51
+    file: MSHU_Reveal_WhoGonnaCallNotThisGuy.wav
+    key: shop_marshmallow
+  - duck: 0.51
+    file: MSHU_Reveal_WhoPutsCellPhoneInHat.wav
+    key: shop_phone
+  - duck: 0.51
+    file: MSHU_Reveal_WhoWouldWantCellPhoneInPi.wav
+    key: shop_phone
+  - duck: 0.51
+    file: MSHU_Reveal_YupGoodPinballButThisIs.wav
+    key: shop_tna
+  - duck: 0.51
+    file: SecretMission_Complete_MissionComplete3.wav
+    key: mission_complete
+  - duck: 0.51
+    file: SecretMission_Ready_SecretMissionIsLit3.wav
+    key: mission_lit
+  - duck: 0.51
+    file: SecretMission_Rule_DontForgetAboutSecretMiss3.wav
+    key: mission_reminder
+  - duck: 0.51
+    file: SecretMission_Rule_HitEachShotInSequenceBefo.wav
+    key: mission_reminder
+  - duck: 0.51
+    file: SecretMission_Rule_HitEachShotInSequenceBefo2.wav
+    key: mission_reminder
+  - duck: 0.51
+    file: SecretMission_Rule_ShootComboToCompleteMissi.wav
+    key: mission_reminder
+  - duck: 0.51
+    file: SecretMission_Rule_ShootKeyLane3.wav
+    key: shoot_keyLane
+  - duck: 0.51
+    file: SecretMission_Rule_ShootRamp3.wav
+    key: shoot_ramp
+  - duck: 0.51
+    file: SecretMission_Rule_ShootRightInnerLoop3.wav
+    key: shoot_rightInnerLoop
+  - duck: 0.51
+    file: SecretMission_Rule_ShootScoop3.wav
+    key: shoot_scoop
+  - duck: 0.51
+    file: SecretMission_Rule_ShootScoopToStartFinalSec.wav
+    key: final_mission_alert
+  - duck: 0.51
+    file: SecretMission_Rule_ShootScoopToStartFinalSec2.wav
+    key: final_mission_alert
+  - duck: 0.51
+    file: SecretMission_Rule_ShootScoopToStartSecretMi3.wav
+    key: shoot_scoop_mission
+  - duck: 0.51
+    file: SecretMission_Rule_ShootStage3.wav
+    key: shoot_stage
+  - duck: 0.51
+    file: SecretMission_Rule_TimeToAttemptFinalSecretM.wav
+    key: final_mission_alert
+  - duck: 0.51
+    file: SJMB_Rule_AllMajorShotsAreLitForJac.wav
+    key: stage_rules_straitjacket
+  - duck: 0.51
+    file: SJMB_Rule_ChimpingPenaltyPointsLost.wav
+    key: chimping_lost_points
+  - duck: 0.51
+    file: SJMB_Rule_ChimpingPenaltyPointsLost2.wav
+    key: chimping_lost_points
+  - duck: 0.51
+    file: SJMB_Rule_ShootRedFlashingArrowsFor.wav
+    key: shoot_redArrows_for_jackpots
+  - duck: 0.51
+    file: SJMB_Warning_DontChimpFlippersUseOneAt.wav
+    key: chimping_warn_1
+  - duck: 0.51
+    file: SJMB_Warning_IfKeepChimpingWillLosePoi.wav
+    key: chimping_warn_1
+  - duck: 0.51
+    file: SJMB_Warning_RealPlayersUseOneFlipperA.wav
+    key: chimping_warn_1
+  - duck: 0.51
+    file: SMBullet_Intro_ComeOnAnnieOakley.wav
+    key: stage_bullet_timer_low
+  - duck: 0.51
+    file: SMBullet_Intro_IveHeardOfGoldFillingsBut.wav
+    key: stage_bullet_success
+  - duck: 0.51
+    file: SMBullet_Intro_ReadyToTakeShot.wav
+    key: stage_bullet_ready_to_fire
+  - duck: 0.51
+    file: SMBullet_Intro_WhoCameUpWithThisIdea.wav
+    key: stage_bullet_misc
+  - duck: 0.51
+    file: SMCards_Intro_CutToChase-NowForKingOfCa.wav
+    key: stage_next_cardking
+  - duck: 0.51
+    file: SMCards_Intro_KingOfCardsWillNowBeHoldi.wav
+    key: stage_next_cardking
+  - duck: 0.51
+    file: SMCards_Intro_NextUpWillShowWhyHeIsKnow.wav
+    key: stage_next_cardking
+  - duck: 0.51
+    file: SMCards_Intro_WillNextBeDemonstratingHi.wav
+    key: stage_next_cardking
+  - duck: 0.51
+    file: SMCards_Rules_PressFlipperButtonToTossC.wav
+    key: stage_rule_cardking
+  - duck: 0.51
+    file: SMCards_Rules_ShootOrangeHoopToLightExt.wav
+    key: stage_rule_cards_eb
+  - duck: 0.51
+    file: SMCards_Rules_ToTossCardsHoldDownFlippe.wav
+    key: stage_rule_cardking
+  - duck: 0.51
+    file: SMElephant_Intro_IHopeHePackedHisTrunk.wav
+    key: stage_elephant_misc
+  - duck: 0.51
+    file: SMHandcuffs_Intro_IfLikeHandcuffsWillCertai.wav
+    key: stage_next_handcuffs
+  - duck: 0.51
+    file: SMHandcuffs_Intro_NextOnMainStageHandcuffKi.wav
+    key: stage_next_handcuffs
+  - duck: 0.51
+    file: SMHandcuffs_Intro_NoDoubtSomeOfHaveExperien.wav
+    key: stage_next_handcuffs_misc
+  - duck: 0.51
+    file: SMHandcuffs_Rules_KeyToThisIsPreparation.wav
+    key: stage_next_handcuffs_misc
+  - duck: 0.51
+    file: SMHandcuffs_Rules_TheseMatchMyCufflinks.wav
+    key: stage_next_handcuffs_misc
+  - duck: 0.51
+    file: SMMorph_Rule_ShootInnerLoopThenEitherO.wav
+    key: stage_rule_metamorph
+  - duck: 0.51
+    file: SMWalls_Rule_ShootOneOfRightShotsThenO.wav
+    key: stage_rule_walls
+  - duck: 0.51
+    file: SMWalls_Rule_WillWalkThruWallsWhenShoo.wav
+    key: stage_rule_walls
+  - duck: 0.51
+    file: SMWater_Banter_DontBeAfraidToFailBeAfrai.wav
+    key: misc_failure
+  - duck: 0.51
+    file: SMWater_Banter_FailureIsNotFinal.wav
+    key: misc_failure
+  - duck: 0.51
+    file: SMWater_Banter_OnlyFailWhenStopTrying.wav
+    key: misc_failure
+  - duck: 0.51
+    file: SMWater_Rule_ToPerformChineseWaterTortModified2
+    key: stage_rule_water_torture
+  - duck: 0.51
+    file: SMWater_Rule_ToPerformChineseWaterTortModified1.wav
+    key: stage_rule_water_torture
+  - duck: 0.51
+    file: Stage_Rule_DontBeAfraidEnterStage.wav
+    key: stage_open_reminder
+  - duck: 0.51
+    file: Stage_Rule_DontForgetStageIsOpen.wav
+    key: stage_open_reminder
+  - duck: 0.51
+    file: Stage_Rule_KeepShootingCurtainToOpen.wav
+    key: stage_rule_to_open
+  - duck: 0.51
+    file: Stage_Rule_MagicShowBeginsWhenHitCur.wav
+    key: stage_rule_to_open
+  - duck: 0.51
+    file: Stage_Rule_ShootCurtainToOpenStage.wav
+    key: stage_rule_to_open
+  - duck: 0.51
+    file: Stage_Rule_ShootStageToToOpenIt.wav
+    key: stage_rule_to_open
+  - duck: 0.51
+    file: Stage_Rule_ToOpenStageShootKeyTarget.wav
+    key: stage_rule_to_open
+  - duck: 0.51
+    file: Stage_Rule_ToStartAnIllusionOpenStag.wav
+    key: stage_rule_to_open
+  - duck: 0.51
+    file: TMB_Rule_LockIsLitAgainGoForIt2.wav
+    key: lock_is_lit
+  - duck: 0.51
+    file: TMB_Rule_LockOneMoreForMultiball.wav
+    key: trunk_mb_ready
+  - duck: 0.51
+    file: TMB_Rule_ShootLeftOrbitRightOrbitR.wav
+    key: trunk_rules
+  - duck: 0.51
+    file: TMB_Rule_ShootStageAlleyToLightLoc.wav
+    key: trunk_rule_to_light_lock
+  - duck: 0.51
+    file: TMB_Rule_ToGetBallInTrunkShootRigh.wav
+    key: trunk_rule_to_lock
+  - duck: 0.51
+    file: TMB_Rule_TwoBallsAreNowLocked.wav
+    key: trunk_ball_locked_2
+  - duck: 0.51
+    file: BFTD_Fail_GuessDontKnowHowToSpellEs.wav
+    key: escape_death_fail
+  - duck: 0.51
+    file: BFTD_Fail_MaybeNetTimeWillBeAbleToE.wav
+    key: escape_death_fail
+  - duck: 0.51
+    file: BFTD_Fail_YourAttemptToEscapeDeathH.wav
+    key: escape_death_fail
+  - duck: 0.51
+    file: BFTD_Intro_EscapeDeathIsNowLit.wav
+    key: escape_death_lit
+  - duck: 0.51
+    file: BFTD_Intro_EscapeDeathReturnFromBeyo.wav
+    key: escape_death_and_beyond_lit
+  - duck: 0.51
+    file: BFTD_Intro_ReturnFromBeyondIsNowLit.wav
+    key: return_beyond_lit
+  - duck: 0.51
+    file: BFTD_Success_AvoidedIcyGripOfDeath.wav
+    key: escape_death_success
+  - duck: 0.51
+    file: BFTD_Success_CongratulationsHaveEscape.wav
+    key: escape_death_success
+  - duck: 0.51
+    file: BFTD_Success_OnlySelectFewCanEscapeDea.wav
+    key: escape_death_success
+  - duck: 0.51
+    file: BFTD_Success_OnlySelectFewCanEscapeDea2.wav
+    key: escape_death_success
+  - duck: 0.51
+    file: BFTD_Success_SalvationFromVeryClutches.wav
+    key: escape_death_success
+  - duck: 0.51
+    file: BFTD_Success_VeryToughEscapeWellDoneKe.wav
+    key: escape_death_success
+  - duck: 0.51
+    file: EOG_Narrarator_CouldBeNext3.wav
+    key: could_be_next
+  - duck: 0.51
+    file: EOG_Narrarator_HasEscapedBuilding.wav
+    key: game_over
+  - duck: 0.51
+    file: EOG_Narrarator_HasLeftBuilding.wav
+    key: game_over
+  - duck: 0.51
+    file: EOG_Narrarator_IsBestOfBunch.wav
+    key: best_magician
+  - duck: 0.51
+    file: EOG_Narrarator_IsWinner2.wav
+    key: best_magician
+  - duck: 0.51
+    file: EOG_Narrarator_Magician1a.wav
+    key: magician_1
+  - duck: 0.51
+    file: EOG_Narrarator_Magician2a.wav
+    key: magician_2
+  - duck: 0.51
+    file: EOG_Narrarator_Magician3a.wav
+    key: magician_3
+  - duck: 0.51
+    file: EOG_Narrarator_Magician4a.wav
+    key: magician_4
+  - duck: 0.51
+    file: EOG_Narrarator_ShouldBeEmbarassedByThatS.wav
+    key: worst_magician
+  - duck: 0.51
+    file: Gen_Chimping_IfKeepChimpingFlippersWil.wav
+    key: chimping_warn_2
+  - duck: 0.51
+    file: Gen_Chimping_LookLikeOneOfThoseMonkeys.wav
+    key: chimping_warn_1
+  - duck: 0.51
+    file: Gen_Chimping_RealPinballPlayersUseOneF.wav
+    key: chimping_warn_1
+  - duck: 0.51
+    file: Gen_ExtraBall_ExtraBall.wav
+    key: extra_ball
+  - duck: 0.51
+    file: Gen_ExtraBall_ExtraBallIsLit.wav
+    key: extra_ball_lit
+  - duck: 0.51
+    file: Gen_ExtraBall_HaveEarnedAnExtraBall.wav
+    key: extra_ball
+  - duck: 0.51
+    file: Gen_ExtraBall_KeepIncreasingBonusLightExtraBall.wav
+    key: bonus_light_extra_ball
+  - duck: 0.51
+    file: Gen_ExtraBall_NiceJobCollectingThatExtr.wav
+    key: extra_ball
+  - duck: 0.51
+    file: Gen_ExtraBall_ShootScoopAnExtraBall.wav
+    key: extra_ball_lit
+  - duck: 0.51
+    file: Gen_Kudos_ArePrettySharpPlayer.wav
+    key: general_good
+  - duck: 0.51
+    file: Gen_Kudos_GreatShot.wav
+    key: generic_good
+  - duck: 0.51
+    file: Gen_Kudos_LookAtSizeOfThatBonus.wav
+    key: big_bonus
+  - duck: 0.51
+    file: Gen_Kudos_MostImpressive.wav
+    key: generic_good
+  - duck: 0.51
+    file: Gen_Kudos_NiceBonus.wav
+    key: big_bonus
+  - duck: 0.51
+    file: Gen_Kudos_NiceBonus2.wav
+    key: big_bonus
+  - duck: 0.51
+    file: Gen_Kudos_VeryImpessive.wav
+    key: big_bonus
+  - duck: 0.51
+    file: Gen_Lights_EnterStageThroughStageAlley.wav
+    key: stage_open
+  - duck: 0.51
+    file: Gen_Lights_ShootBlueFlashingArrows.wav
+    key: shoot_blue
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingBlueLight.wav
+    key: shoot_bllue
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingBlueLights.wav
+    key: shoot_blue
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingGreenLight.wav
+    key: shoot_green_light
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingGreenLights.wav
+    key: shoot_green_lights
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingLightBlueLight.wav
+    key: shoot_light_blue
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingLightBlueLights.wav
+    key: shoot_light_blue
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingRedLight.wav
+    key: shoot_red_light
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingRedLights.wav
+    key: shoot_redArrows
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingTurquoiseLight.wav
+    key: shoot_turquoise
+  - duck: 0.51
+    file: Gen_Lights_ShootFlashingTurquoiseLights.wav
+    key: shoot_turquoise
+  - duck: 0.51
+    file: Gen_Lights_ShootOrangeFlashingLight.wav
+    key: shoot_orange
+  - duck: 0.51
+    file: Gen_Lights_ShootOrangeFlashingLights.wav
+    key: shoot_orange
+  - duck: 0.51
+    file: Gen_Lights_ShootPurpleFlashingArrows.wav
+    key: shoot_purple
+  - duck: 0.51
+    file: Gen_Lights_ShootRedFlashingArrows.wav
+    key: shoot_red
+  - duck: 0.51
+    file: Gen_Lights_ShootRedFlashingArrowsInMiddle.wav
+    key: shoot_red_middle
+  - duck: 0.51
+    file: Gen_Lights_ShootRedFlashingArrowsOnLeft.wav
+    key: shoot_red_left
+  - duck: 0.51
+    file: Gen_Lights_ShootRedFlashingArrowsOnRight.wav
+    key: shoot_red_right
+  - duck: 0.51
+    file: Gen_Lights_StartedThisViaStage.wav
+    key: double_stage
+  - duck: 0.51
+    file: Gen_Lights_ThisPerformanceWorthDoubl.wav
+    key: double_stage
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt2x.wav
+    key: bonus_multiplier_2
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt3x.wav
+    key: bonus_multiplier_3
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt4x.wav
+    key: bonus_multiplier_4
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt5x.wav
+    key: bonus_multiplier_5
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt6x.wav
+    key: bonus_multiplier_6
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt7x.wav
+    key: bonus_multiplier_7
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt8x.wav
+    key: bonus_multiplier_8
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt9x.wav
+    key: bonus_multiplier_9
+  - duck: 0.51
+    file: Gen_Mulitplier_BonusMulitplierNowAt10x.wav
+    key: bonus_multiplier_10
+  - duck: 0.51
+    file: Gen_Mulitplier_GoingForBigBonusISee1.wav
+    key: bonus_multiplier_general
+  - duck: 0.51
+    file: Gen_Mulitplier_GoingForBigBonusISee2.wav
+    key: bonus_multiplier_general
+  - duck: 0.51
+    file: Gen_Mulitplier_HoldBonusMultiplier.wav
+    key: shop_hold_bonus
+  - duck: 0.51
+    file: Gen_Mulitplier_ShootLockbumpersToIncreas.wav
+    key: bonus_multiplier_rule
+  - duck: 0.51
+    file: Gen_Mulitplier_ShootPopsToIncreaseBonusM.wav
+    key: bonus_multiplier_rule
+  - duck: 0.51
+    file: Gen_Multiball_ThreeBallsLockedNowTheyAr.wav
+    key: tmb_start
+  - duck: 0.51
+    file: Gen_NarrAlpha_D1.wav
+    key: houdini_letter_d
+  - duck: 0.51
+    file: Gen_NarrAlpha_D2.wav
+    key: houdini_letter_d
+  - duck: 0.51
+    file: Gen_NarrAlpha_H1.wav
+    key: houdini_letter_h
+  - duck: 0.51
+    file: Gen_NarrAlpha_H2.wav
+    key: houdini_letter_h
+  - duck: 0.51
+    file: Gen_NarrAlpha_I1.wav
+    key: houdini_letter_i
+  - duck: 0.51
+    file: Gen_NarrAlpha_I2.wav
+    key: houdini_letter_i
+  - duck: 0.51
+    file: Gen_NarrAlpha_N1.wav
+    key: houdini_letter_n
+  - duck: 0.51
+    file: Gen_NarrAlpha_N2.wav
+    key: houdini_letter_n
+  - duck: 0.51
+    file: Gen_NarrAlpha_O1.wav
+    key: houdini_letter_o
+  - duck: 0.51
+    file: Gen_NarrAlpha_O2.wav
+    key: houdini_letter_o
+  - duck: 0.51
+    file: Gen_NarrAlpha_U1.wav
+    key: houdini_letter_u
+  - duck: 0.51
+    file: Gen_NarrAlpha_U2.wav
+    key: houdini_letter_u
+  - duck: 0.51
+    file: Gen_Narrarator_IsInHouse.wav
+    key: power_up
+  - duck: 0.51
+    file: Gen_Narrarator_LadiesGentlemenShowIsAbou.wav
+    key: power_up
+  - duck: 0.51
+    file: Gen_Narrarator_LadiesGentlemenShowIsAbou.wav
+    key: LetTheShowBegin
+  - duck: 0.51
+    file: Gen_Narrarator_PleaseTakeYourSeats.wav
+    key: LetTheShowBegin
+  - duck: 0.51
+    file: Gen_Narrarator_SeemToBeSittingHereForMon.wav
+    key: shooter_lane_delay
+  - duck: 0.51
+    file: Gen_Narrarator_ShootOrGetOff.wav
+    key: shooter_lane_delay
+  - duck: 0.51
+    file: Gen_Narrarator_TimeForSomeMagic.wav
+    key: power_up
+  - duck: 0.51
+    file: Gen_Narrarator_TimeForSomeMagic.wav
+    key: shooter_lane_delay
+  - duck: 0.51
+    file: Gen_Narrarator_UseShooterToStart.wav
+    key: shooter_lane_delay
+  - duck: 0.51
+    file: Gen_Narrarator_WelcomeToApiGrand.wav
+    key: power_up
+  - duck: 0.51
+    file: Gen_Narrarator_WhatAreWaitingFor.wav
+    key: shooter_lane_delay
+  - duck: 0.51
+    file: Gen_NarrLetterRule_HaveEarnedAnotherLetter.wav
+    key: houdini_letter
+  - duck: 0.51
+    file: Gen_NarrLetterRule_HaveEarnedYourFirstLetter.wav
+    key: houdini_letter_first
+  - duck: 0.51
+    file: Gen_NarrLetterRule_SpellToBecomeMasterMagici.wav
+    key: houdini_letter
+  - duck: 0.51
+    file: Gen_Shots_ShootEscapeTargets.wav
+    key: shoot_escape_targets
+  - duck: 0.51
+    file: Gen_Shots_ShootLeftOrbit.wav
+    key: shoot_leftOrbit
+  - duck: 0.51
+    file: Gen_Shots_ShootMilkcanLoop.wav
+    key: shoot_milkcan
+  - duck: 0.51
+    file: Gen_Shots_ShootPopBumpers.wav
+    key: shoot_pops
+  - duck: 0.51
+    file: Gen_Shots_ShootRightOrbit.wav
+    key: shoot_rightOrbit
+  - duck: 0.51
+    file: Gen_Shots_ShootScoop.wav
+    key: shoot_scoop
+  - duck: 0.51
+    file: Gen_Shots_ShootSeanceTargets.wav
+    key: shoot_seance
+  - duck: 0.51
+    file: Gen_Shots_ShootSpinner.wav
+    key: shoot_spinner
+  - duck: 0.51
+    file: Gen_Shots_ShootStageAlley.wav
+    key: shoot_stageAlley
+  - duck: 0.51
+    file: Gen_Shots_ShotRightInnerLoop.wav
+    key: shoot_rightInnerLoop
+  - duck: 0.51
+    file: Gen_SkillMIss_ISeeHaveNoSkill1.wav
+    key: skill_bad
+  - duck: 0.51
+    file: Gen_SkillMIss_ISeeHaveNoSkill2.wav
+    key: skill_bad
+  - duck: 0.51
+    file: Gen_SkillMIss_KeepPracticingMaybeWillBeSkilled.wav
+    key: skill_bad
+  - duck: 0.51
+    file: Gen_SkillMIss_MaybeNextTime.wav
+    key: skill_bad
+  - duck: 0.51
+    file: Gen_SkillMIss_WellIsCalledSkillShot.wav
+    key: skill_bad
+  - duck: 0.51
+    file: Gen_SkillShot_ClearyHaveSomeMagicInYou.wav
+    key: skill_good
+  - duck: 0.51
+    file: Gen_SkillShot_NiceShot.wav
+    key: skill_good
+  - duck: 0.51
+    file: Gen_SkillShot_NiceShot2.wav
+    key: skill_good
+  - duck: 0.51
+    file: Gen_SkillShot_SkillfullyDone.wav
+    key: skill_good
+  - duck: 0.51
+    file: Gen_SkillShot_SoDoHaveSomeSkill.wav
+    key: skill_good
+  - duck: 0.51
+    file: Gen_SkillShot_SoDoHaveSomeSkill2.wav
+    key: skill_good
+  - duck: 0.51
+    file: JEHU_Rule_ShootAllFlashingHurryUpSh.wav
+    key: ultimate_escape_rules
+  - duck: 0.51
+    file: JEHU_Rule_ShootAllFlashingHurryUpSh2.wav
+    key: ultimate_escape_rules
+  - duck: 0.51
+    file: JEHU_Rule_ShootAllHurryUpShots.wav
+    key: ultimate_escape_rules
+  - duck: 0.51
+    file: JEHU_Rule_ShootAllHurryUpShots2.wav
+    key: ultimate_escape_rules
+  - duck: 0.51
+    file: JEHU_Rule_ShootJailToStartUltimateJ.wav
+    key: start_ultimate_escape
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_A.wav
+    key: escape_letter_new_york_a
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_A2.wav
+    key: escape_letter_new_york_a
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_C.wav
+    key: escape_letter_new_york_c
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_C2.wav
+    key: escape_letter_new_york_c
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_E.wav
+    key: escape_letter_new_york_e
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_E2.wav
+    key: escape_letter_new_york_e
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_E3.wav
+    key: escape_letter_new_york_e
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_E4.wav
+    key: escape_letter_new_york_e
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_P.wav
+    key: escape_letter_new_york_p
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_P2.wav
+    key: escape_letter_new_york_p
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_P3.wav
+    key: escape_letter_new_york_p
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_S.wav
+    key: escape_letter_new_york_s
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_S2.wav
+    key: escape_letter_new_york_s
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_LetterNY_S3.wav
+    key: escape_letter_new_york_s
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_BarsChainsCantHoldHim.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_BeatShillelagh.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_Escaped4LeafClover.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_GreatIDontThinkHeIsSoGrea.wav
+    key: escape_fail_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_HesOut.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_HowDoesHeDoIt2.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_IDontBelieveIt.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_IsGoneNeedWhiskey.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_LetsSeeThatHeadlineCantEs.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYFail_WhereDevil.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_BreakOutShellalie5.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_BubbleGum.wav
+    key: tilt
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_CanAttemptToEscapeJailWhe2.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_CantEscape.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_CantEscape2.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_CantEscape6.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_IfThatThinksHeIsGoingToBr.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_IsWelcomeAtJail.wav
+    key: escape_open_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_JailEscapeIsOpen.wav
+    key: escape_open_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_JailEscapeIsReady.wav
+    key: escape_open_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_JailIsReadyForYou.wav
+    key: escape_open_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_NoWayThatClownBreaksOutOf.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_ThisIsNewYorkWeTakeCrimeS.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYIntro_WillNeverBreakOutOfJail.wav
+    key: escape_intro_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYShot_ShootRamp.wav
+    key: escape_shot_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYShot_ShootRamp3.wav
+    key: escape_shot_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: NewYork/JEHU_NYWrap_VeryNice.wav
+    key: escape_success_new_york
+    volume: 1.2
+  - duck: 0.51
+    file: Narrator2/Film1_Intro_InMasterMysteryCharacterM2.wav
+    key: master_intro
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film1_Rule_ToStopQShootLeftOrbitThen2.wav
+    key: master_rules
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film2_Intro_InManFromBeyondPlaysManFr.wav
+    key: beyond_intro
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film2_Rule_ShootStageRepeatedlyToFre.wav
+    key: beyond_rules
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film3_Intro_InTerrorIsalandCharacterU.wav
+    key: terror_intro
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film3_Intro_InTerrorIslandCharacterCo.wav
+    key: terror_intro
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film3_Rule_HelpRescueWomanRecoverTre.wav
+    key: terror_rules
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film3_Rule_ShootScoopThenRampTwiceTo2.wav
+    key: terror_rules
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film4_Intro_PlaysHaldaneSecretService.wav
+    key: haldane_intro
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film4_Rule_HelpHimEscapeWaterWheelBy.wav
+    key: haldane_rules
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film5_Intro_InBestFilmHePlaysAnAccuse.wav
+    key: grim_intro
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film5_Rule_HelpRescueWomanByShootingOrbitsRamps.wav
+    key: grim_rules
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Film5_Rule_HelpRescueWomanByShootingOrbitsThenRamps.wav
+    key: grim_rules
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Movies_Intro_HoudinInGrimGame.wav
+    key: grim_next
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Movies_Intro_InHaldaneOfSecretService2.wav
+    key: haldane_next
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Movies_Intro_InManFromBeyond3.wav
+    key: beyond_next
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Movies_Intro_InMasterMystery2.wav
+    key: master_next
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Movies_Intro_InTerrorIsland3.wav
+    key: terror_next
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Movies_Intro_NowShowingAtApiTheatre7.wav
+    key: now_showing
+    volume: 1
+  - duck: 0.51
+    file: Houdini/Gen_HiScore_WellDoneOldBoy.wav
+    key: houdini_high_score
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_AnOldTrickWellDoneIsFarBe.wav
+    key: quote2
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_GreatestEscapeIEverMadeWa.wav
+    key: quote1
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_KeepUpYourEnthusiasmThere.wav
+    key: quote3
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_LookAtThisLifeallMysteryM2.wav
+    key: quote5
+    volume: 0.5
+  - file: Gen_Quotes_NeverTellAudienceHowGoodT
+    key: quote8
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_MagicianIsOnlyAnActoranAc.wav
+    key: quote4
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_MagicIsSoleScienceNotAcce2.wav
+    key: quote6
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_MyBrainIsKeyToMySuccess2.wav
+    key: quote7
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_NoPrisonCanHoldMeNoHandOr.wav
+    key: quote9
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_SomeSayIDoThisWayOthersSa.wav
+    key: quote10
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/Gen_Quotes_WhatEyeSeesEarHearsMindBe.wav
+    key: quote11
+    volume: 0.5
+  - duck: 0.51
+    file: Houdini/SMMilkcan_Houdini_IWillNowBeLocked.wav
+    key: stage_houdini_milkcan
+  - duck: 0.51
+    file: Houdini/SMCards_Houdini_IWillNowDemonstratescalin.wav
+    key: stage_houdini_cardking
+  - duck: 0.51
+    file: Houdini/SMCards_Houdini_NoJokersAroundHere.wav
+    key: stage_houdini_cardking_misc
+  - duck: 0.51
+    file: Houdini/SMCards_Houdini_TimingIsEverything.wav
+    key: stage_houdini_cardking_misc
+  - duck: 0.51
+    file: Houdini/SMCards_Houdini_WatchITossThesePlayingCar.wav
+    key: stage_houdini_cardking
+  - duck: 0.5
+    file: Houdini/SMHandcuffs_Houdini_CanSeeIAmHeavilyLockedCha.wav
+    key: stage_houdini_handcuff
+  - duck: 0.51
+    file: Houdini/SMHandcuffs_Houdini_KeyToThisIsPreparation.wav
+    key: stage_houdini_handcuff_misc
+  - duck: 0.51
+    file: Houdini/SMHandcuffs_Houdini_TheseMatchMyCufflinks.wav
+    key: stage_houdini_handcuff_misc
+  - duck: 0.51
+    file: Houdini/SMMorph_Houdini_BessCertainlyCanHandleMyS.wav
+    key: stage_houdini_end_success
+  - duck: 0.51
+    file: Houdini/SMMorph_Houdini_IWillGoIntoTrunkLockedUpM.wav
+    key: stage_houdini_metamorph
+  - duck: 0.51
+    file: Houdini/SMWalls_Houdini_IWillNowWalkThroughThisBr.wav
+    key: stage_houdini_walls
+  - duck: 0.51
+    file: Houdini/SMWalls_Houdini_MereBricksMortarAreNoMatc.wav
+    key: stage_houdini_walls
+  - duck: 0.51
+    file: Houdini/SMWalls_Houdini_NotEvenSolidWallsCanHoldG.wav
+    key: stage_houdini_walls
+  - duck: 0.51
+    file: Houdini/SMWater_Houdini_BoyThatsCold.wav
+    key: stage_houdini_milkcan_misc
+  - duck: 0.51
+    file: Houdini/SMWater_Houdini_IWillBeLoweredIntoThisWat.wav
+    key: stage_houdini_water_torture
+  - duck: 0.51
+    file: Houdini/SMWater_Houdini_IWillNowRiskDeathIAmSubme.wav
+    key: stage_houdini_water_torture
+  - duck: 0.51
+    file: Crowds/Crowd_Cheers_YayWithLines1.wav
+    key: audience_cheers_short
+  - duck: 0.51
+    file: Crowds/Crowd_Cheers_YayWithLines2.wav
+    key: audience_cheers
+  - duck: 0.51
+    file: Crowds/Crowd_Cheers_YayWithLines2.wav
+    key: audience_cheers_movie
+  - duck: 0.51
+    file: Crowds/Crowd_Cheers_YayWithLines3.wav
+    key: audience_cheers_long
+  - duck: 0.51
+    file: Crowds/Crowd_Boo_BoosWithLines3.wav
+    key: audience_boos
+  - duck: 0.51
+    file: Crowds/Crowd_Boo_BoosWithLines4.wav
+    key: audience_boos
+  - duck: 0.51
+    file: Crowds/Crowd_Boo_Boo4.wav
+    key: audience_boos_movie
+  - duck: 0.51
+    file: crowds/Crowd_Cheers_Yay1.wav
+    key: audience_cheers_short
+    volume: 1
+  - duck: 0.51
+    file: crowds/Crowd_Cheers_Yay3.wav
+    key: audience_cheers_long
+    volume: 1
+  - duck: 0.51
+    file: crowds/Crowd_Cheers_Yay6.wav
+    key: audience_cheers
+    volume: 1
+  - duck: 0.51
+    file: crowds/Crowd_Cheers_Yay7.wav
+    key: audience_cheers
+    volume: 1
+  - duck: 0.51
+    file: crowds/Crowd_Boo_Boo5.wav <= more boos
+    key: audience_boos
+    volume: 1
+  - duck: 0.51
+    file: crowds/Crowd_Boo_Boo8.wav
+    key: audience_boos
+    volume: 1
+  - duck: 0.51
+    file: crowds/Crowd_Boo_Boo10.wav
+    key: audience_boos
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_A.wav
+    key: escape_letter_paris_a
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_A2.wav
+    key: escape_letter_paris_a
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_C.wav
+    key: escape_letter_paris_c
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_C2.wav
+    key: escape_letter_paris_c
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_E.wav
+    key: escape_letter_paris_e
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_E2.wav
+    key: escape_letter_paris_e
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_P.wav
+    key: escape_letter_paris_p
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_P2.wav
+    key: escape_letter_paris_p
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_S.wav
+    key: escape_letter_paris_s
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_LetterParis_S2.wav
+    key: escape_letter_paris_s
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisFail_ISaidParisJailsCanNotBeEs.wav
+    key: escape_fail_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisFail_MaybeLaterWeCanBreakBread.wav
+    key: escape_fail_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_FeelFreeToEnterJail.wav
+    key: escape_open_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_IdeaOfBreakingOutOfJail.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_IsWelcomeAtJail.wav
+    key: escape_open_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_JailEscapeIsOpen.wav
+    key: escape_open_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_JailEscapeIsReady.wav
+    key: escape_open_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_JailIsReadyForYou.wav
+    key: escape_open_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_MaybeCanEscapeFromAmerica.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_MaybeCanEscapeFromAmerica2.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_ThisCrazyAmerican.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_WeShallCheckOnInAnHourSee.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_WhoDoesThinkHeIs.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_WillNeverBreakOutOfJail.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisIntro_WillNotBreakOutOfJail.wav
+    key: escape_intro_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisShot_ShootRightInnerLoop.wav
+    key: escape_shot_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisShot_ShootRightInnerLoop2.wav
+    key: escape_shot_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisWrap_AbsolutelyBrilliant2.wav
+    key: escape_success_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisWrap_BarsChainsCannotHoldHim.wav
+    key: escape_success_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisWrap_EscapesAgain.wav
+    key: escape_success_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisWrap_FelicitationsCongratulati.wav
+    key: escape_success_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisWrap_HowDoesHeDoIt.wav
+    key: escape_success_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisWrap_SacreBleu.wav
+    key: escape_success_paris
+    volume: 1
+  - duck: 0.51
+    file: Paris/JEHU_ParisWrap_ThisGuyIsRealDeal.wav
+    key: escape_success_paris
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_AttrNoCredit_GotToPayToPlay.wav
+    key: no_credits
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_AttrNoCredit_NoCreditNoMagic2.wav
+    key: no_credits
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_AttrNoCredit_NoPinballForYou.wav
+    key: no_credits
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_AttrNoCredit_PinballAintFreeOrEasy.wav
+    key: no_credits
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_AttrNoCredit_TryPuttingSomeMoneyIn.wav
+    key: no_credits
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_HiScoreGypsy_CongratulationsHaveHighSc.wav
+    key: high_score
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_HiScoreGypsy_HaveEarnedRightToEnterYou2.wav
+    key: high_score
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/Gen_HiScoreGypsy_IsImpressedByYourSkill2.wav
+    key: high_score
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_andToDustShallReturn2.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_BackToPushingUpDaisies.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_MaybeInYourNextLifeWillHa.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_ReturningFromBeyondAppear.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_ReturningFromBeyondIsBeyo.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_SorryButLackSkillToReturn2.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_TakesSkillToReturnFromBey2.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_YourAttemptToReturnFromBe.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Failure_YourAttemptToReturnNotGood.wav
+    key: return_from_beyond_fail
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Rule_CongratulationsOnYourRetu.wav
+    key: return_from_beyond_success
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Rule_HaveReturnedFromBeyondCan.wav
+    key: return_from_beyond_success
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Rule_HaveReturnedFromBeyondTru.wav
+    key: return_from_beyond_success
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Rule_HaveSuccessfullyReturnedF.wav
+    key: return_from_beyond_success
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Rule_ReturnFromBeyondIsNowLit2.wav
+    key: return_from_beyond_lit
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Rule_WouldBeProudHaveRetunedFr.wav
+    key: return_from_beyond_success
+    volume: 1
+  - duck: 0.51
+    file: Gypsy/RFB_Rule_YourReturnFromBeyondWasSu.wav
+    key: return_from_beyond_success
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_CongratulationAreGrandChaInitials.wav
+    key: grand_champion
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootFlashingBlueArrows.wav
+    key: film_shoot_blueArrows
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootInnerLoop2.wav
+    key: film_shoot_rightInnerLoop
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootKeyLane.wav
+    key: film_shoot_keylane
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootLeftObit.wav
+    key: film_shoot_leftOribt
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootMilkcan4.wav
+    key: film_shoot_milkcan
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootOrbits.wav
+    key: film_shoot_orbits
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootPops.wav
+    key: film_shoot_pops
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootRamp.wav
+    key: film_shoot_ramp
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootRightOrbit.wav
+    key: film_shoot_rightOrbit
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootScoop.wav
+    key: film_shoot_scoop
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootStage.wav
+    key: film_shoot_stage
+    volume: 1
+  - duck: 0.51
+    file: Narrator2/Gen_FemNarr_ShootStageAlley.wav
+    key: film_shoot_stageAlley
+    volume: 1
