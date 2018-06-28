@@ -16,7 +16,7 @@ def yaml_loader(filepath):
 
 def yaml_dump(data):
     #WRITES DATA BACK TO FILE
-    with open("exported_test.yml", "w") as file_desc:
+    with open("exported_test.yaml", "w") as file_desc:
         yaml.dump(data, file_desc, default_flow_style= False)
        
 
@@ -181,7 +181,15 @@ class MainWindow(wx.Frame):
 
     def editBttnFunc(self, file):
         print "editting file", self.input_string
-        yaml_dump(self.input_string)
+        #open a new window to edit an entry
+        self.Disable()
+        editWindow = EditSubWindow(self)
+        editWindow.Show()
+        
+        #they may cancel the edit half-way
+
+        #dump new file to disk if edit made
+        #yaml_dump(self.input_string)
 
     def dletBttnFunc(self, file):
         print "deleting file",file
@@ -206,10 +214,60 @@ class MainWindow(wx.Frame):
             self.dletBttnFunc,(self.finalFileList[self.choicebox.GetCurrentSelection()])  
 
 
+class EditSubWindow (wx.Frame):
+    def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, 
+                 style = ~wx.RESIZE_BORDER, name = ""):
+        super(EditSubWindow, self).__init__(parent, title = "second window", pos = (250,250), size = (480,160))
+        self.instance = wx.SingleInstanceChecker()
+        self.SetFocus()
+        print parent.input_string.keys()
+        self.prevObj = parent
+
+        #print "Address of parnet : ", id(parent.input_string)
+        print "Address of this   : ", id(prevObj.input_stirng)
+        
+        self.finalDict = parent.input_string
+        self.finalKey = None
+        self.finalFile = None
+        self.finalVol = None
+        self.finalDuck = None
+        self.finalUnduck = None
+
+        self.refreshEntries();
+        self.displaySelctionInfo();
+
+        def __destroy(_):
+            print "destroying edit menu"
+            parent.Enable()
+
+        self.Bind(wx.EVT_WINDOW_DESTROY, __destroy)   
+        self.Bind(wx.EVT_LEFT_DOWN, self.mouseClickCoordinates)
+
+    def mouseClickCoordinates(self, event):
+        print "Mouse Cooridnate: ", event.x, event.y
+            
+    def refreshEntries(self):
+        print "The Key ebing edited is :", parent
+        
+    def displaySelctionInfo(self):
+        keyName_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (30,10), (400,25))
+        fileName_SBOX = wx.StaticBox(self, wx.ID_ANY, "File: ", (30,35), (400,25))
+        volume_SBOX = wx.StaticBox(self, wx.ID_ANY, "Volume: ", (30,60), (80,25))
+        duck_SBOX= wx.StaticBox(self, wx.ID_ANY, "Duck: ", (30,85), (80,25))
+        unduck_SBOX = wx.StaticBox(self, wx.ID_ANY, "Unduck Offset: ", (120,85), (100,25))
+
+
+        #keyEntry = wx.TextCtrl(self, wx.ID_ANY, "", )
+
+
+
+
+    #def __del__(self):
+     #   print self.id, 'died'
+
 def main():
     
     #uncomment below to run legit
-
     #test out reading YAML
 
     global frame
