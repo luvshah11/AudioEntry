@@ -26,14 +26,16 @@ Audio:
     key: shooter_sound
     volume: 1.1
   Fanfare:
-  - duck: 213.0
-    file: SDFSDF
-    key: szdfsad
-    unduck_duration_offset: 1231.0
-    volume: 123
-  - file: asdasd
-    key: asda
-    volume: 123
+  - duck: 1234.0
+    file: asdf
+    key: adsf
+    unduck_duration_offset: 1243.0
+    volume: 124
+  - duck: 0.51
+    file: Gen_ChestPoints.wav
+    key: Gen_ChestPoints
+    unduck_duration_offset: -.5
+    volume: 1
   Music:
   - file: match_sequence.wav
     key: match_sequence

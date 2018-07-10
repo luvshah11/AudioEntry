@@ -21,8 +21,7 @@ def yaml_dump(data):
        
 
 class MainWindow(wx.Frame):
-
-  
+      
     def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, 
                  style = ~wx.RESIZE_BORDER, name = ""):
         super(MainWindow, self).__init__( parent, id, title, pos, size, style, name)
@@ -30,13 +29,13 @@ class MainWindow(wx.Frame):
         #self.SetScrollbar(self)
         #members
         self.holding_list = []
+        self.channelList = []
         self.finalKeyList = []
         self.finalFileList= []
         self.input_structure = {}
         #title
         #StaticText(parent, id=ID_ANY, label="", pos=DefaultPosition, size=DefaultSize, style=0, name=StaticTextNameStr)
         text = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t\tSound(s) Menu", (1,1), (350,35))
-
         #load the YAML to Mem and into list of strings
         file_path = "test.yml"
         
@@ -45,10 +44,7 @@ class MainWindow(wx.Frame):
         #value = value_for_key(input_structure, in_keys)
 
         print self.input_structure
-        #getKeys = input_structure.keys("Audio") only pulls 'Audio
-
-
-
+        #getKeys = input_structure.keys("Audio") only pulls 'Audio        
         #print len(input_structure)                             prints 1 key
         #print len(input_structure["Audio"])                    prints 5 keys
         #print len(input_structure["Audio"]["Dictionaries"])    prints 2 keys
@@ -58,7 +54,7 @@ class MainWindow(wx.Frame):
        #here, I am triyng to extract all values that are under the "file" key in the YAML
 
         print "\n",self.input_structure["Audio"]["Music"]
-        holding_list = []
+        self.holding_list = []
         Dictionaries_keys = {}
         Audio_keys = {}
         
@@ -70,66 +66,9 @@ class MainWindow(wx.Frame):
         print "\n\n Audio list: ", Audio_keys
 
         print "\nAudio keys only: ", Audio_keys.keys() #gets all keys 'Fanfare', 'Voice', 'Music', 'Effects', 'Dictionaries'
-
-        print "\nStoring Values of Audio_keys in list"
-        key_list = []   #stores only key values in the dictionary,5 total 
-        key_list = Audio_keys.keys()
-        print key_list
-        
-        print"iterating thorugh dictionary to print keys and values"
-
-        peakKeyStrLen = 0
-        peakFileStrLen = 0
-        x = 0
-        z = 0
-        isFiredOff = False
-        while x < len(key_list):
-            print "\nKey at index ",x,"is", key_list[x]
-            print "\n", Audio_keys[key_list[x]]
-            print len(Audio_keys[key_list[x]])
-            if len(Audio_keys[key_list[x]]) > 0: #if a sub dictionary exists at key in 'key_list[x]' index, loop a nested loop and print keys only
-                #grab the keys in sub dictionary
-                sub_dict = Audio_keys[key_list[x]] #sub_dict is actually a list, but it's "values" are ALL INDIVUDUAL DICTIONARIES
-                print sub_dict
-                y = 0
-                while y < len(sub_dict):
-                    if key_list[x] == "Dictionaries":
-                        if not isFiredOff:
-                            isFiredOff = True
-                            terror_list = sub_dict["now_showing_terror"]
-                            letter_list = sub_dict["houdini_letter"]
-                            combo_list = terror_list + letter_list
-                            z = 0
-                            while z < len(combo_list):
-                                temp_dict = combo_list[z]
-                                string_line = temp_dict["key"]
-                                self.finalKeyList.append(string_line)
-                                holding_list.append(string_line)
-                                z += 1
-                    else:
-                        temp_dict = {}
-                        temp_dict = sub_dict[y]
-                        #print "Element ",y," is :",temp_dict["key"], "\n\tfile: ", temp_dict["file"], "\n\tvolume: ", temp_dict["volume"], "\n\tDuck: ", temp_dict["duck"], "\n\tunduck_duration_offset: ", temp_dict["unduck_duration_offset"]
-                       
-                        print temp_dict["key"] , temp_dict["file"]
-                        if len(temp_dict["key"]) > peakKeyStrLen:
-                            peakKeyStrLen = len(temp_dict["key"])
-                        if len(temp_dict["file"]) > peakFileStrLen:
-                            peakFileStrLen = len(temp_dict["file"])
-
-                        string_line = "{:70s} {:<80s}".format(temp_dict["key"], temp_dict["file"])
-                        self.finalFileList.append(temp_dict["file"])
-                        self.finalKeyList.append(temp_dict["key"])
-                        self.holding_list.append(string_line) 
-                    y += 1 
-                  
-            x += 1
-
-
-   
-       
      
         #default constructions
+
         self.makeAudioPanel(self.holding_list)
         self.makeToolBar()
         self.makeButtons()
@@ -139,31 +78,63 @@ class MainWindow(wx.Frame):
         #create a menu bar you typcally see at the top
         menuBar = wx.MenuBar()
 
-        #first menu item is File
+        #Menus
         fileButton = wx.Menu()
+        createButton = wx.Menu()
 
-        #first item APPENDED the File tab is exit (it exits the program when clicked)
-        exitItem = fileButton.Append(wx.ID_EXIT, 'Exit','Status message...')
-        
-        #append the File tab to the menu bar
+        #menu items for file
+        fileButton.Append(wx.ID_SAVE, 'Save', 'Saving structure...')
+        fileButton.Append(wx.ID_EXIT, 'Exit','Exiting...')
+        crtAudEnt = createButton.Append(wx.ID_ANY, 'Create Audio Entry')
+        crtDict = createButton.Append(wx.ID_ANY, 'Create Dictionary')
+
+        #menu items for Create
+
+        #append menus to menu bar
         menuBar.Append(fileButton, 'File')
+        menuBar.Append(createButton, 'Create')
 
         #call menu bar to show up
         self.SetMenuBar(menuBar)
 
-        self.Bind(wx.EVT_MENU, self.onExit, exitItem)
+        self.Bind(wx.EVT_MENU, self.onExit, id = wx.ID_EXIT)
+        self.Bind(wx.EVT_MENU, self.onSave, id = wx.ID_SAVE)
+        self.Bind(wx.EVT_MENU, self.onCreatAudioEntry, crtAudEnt)
+        self.Bind(wx.EVT_MENU, self.onCreatDictionary, crtDict)
 
         #exit script for tool bar's 'File' tab
+
+    def onCreatAudioEntry(self, event):
+        print "creating audio entry"
+        self.Disable
+        caeWindow = CreateAudioEntryWindow(self)
+        caeWindow.Show()
+        
+    def onCreatDictionary(self, event):
+        dictWindow = CreateDictionaryWindow(self)
+        dictWindow.Show()
+        print "creating dictionary"
+
     def onExit(self,event):
         self.Close()
 
+    def onSave(self, event):
+        print "saving"
+        yaml_dump(self.input_structure)
+
     def makeAudioPanel(self, in_string):
         print "firing off audiopanel"
-        self.choicebox = wx.Choice(self,1, (25,50), (800,25),in_string)        
-        self.Bind(wx.EVT_CHOICE, self.audioPanelScript, self.choicebox)
-        #audioMenuListBox.AppendAndEnsureVisible('hello')
+        testing = ["testing" , "1" , "2" , "3"]
+        choicebox_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (440,36), (390,45))
+        channel_SBOX = wx.StaticBox(self, wx.ID_ANY, "Channel: ", (20,36), (390,45))
+        self.choicebox = wx.Choice(self,1,(445,50), (380,25))        
+        self.channelbox = wx.Choice(self,1, (25,50), (380,25), testing)
+        self.Bind(wx.EVT_CHOICE, self.choicePanelScript, self.choicebox)
+        
  
-    def audioPanelScript(self,event):
+    def choicePanelScript(self,event):
+        print self.choicebox.GetCurrentSelection()
+        print self.holding_list
         print "\nYou selected: ",self.holding_list[self.choicebox.GetCurrentSelection()]
         
 
@@ -177,9 +148,10 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.buttonEventHandler, playButton)
     
     def refresh(self):
-        holding_list= []
+        self.holding_list= []
         del self.finalKeyList 
         self.finalKeyList = []
+        self.finalFileList = []
         Audio_keys = self.input_structure["Audio"]
         key_list = Audio_keys.keys()
         peakKeyStrLen = 0
@@ -207,8 +179,8 @@ class MainWindow(wx.Frame):
                             while z < len(combo_list):
                                 temp_dict = combo_list[z]
                                 string_line = temp_dict["key"]
-                                self.finalKeyList.append(string_line)
-                                holding_list.append(string_line)
+                                #self.finalKeyList.append(string_line)
+                                #holding_list.append(string_line)
                                 z += 1
                     else:
                         temp_dict = sub_dict[y]
@@ -220,15 +192,14 @@ class MainWindow(wx.Frame):
                         if len(temp_dict["file"]) > peakFileStrLen:
                             peakFileStrLen = len(temp_dict["file"])
 
-                        string_line = "{:70s} {:<80s}".format(temp_dict["key"], temp_dict["file"])
+                        string_line = "{:20s} {:<50s}".format(temp_dict["key"], temp_dict["file"])
                         self.finalFileList.append(temp_dict["file"])
                         self.finalKeyList.append(temp_dict["key"])
-                        holding_list.append(string_line) 
-                    y += 1 
-                  
+                        self.holding_list.append(string_line) 
+                    y += 1                   
             x += 1
         self.choicebox.Destroy()
-        self.choicebox =  wx.Choice(self,1, (25,50), (800,25), holding_list) 
+        self.choicebox =  wx.Choice(self,1, (445,50), (380,25), self.holding_list) 
     def playbttnFunc(self, file):
         print "playing file", file
 
@@ -262,8 +233,7 @@ class MainWindow(wx.Frame):
                    y = 0
                    sub_list = AudioKeys[keyList[x]]    #grabs a dict of list, ie it becomes fanfare, or effects  ect
                    while y < len(sub_list):
-                       if keyList[x] == "Dictionaries":
-                  
+                       if keyList[x] == "Dictionaries":                  
                            #diction egde case
                            print "Dictionary skip"
                            break
@@ -295,8 +265,7 @@ class MainWindow(wx.Frame):
         if button.GetName() == "editButton":
             #editButtonFunc
             print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
-            self.editBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])
-            
+            self.editBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])            
         
         if button.GetName() == "deleteBttn":
             #deleteButtonFunc
@@ -308,12 +277,13 @@ class EditSubWindow (wx.Frame):
     def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, 
                  style = ~wx.RESIZE_BORDER, name = ""):
         super(EditSubWindow, self).__init__(parent, title = "Edit Entry", pos = (250,250), size = (500,350))
-        self.instance = wx.SingleInstanceChecker()
         self.SetFocus()
         print parent.input_structure.keys()
-        
-
+        self.SetBackgroundColour('Gray')
         #print "Address of parnet : ", id(parent.input_structure)
+        print self.GetPosition()
+        print self.GetSize()
+        self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
         print parent.choicebox.CurrentSelection
         self.writeflag = False
         self.finalDict = parent.input_structure
@@ -324,16 +294,12 @@ class EditSubWindow (wx.Frame):
         self.finalDuck = None
         self.finalUnduck = None
         self.isSelected = False
-
-        
+                
         #check for congruency dictionary 
         if(self.finalDict is parent.input_structure):
             print "yes"
         else:
             print "no"
-
-
-
 
         if parent.choicebox.CurrentSelection > -1:
             self.finalKey = parent.finalKeyList[parent.choicebox.CurrentSelection]
@@ -364,33 +330,28 @@ class EditSubWindow (wx.Frame):
                                         print "File found"
                                     except:
                                         print "No File found for this Key"
-                                z +=1
-                            
+                                z +=1                            
                     else:
                         #notmal lists of dictionaries
                         print sub_list[y]
                         print sub_list[y]["key"]
                         if(sub_list[y]["key"] is self.finalKey) :
                            self.finalFile = sub_list[y]["file"]
-
                            try:
                                self.finalFile = sub_list[y]["file"]
                                print "File found"
                            except:
                                print "No File found for this Key"
-
                            try:
                                self.finalVol = sub_list[y]["volume"]
                                print "Volume found"
                            except:
-                               print "No Volume found for this key"
-                   
+                               print "No Volume found for this key"                   
                            try:
                                self.finalDuck = sub_list[y]["duck"]
                                print "Duck found (quack)"
                            except:
-                               print "No Duck found for this Key"
-                           
+                               print "No Duck found for this Key"                           
                            try:
                                self.finalUnduck = sub_list[y]["unduck_duration_offset"]
                                print "Unduck value found"
@@ -402,8 +363,7 @@ class EditSubWindow (wx.Frame):
                 x +=1   
        
         self.displaySelctionInfo();
-
-
+        
         def __destroy(_):
             print "destroying edit menu"
             parent.input_structure = self.finalDict
@@ -501,17 +461,6 @@ class EditSubWindow (wx.Frame):
         print "address of local: ", hex(id(self.finalDuck))
         print "address of local: ", hex(id(self.finalUnduck))
        
-        #self.keyEntry.Refresh()
-        #self.fileEntry.Refresh()
-        #self.volEntry.Refresh()
-        #self.duckEntry.Refresh()
-        #self.unDuckEntry.Refresh()
-        
-        #self.keyEntry.Show()
-        #self.fileEntry.Show()
-        #self.volEntry.Show()
-        #self.duckEntry.Show()
-        #self.unDuckEntry.Show()
 
         self.keyEntry.SetValue(str(self.finalKey))
         self.fileEntry.SetValue(str(self.finalFile))
@@ -520,33 +469,28 @@ class EditSubWindow (wx.Frame):
         self.unDuckEntry.SetValue(str(self.finalUnduck))
         
         print self.finalDict
-        #self.keyEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalKey), (25,19), (400,23))
-        #self.fileEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalFile), (25,74), (400,23))
-        #self.volEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalVol), (25,129), (70,23))
-        #self.duckEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalDuck), (25,184), (70,23))
-        #self.unDuckEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalUnduck), (125,184), (300,23))
 
     def displaySelctionInfo(self):
 
-        keyName_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (20,5), (410,45))
-        fileName_SBOX = wx.StaticBox(self, wx.ID_ANY, "File: ", (20,60), (410,45))
-        volume_SBOX = wx.StaticBox(self, wx.ID_ANY, "Volume: ", (20,115), (80,45))
-        duck_SBOX= wx.StaticBox(self, wx.ID_ANY, "Duck: ", (20,170), (80,45))
-        unduck_SBOX = wx.StaticBox(self, wx.ID_ANY, "Unduck Duration Offset: ", (120,170), (310,45))
+        keyName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (20,5), (410,45))
+        fileName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "File: ", (20,60), (410,45))
+        volume_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Volume: ", (20,115), (80,45))
+        duck_SBOX= wx.StaticBox(self.panel, wx.ID_ANY, "Duck: ", (20,170), (80,45))
+        unduck_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Unduck Duration Offset: ", (120,170), (310,45))
        
-        self.keyEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalKey), (25,19), (400,23))
-        self.fileEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalFile), (25,74), (400,23))
-        self.volEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalVol), (25,129), (70,23))
-        self.duckEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalDuck), (25,184), (70,23))
-        self.unDuckEntry = wx.TextCtrl(self, wx.ID_ANY, str(self.finalUnduck), (125,184), (300,23))
+        self.keyEntry = wx.TextCtrl(self.panel, wx.ID_ANY, str(self.finalKey), (25,19), (400,23))
+        self.fileEntry = wx.TextCtrl(self.panel, wx.ID_ANY, str(self.finalFile), (25,74), (400,23))
+        self.volEntry = wx.TextCtrl(self.panel, wx.ID_ANY, str(self.finalVol), (25,129), (70,23))
+        self.duckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, str(self.finalDuck), (25,184), (70,23))
+        self.unDuckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, str(self.finalUnduck), (125,184), (300,23))
 
         status = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE, "helooooo")
         self.SetStatusBar(status)
         self.SetStatusText("Enter data and press OK | Refresh to see current selection")
 
         print "making buttons"
-        okButton = wx.Button(self, 1, "OK", (375,129), (50,25), name = "okButton")
-        refreshButton = wx.Button(self, 1, "Refresh", (305,129), (50,25), name = "refreshButton")
+        okButton = wx.Button(self.panel, 1, "OK", (375,129), (50,25), name = "okButton")
+        refreshButton = wx.Button(self.panel, 1, "Refresh", (305,129), (50,25), name = "refreshButton")
         
 
         #bind script to buttons
@@ -586,7 +530,6 @@ class EditSubWindow (wx.Frame):
                 type(int(self.volEntry.GetValue())) is not int
             except:
                 status += " Volume(int) "
-
             try:
                 type(float(self.duckEntry.GetValue())) is not float
             except:
@@ -687,6 +630,203 @@ class EditSubWindow (wx.Frame):
                 #BAd data
                 status = "ERROR: Bad data at field(s): " + status
             self.SetStatusText(status)
+
+class CreateAudioEntryWindow(wx.Frame):
+
+    def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, style = ~wx.RESIZE_BORDER, name = ""):
+        super(CreateAudioEntryWindow, self).__init__(parent, title = "Create Audio Entry", pos = (250,250), size = (580,350))
+        self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
+
+        self.SetBackgroundColour('Gray')
+        parent.Disable()
+        self.SetFocus() 
+        self.finalDict = parent.input_structure
+        temp = self.finalDict["Audio"]
+        self.key_list = self.finalDict["Audio"].keys()
+        self.key_list = self.key_list[:-1]
+
+        #list
+        self.listChoice = wx.Choice(self.panel,1, (125,30), (350,25), self.key_list)
+
+        #entries
+        
+        self.keyEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,66), size = (350,25),name = "keyE")
+        self.fileEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,121), size = (350,25), name= "fileE")
+        self.VolEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,176), size = (90,25))
+        self.duckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,231), size = (90,25))
+        self.unduckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (255,231), size = (220,25))
+        
+        #disable for now, enable once you make a selection in listCHoice
+        self.keyEntry.Disable()
+        self.fileEntry.Disable()
+        self.VolEntry.Disable()
+        self.duckEntry.Disable()
+        self.unduckEntry.Disable()
+
+        #text labels
+        list_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "List: ", (120,16), (360,45))
+        keyName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (120,52), (360,45))
+        fileName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "File: ", (120,107), (360,45))
+        volume_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Volume: ", (120,162), (100,45))
+        duck_SBOX= wx.StaticBox(self.panel, wx.ID_ANY, "Duck: ", (120,217), (100,45))
+        unduck_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Unduck Duration Offset: ", (250,217), (230,45))
+
+        #buttons
+        self.okButton = wx.Button(self.panel, 1, "OK", (425,176), (50,25), name = "okButton")
+        self.okButton.Disable()
+
+        #Status Bar
+        self.isKeyEntered = False
+        self.isFileEntered = False
+        status = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE, "helooooo")
+        self.SetStatusBar(status)
+        self.SetStatusText("Enter data and press OK | Key/File are required, other data fields can be left blank")
+
+
+        #bind list box to function, to enable text feilds 
+        self.Bind(wx.EVT_CHOICE, self.enableTextCtrl, self.listChoice)
+        self.Bind(wx.EVT_BUTTON, self.addToDict, self.okButton)
+
+        def __destroy(_):
+                print "destroying CAE menu"
+                parent.refresh()
+                parent.Enable()
+                parent.SetFocus()
+               
+        self.Bind(wx.EVT_WINDOW_DESTROY, __destroy)  
+        self.Bind(wx.EVT_TEXT,self.enableButton, self.keyEntry)
+        self.Bind(wx.EVT_TEXT,self.enableButton, self.fileEntry)
+        #disable OK button until Key and File are modified
+        
+    def enableButton(self, event):
+        box = event.GetEventObject()
+        print box.GetName()
+        if(box.GetName() == 'keyE'):
+            self.isKeyEntered = True
+        elif(box.GetName() == 'fileE'):
+            self.isFileEntered =True
+
+        print self.keyEntry.GetLineLength(1) 
+        print self.fileEntry.GetLineLength(1) 
+        if (self.keyEntry.GetLineLength(1) < 1):
+            self.isKeyEntered = False
+        if (self.fileEntry.GetLineLength(1) < 1):
+            self.isFileEntered = False
+
+        if(self.isKeyEntered and self.isFileEntered):
+            self.okButton.Enable()
+        else:
+            self.okButton.Disable()
+
+    def enableTextCtrl(self, event):
+        self.keyEntry.Enable()
+        self.fileEntry.Enable()
+        self.VolEntry.Enable()
+        self.duckEntry.Enable()
+        self.unduckEntry.Enable()
+
+
+        print self.keyEntry.GetValue()
+        print self.keyEntry.IsModified()
+
+
+    def refreshAllFields(self):
+
+        self.keyEntry.SetLabelText("")
+        self.fileEntry.SetLabelText("")
+        self.VolEntry.SetLabelText("")
+        self.duckEntry.SetLabelText("")
+        self.unduckEntry.SetLabelText("")
+
+        self.keyEntry.Disable()
+        self.fileEntry.Disable()
+        self.VolEntry.Disable()
+        self.duckEntry.Disable()
+        self.unduckEntry.Disable()
+
+        self.keyEntry.SetModified(False)
+        self.fileEntry.SetModified(False)
+        self.VolEntry.SetModified(False)
+        self.duckEntry.SetModified(False)
+        self.unduckEntry.SetModified(False)
+
+        self.okButton.Disable()
+        self.isKeyEntered = False
+        self.isFileEntered = False
+
+
+    def addToDict(self, event):
+        selection = self.key_list[self.listChoice.GetCurrentSelection()] #effects, fanfare, muslice, voice <----choose one
+        print selection 
+        stagingDict = {}
+        status = ""
+        #1. create a dict to hold the key, file, vol, duck, unduck
+        print self.keyEntry.IsModified()
+        if(self.keyEntry.IsModified()and self.keyEntry.GetLineLength(1) > 1):
+            stagingDict["key"] = str(self.keyEntry.GetValue())
+            status += "Key &"
+        else:
+            print "ERROR: NO KEY"
+            self.SetStatusText("ERROR: You must enter a Key name")
+            return
+        
+        if(self.fileEntry.IsModified() and self.fileEntry.GetLineLength(1) > 1):
+            stagingDict["file"] = str(self.fileEntry.GetValue())
+            status = status + " File "
+        else:
+            print "ERROR: NO FILE"
+            self.SetStatusText("ERROR: You must enter a File name")
+            return
+
+        if(self.VolEntry.IsModified() and self.VolEntry.GetLineLength(1) > 1):
+            stagingDict["volume"] = int(self.VolEntry.GetValue())
+            status = status + "& volume "
+        else:
+            print "NO VOLUME ENTERED, NO VOLUME WRITTEN"
+
+        
+        if(self.duckEntry.IsModified() and self.duckEntry.GetLineLength(1) > 1):
+            stagingDict["duck"] = float(self.duckEntry.GetValue())
+            status = status + "& duck "
+        else:
+            print "NO DUCK ENTERED, NO DUCK WRITTEN"
+        
+        if(self.unduckEntry.IsModified()  and self.unduckEntry.GetLineLength(1) > 1):
+            stagingDict["unduck_duration_offset"] = float(self.unduckEntry.GetValue())
+            status = status + "& unduck "
+            print stagingDict
+        else:
+            print "NO UNDUCK ENTERED, NO UNDUCK WRITTEN"
+
+        print stagingDict
+
+        status = "Data entered: " + status
+        self.SetStatusText(status)
+
+        print self.finalDict["Audio"][selection]
+        self.finalDict["Audio"][selection].append(stagingDict)
+        print self.finalDict["Audio"][selection]
+
+        #set all text fields to false
+        self.refreshAllFields()
+        #2. Append the dict to the list selected from listChoice
+        yaml_dump(self.finalDict)
+
+class CreateDictionaryWindow(wx.Frame):
+
+    def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, style = ~wx.RESIZE_BORDER, name = ""):
+        super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (580,350))
+        self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
+
+        keyName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (30,30), (150,45))
+        channel_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Channel: ", (190,30), (150,45))
+        delay_SBOX =   wx.StaticBox(self.panel, wx.ID_ANY, "Delay: ", (350,30), (150,45))
+
+        self.Bind(wx.EVT_LEFT_DOWN, self.mouseClickCoordinates)
+
+    def mouseClickCoordinates(self, event):
+        print "Mouse Cooridnate: ", event.x, event.y
+
 
 def main():
     
