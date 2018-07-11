@@ -25,17 +25,20 @@ class MainWindow(wx.Frame):
     def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, 
                  style = ~wx.RESIZE_BORDER, name = ""):
         super(MainWindow, self).__init__( parent, id, title, pos, size, style, name)
-        
+        self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "mainPanel")
         #self.SetScrollbar(self)
         #members
         self.holding_list = []
         self.channelList = []
         self.finalKeyList = []
-        self.finalFileList= []
+        self.finalFileList = []
+        self.finalKeySelection = None
+        self.finalFileSelection = None
+        self.finalSubDict = {}
         self.input_structure = {}
         #title
         #StaticText(parent, id=ID_ANY, label="", pos=DefaultPosition, size=DefaultSize, style=0, name=StaticTextNameStr)
-        text = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t\tSound(s) Menu", (1,1), (350,35))
+        text = wx.StaticText(self.panel, wx.ID_ANY, "\t\t\t\t\tSound(s) Menu", (1,1), (350,35))
         #load the YAML to Mem and into list of strings
         file_path = "test.yml"
         
@@ -68,7 +71,8 @@ class MainWindow(wx.Frame):
         print "\nAudio keys only: ", Audio_keys.keys() #gets all keys 'Fanfare', 'Voice', 'Music', 'Effects', 'Dictionaries'
      
         #default constructions
-
+        self.holding_list = Audio_keys.keys()
+        self.holding_list = self.holding_list[:-1]
         self.makeAudioPanel(self.holding_list)
         self.makeToolBar()
         self.makeButtons()
@@ -123,83 +127,69 @@ class MainWindow(wx.Frame):
         yaml_dump(self.input_structure)
 
     def makeAudioPanel(self, in_string):
-        print "firing off audiopanel"
-        testing = ["testing" , "1" , "2" , "3"]
-        choicebox_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (440,36), (390,45))
-        channel_SBOX = wx.StaticBox(self, wx.ID_ANY, "Channel: ", (20,36), (390,45))
-        self.choicebox = wx.Choice(self,1,(445,50), (380,25))        
-        self.channelbox = wx.Choice(self,1, (25,50), (380,25), testing)
-        self.Bind(wx.EVT_CHOICE, self.choicePanelScript, self.choicebox)
-        
+        choicebox_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (430,36), (390,45))
+        channel_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Channel: ", (20,36), (390,45))
+        self.channelbox = wx.Choice(self.panel,1, (25,50), (380,25), in_string)
+        self.choicebox = wx.Choice(self.panel,1,(435,50), (380,25))
+        self.Bind(wx.EVT_CHOICE, self.channelPanelScript, self.channelbox)
+        self.choicebox.Bind(wx.EVT_CHOICE, self.choicePanelScript, self.choicebox)
  
+    def channelPanelScript(self, event):
+        print self.channelbox.GetCurrentSelection()
+        #find the appropriate list of entries
+        self.finalFileList = []
+        x = 0
+        key_list = self.input_structure["Audio"].keys()
+        sub_list = self.input_structure["Audio"][key_list[self.channelbox.GetCurrentSelection()]]
+        displayString = []
+        while x < len(sub_list):
+            self.finalFileList.append(sub_list[x]["file"])
+            x += 1
+        print "sucess"
+        self.finalFileList.sort()
+        self.choicebox.SetItems(self.finalFileList)
+        
+
+
+
     def choicePanelScript(self,event):
         print self.choicebox.GetCurrentSelection()
-        print self.holding_list
-        print "\nYou selected: ",self.holding_list[self.choicebox.GetCurrentSelection()]
-        
+        sub_list = self.input_structure["Audio"][self.holding_list[self.channelbox.GetCurrentSelection()]]
+        print sub_list
+        print sub_list[self.choicebox.GetCurrentSelection()]
+        print "\nYou selected: ",self.finalFileList[self.choicebox.GetCurrentSelection()]
+        print self.choicebox.GetSelection()
+        self.finalFileSelection = self.finalFileList[self.choicebox.GetSelection()]
+        #print sub_list[self.finalFileSelection]
 
     def makeButtons(self):
         print "making buttons"
-        playButton = wx.Button(self, 1, "Play", (830,50), (35,25), name = "playButton")
-        editButton = wx.Button(self, 1, "Edit", (875,50), (35,25), name = "editButton")
-        deleteBttn = wx.Button(self, 1, "Delete", (920,50), (45,25), name = "deleteBttn")        
+        playButton = wx.Button(self.panel, 1, "Play", (830,50), (35,25), name = "playButton")
+        editButton = wx.Button(self.panel, 1, "Edit", (875,50), (35,25), name = "editButton")
+        deleteBttn = wx.Button(self.panel, 1, "Delete", (920,50), (45,25), name = "deleteBttn")        
 
         #bind script to buttons
         self.Bind(wx.EVT_BUTTON, self.buttonEventHandler, playButton)
     
     def refresh(self):
-        self.holding_list= []
-        del self.finalKeyList 
-        self.finalKeyList = []
+        self.choicebox.Clear()
         self.finalFileList = []
-        Audio_keys = self.input_structure["Audio"]
-        key_list = Audio_keys.keys()
-        peakKeyStrLen = 0
-        peakFileStrLen = 0
         x = 0
-        z = 0
-        isFiredOff = False
-        while x < len(key_list):
-            print "\nKey at index ",x,"is", key_list[x]
-            print "\n", Audio_keys[key_list[x]]
-            print len(Audio_keys[key_list[x]])
-            if len(Audio_keys[key_list[x]]) > 0: #if a sub dictionary exists at key in 'key_list[x]' index, loop a nested loop and print keys only
-                #grab the keys in sub dictionary
-                sub_dict = Audio_keys[key_list[x]] #sub_dict is actually a list, but it's "values" are ALL INDIVUDUAL DICTIONARIES
-                print sub_dict
-                y = 0
-                while y < len(sub_dict):
-                    if key_list[x] == "Dictionaries":
-                        if not isFiredOff:
-                            isFiredOff = True
-                            terror_list = sub_dict["now_showing_terror"]
-                            letter_list = sub_dict["houdini_letter"]
-                            combo_list = terror_list + letter_list
-                            z = 0
-                            while z < len(combo_list):
-                                temp_dict = combo_list[z]
-                                string_line = temp_dict["key"]
-                                #self.finalKeyList.append(string_line)
-                                #holding_list.append(string_line)
-                                z += 1
-                    else:
-                        temp_dict = sub_dict[y]
-                        #print "Element ",y," is :",temp_dict["key"], "\n\tfile: ", temp_dict["file"], "\n\tvolume: ", temp_dict["volume"], "\n\tDuck: ", temp_dict["duck"], "\n\tunduck_duration_offset: ", temp_dict["unduck_duration_offset"]
-                       
-                        print temp_dict["key"] , temp_dict["file"]
-                        if len(temp_dict["key"]) > peakKeyStrLen:
-                            peakKeyStrLen = len(temp_dict["key"])
-                        if len(temp_dict["file"]) > peakFileStrLen:
-                            peakFileStrLen = len(temp_dict["file"])
-
-                        string_line = "{:20s} {:<50s}".format(temp_dict["key"], temp_dict["file"])
-                        self.finalFileList.append(temp_dict["file"])
-                        self.finalKeyList.append(temp_dict["key"])
-                        self.holding_list.append(string_line) 
-                    y += 1                   
+        key_list = self.input_structure["Audio"].keys()
+        key_list = key_list[:-1]
+        sub_list = self.input_structure["Audio"][key_list[self.channelbox.GetCurrentSelection()]]
+        displayString = []
+        while x < len(sub_list):
+            self.finalFileList.append(sub_list[x]["file"])
             x += 1
-        self.choicebox.Destroy()
-        self.choicebox =  wx.Choice(self,1, (445,50), (380,25), self.holding_list) 
+        print "sucess"
+        self.finalFileList.sort()
+        self.choicebox.SetItems(self.finalFileList)
+        self.channelbox.SetSelection(wx.NOT_FOUND)
+        self.choicebox.SetSelection(wx.NOT_FOUND)
+        self.choicebox.Clear()
+        print "end"
+
     def playbttnFunc(self, file):
         print "playing file", file
 
@@ -213,14 +203,14 @@ class MainWindow(wx.Frame):
 
     def dletBttnFunc(self, file):
         
-        if wx.MessageBox("Are you sure?", "Are you shyould you want to delete this?", wx.ICON_QUESTION | wx.YES_NO) != wx.YES:
+        if wx.MessageBox("Are you sure?", "Are you sure you want to delete this?", wx.ICON_QUESTION | wx.YES_NO) != wx.YES:
             print "Nothing wirtten to disc"
         elif wx.MessageBox("Are you DAMN sure you want to delete this? You might get in trouble","No...Seriously",  wx.ICON_QUESTION | wx.YES_NO) != wx.YES:
             print "Nothing wirtten to disc"
         else: 
             print "deleting file",file
             #begin deletion of element
-            targetKey = self.finalKeyList[self.choicebox.CurrentSelection]
+            targetfile = self.finalFileSelection
             isSelected = True
             sub_list = []
             if isSelected:
@@ -240,8 +230,8 @@ class MainWindow(wx.Frame):
                        else:
                              #normal lists of dictionaries
                              print sub_list[y]
-                             print sub_list[y]["key"]
-                             if(sub_list[y]["key"] is targetKey) :
+                             print sub_list[y]["file"]
+                             if(sub_list[y]["file"] is targetfile) :
                                 sub_list.remove(sub_list[y])
                                 #print "sub_dict[y]['key'] = ", sub_list[y]["key"]
                                 break
@@ -302,7 +292,7 @@ class EditSubWindow (wx.Frame):
             print "no"
 
         if parent.choicebox.CurrentSelection > -1:
-            self.finalKey = parent.finalKeyList[parent.choicebox.CurrentSelection]
+            self.finalFile = parent.finalFileSelection
             isSelected = True
             isFiredOff = False
             x = 0
@@ -326,7 +316,7 @@ class EditSubWindow (wx.Frame):
                             while z < len(combo_list):
                                 if(combo_list[z]["key"] is self.finalKey):
                                     try:
-                                        self.finalFile = sub_list[y]["file"]
+                                        #self.finalFile = sub_list[y]["file"]
                                         print "File found"
                                     except:
                                         print "No File found for this Key"
@@ -334,14 +324,14 @@ class EditSubWindow (wx.Frame):
                     else:
                         #notmal lists of dictionaries
                         print sub_list[y]
-                        print sub_list[y]["key"]
-                        if(sub_list[y]["key"] is self.finalKey) :
+                        print sub_list[y]["file"]
+                        if(sub_list[y]["file"] is self.finalFile) :
                            self.finalFile = sub_list[y]["file"]
                            try:
-                               self.finalFile = sub_list[y]["file"]
-                               print "File found"
+                               self.finalKey = sub_list[y]["key"]
+                               print "key found"
                            except:
-                               print "No File found for this Key"
+                               print "No key found for this file"
                            try:
                                self.finalVol = sub_list[y]["volume"]
                                print "Volume found"
@@ -379,7 +369,12 @@ class EditSubWindow (wx.Frame):
             
     def refreshEntries(self):
        #robust check - if they MADE a selection, then only execute, otherwise yell at them
-        
+
+        self.finalVol = None
+        self.finalDuck = None
+        self.finalUnduck = None
+
+        self.isSelected = False
         isSelected = True
         if isSelected:
            isFiredOff = False
@@ -414,8 +409,8 @@ class EditSubWindow (wx.Frame):
                          #normal lists of dictionaries
                          print sub_list[y]
                          print sub_list[y]["key"]
-                         if(sub_list[y]["key"] is self.finalKey) :
-                            self.finalFile = sub_list[y]["file"]
+                         if(sub_list[y]["file"] == self.finalFile) :
+                            self.finalKey = sub_list[y]["key"]
               
                             try:
                                 self.finalFile = sub_list[y]["file"]
@@ -484,8 +479,9 @@ class EditSubWindow (wx.Frame):
         self.duckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, str(self.finalDuck), (25,184), (70,23))
         self.unDuckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, str(self.finalUnduck), (125,184), (300,23))
 
-        status = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE, "helooooo")
-        self.SetStatusBar(status)
+        self.statusBar = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE)
+        
+        self.SetStatusBar(self.statusBar)
         self.SetStatusText("Enter data and press OK | Refresh to see current selection")
 
         print "making buttons"
@@ -526,22 +522,23 @@ class EditSubWindow (wx.Frame):
                status = " Keys(str) "
             if(type(str(self.fileEntry.GetValue())) is not str):
                status += " File(str) "
-            try:
-                type(int(self.volEntry.GetValue())) is not int
-            except:
-                status += " Volume(int) "
-            try:
-                type(float(self.duckEntry.GetValue())) is not float
-            except:
-                status += " Duck(float) "
-            try:
-                type(float(self.unDuckEntry.GetValue())) is not float
-            except:
-                status += " Unduck(float) "
-            #if(type(float(self.duckEntry.GetValue())) is not float):
-            #    status += " Duck(float) "
-            #if(type(float(self.unDuckEntry.GetValue())) is not float):
-            #    status += " Unduck(float) "
+
+            if(str(self.volEntry.GetValue()) != 'None' and str(self.volEntry.GetValue()) != ''):
+                try:
+                    type(int(self.volEntry.GetValue())) is not int 
+                except:
+                    status += " Volume(int) "
+            if(str(self.duckEntry.GetValue()) != "None" and str(self.duckEntry.GetValue()) != ''):
+                try:
+                    type(float(self.duckEntry.GetValue())) is not float
+                except:
+                    status += " Duck(float) "
+            if(str(self.unDuckEntry.GetValue()) != "None" and str(self.unDuckEntry.GetValue()) != ''):
+                try:
+                    type(float(self.unDuckEntry.GetValue())) is not float
+                except:
+                    status += " Unduck(float) "
+
 
 
             if(status is ""):
@@ -579,40 +576,61 @@ class EditSubWindow (wx.Frame):
 
                                   sub_list[y]["key"] = str(self.keyEntry.GetValue())
                                   sub_list[y]["file"] = str(self.fileEntry.GetValue())
-                                  sub_list[y]["volume"] = int(self.volEntry.GetValue())
-                                  sub_list[y]["duck"] = float(self.duckEntry.GetValue())
-                                  sub_list[y]["unduck_duration_offset"] = float(self.unDuckEntry.GetValue())
+
+                                  if(self.volEntry.GetValue() != 'None' and self.volEntry.GetValue() != ''): 
+                                      sub_list[y]["volume"] = int(self.volEntry.GetValue())
+                                  else:
+                                      try: 
+                                          del sub_list[y]["volume"]
+                                      except:
+                                          print "no vol"
+
+                                  if(self.duckEntry.GetValue() != 'None' and self.duckEntry.GetValue() != ''):
+                                      sub_list[y]["duck"] = float(self.duckEntry.GetValue())
+                                  else:
+                                      try:
+                                          del sub_list[y]["duck"]
+                                      except:
+                                          print "no duck"
+
+                                  if(self.unDuckEntry.GetValue() != 'None' and self.unDuckEntry.GetValue() != ''):
+                                      sub_list[y]["unduck_duration_offset"] = float(self.unDuckEntry.GetValue())
+                                  else:
+                                      try:
+                                          del sub_list[y]["unduck_duration_offset"]
+                                      except:
+                                          print "no unduck"
 
                                   try:
-                                      self.finalKey = self.keyEntry.GetValue()
+                                      self.finalKey = str(self.keyEntry.GetValue())
                                       print "File found, adress: ", hex(id(sub_list[y]["file"]))
                                       print "address of local: ", hex(id(self.finalKey))
                                   except:
                                       print "No File found for this Key"
 
                                   try:
-                                      self.finalFile = self.fileEntry.GetValue()
+                                      self.finalFile = str(self.fileEntry.GetValue())
                                       print "File found, adress: ", hex(id(sub_list[y]["file"]))
                                       print "address of local: ", hex(id(self.finalFile))
                                   except:
                                       print "No File found for this Key"
                     
                                   try:
-                                      self.finalVol = self.volEntry.GetValue()
+                                      self.finalVol = int(self.volEntry.GetValue())
                                       print "Volume found adress: ", hex(id(sub_list[y]["volume"])) 
                                       print "address of local: ", hex(id(self.finalVol))
                                   except:
                                       print "No Volume found for this key"
                           
                                   try:
-                                      self.finalDuck = self.duckEntry.GetValue()
+                                      self.finalDuck = float(self.duckEntry.GetValue())
                                       print "Duck found adress: ", hex(id(sub_list[y]["duck"])) 
                                       print "address of local: ", hex(id(self.finalDuck))
                                   except:
                                       print "No Duck found for this Key"
                                   
                                   try:
-                                      self.finalUnduck = self.unDuckEntry.GetValue()
+                                      self.finalUnduck = float(self.unDuckEntry.GetValue())
                                       print "Unduck value found adress: ", hex(id(sub_list[y]["unduck_duration_offset"]))
                                       print "address of local: ", hex(id(self.finalUnduck))
                                   except:
@@ -625,11 +643,16 @@ class EditSubWindow (wx.Frame):
                      print "no file selected"
                  print "dictionary ", self.finalDict
                  yaml_dump(self.finalDict)
+                 self.statusBar.SetBackgroundColour("Green")
+                 self.statusBar.SetForegroundColour("White")
                  status = "DONE Entry Updated "
             else:
                 #BAd data
+                self.statusBar.SetBackgroundColour("Red")
                 status = "ERROR: Bad data at field(s): " + status
+            
             self.SetStatusText(status)
+            
 
 class CreateAudioEntryWindow(wx.Frame):
 
