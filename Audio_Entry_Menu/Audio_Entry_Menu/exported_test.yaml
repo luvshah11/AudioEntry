@@ -36,6 +36,11 @@ Audio:
     key: Gen_ChestPoints
     unduck_duration_offset: -.5
     volume: 1
+  - duck: 1234.0
+    file: '1234'
+    key: '1234'
+    unduck_duration_offset: 1234.0
+    volume: 1234
   Music:
   - file: match_sequence.wav
     key: match_sequence

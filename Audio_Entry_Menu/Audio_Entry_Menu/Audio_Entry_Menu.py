@@ -840,15 +840,51 @@ class CreateDictionaryWindow(wx.Frame):
     def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, style = ~wx.RESIZE_BORDER, name = ""):
         super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (580,350))
         self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
+        self.NodeList = []
 
-        keyName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (30,30), (150,45))
-        channel_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Channel: ", (190,30), (150,45))
-        delay_SBOX =   wx.StaticBox(self.panel, wx.ID_ANY, "Delay: ", (350,30), (150,45))
+        class EntryRow:
+            def __init__(self, xpos, ypos, parentpanel):
+                print "making an EntryRow object"
+                self.posx = xpos
+                self.posy = ypos
+                self.next = None
+                self.prev = None
+                self.renderPanel = parentpanel
 
-        self.Bind(wx.EVT_LEFT_DOWN, self.mouseClickCoordinates)
+                plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
+                xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
 
-    def mouseClickCoordinates(self, event):
-        print "Mouse Cooridnate: ", event.x, event.y
+                self.addButton = wx.Button(self.renderPanel, 1, pos =(self.posx-4, self.posy + 9), size = (14,14), name = "addButton")
+                self.addButton.SetBitmapLabel(plusBitMap)
+
+                self.removeButton = wx.Button(self.renderPanel, 2, pos =(self.posx-4, self.posy + 22), size = (14,14), name = "removeButton")
+                self.removeButton.SetBitmapLabel(xBitmap)
+
+
+
+                self.keyEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 10, self.posy + 10), size = (100,25),name = "keyE")
+                self.channelEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 120, self.posy + 10), size = (100,25),name = "channelE")
+                self.delayEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 230, self.posy + 10), size = (100,25),name = "delayE")
+                self.actionEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 340, self.posy + 10), size = (100,25),name = "actyionE")
+
+                print "success"
+
+
+        newEntry = EntryRow(40,10,self.panel)
+        
+        self.NodeList.append(newEntry)
+        #sec = EntryRow(40,45,self.panel)#down (25{heigt of textctr} + 10 for space)
+        #thi = EntryRow(40,80,self.panel)
+        #fou = EntryRow(40,115,self.panel)
+
+
+        self.SetFocus()
+        #keyName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (30,30), (150,45))
+        #channel_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Channel: ", (190,30), (150,45))
+        #delay_SBOX =   wx.StaticBox(self.panel, wx.ID_ANY, "Delay: ", (350,30), (150,45))
+        def pushNew(self, prevNode_x, prevNode_y):
+            print "creating new row"
+
 
 
 def main():
