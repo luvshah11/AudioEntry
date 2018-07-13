@@ -849,25 +849,37 @@ class CreateDictionaryWindow(wx.Frame):
             self.listHead = None
             self.frame = parent
             self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-            controlSizer = wx.BoxSizer(wx.HORIZONTAL)
-            self.widgetSizer = wx.BoxSizer(wx.VERTICAL)
+
 
             #intit list
-            newEntry = parent.EntryRow(40,10,self)
+            newEntry = self.EntryRow(self,10,10)
+            newEntry.Show()
             self.listOfNodes.append(newEntry)
             self.listHead = self.listOfNodes[0]
             numberOfNodes += 1
+            
+            self.mainSizer.Add(newEntry,1, wx.GROW)
+            self.SetSizer(self.mainSizer)
+            #newEntry.Destroy() #destyors the object, use this
+
         
-            #
+            #test = wx.TextCtrl(self,pos = (10,10), size = (50,50))
+
+            
+            
         def pushNew(self, entry):
             print "green plus pressed"
-            
             print "next",entry.next, "prev", entry.prev
             #goto EOL
             node = self.listHead
             while node.next is not None:
                 node = node.next
-            node.next = self.frame.EntryRow(node.posx, node.posy + 50, self)
+            node.next = self.EntryRow(self, 10, 60)
+            self.AddChild(node.next)
+            self.mainSizer.Add(node.next, 1, wx.GROW)
+            self.SetSizer(self.mainSizer)
+            #node.next = self.frame.EntryRow(node.posx, node.posy + 50, self)
+            self.listOfNodes.append(node.next)
             
             
 
@@ -891,57 +903,78 @@ class CreateDictionaryWindow(wx.Frame):
                 nextNode = nextNode.next
             
             self.listOfNodes.remove(entry)
-            del entry
-           #node
-    class EntryRow():
-        def __init__(self, xpos, ypos, parentpanel):
+            entry.Destroy()
+            self.Refresh()
             
-    
-            print "making an EntryRow object"
-            self.posx = xpos
-            self.posy = ypos
-            self.next = None
-            self.prev = None
-            self.renderPanel = parentpanel
-    
-            plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
-            xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
-    
-            self.addButton = wx.Button(self.renderPanel, 1, pos =(self.posx-24, self.posy - 7), size = (24,24), name = "addButton")
-            self.addButton.SetBitmapLabel(plusBitMap)
-    
-            self.removeButton = wx.Button(self.renderPanel, 2, pos =(self.posx-24, self.posy + 20), size = (24,24), name = "removeButton")
-            self.removeButton.SetBitmapLabel(xBitmap)
-    
-            #self.Bind(wx.EVT_BUTTON, parentpanel.greenPlus() , self.addButton)
 
-            keyName_SBOX = wx.StaticBox(self.renderPanel, wx.ID_ANY, "Key: ", (self.posx+ 5 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-            channel_SBOX = wx.StaticBox(self.renderPanel, wx.ID_ANY, "Channel: ",(self.posx+ 120 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-            delay_SBOX =   wx.StaticBox(self.renderPanel, wx.ID_ANY, "Delay: ", (self.posx+ 235 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-            action_SBOX =   wx.StaticBox(self.renderPanel, wx.ID_ANY, "Action: ", (self.posx+ 350 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-    
-            self.keyEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 10, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER ,name = "keyE")
-            self.channelEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 125, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
-            self.delayEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 240, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
-            self.actionEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 355, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER,name = "actyionE")
-    
-            print "success" 
-            #self.Bind(wx.EVT_BUTTON, pushNew, addButton)
-            parentpanel.Bind(wx.EVT_BUTTON, self.greenPlus , self.addButton)
-            parentpanel.Bind(wx.EVT_BUTTON, self.redX , self.removeButton)
+           #node
+        class EntryRow(wx.Panel):
+            def __init__(self,parentpanel, xpos, ypos ):
+                super(parentpanel.EntryRow, self).__init__(parentpanel, wx.ID_ANY, (xpos,ypos), size = (10,50), style = wx.TAB_TRAVERSAL | wx.SIMPLE_BORDER )
+                #wx.Panel.__init__(parentpanel)
+                self.SetSize(460,50)
+                self.SetSizer(self.Size(), True)
+                print "making an EntryRow object"
+                self.posx = xpos
+                self.posy = ypos
+                self.next = None
+                self.prev = None
+                self.parentpan = parentpanel
 
-            def __destroy__(self):
-                print "destroying EntryRow"
-           
+
+                plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
+                xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
+                
+        
+                self.addButton = wx.Button(self, 1, pos =(self.posx, self.posy - 5), size = (24,24), name = "addButton")
+                self.addButton.SetBitmapLabel(plusBitMap)
+                
+
+                self.removeButton = wx.Button(self, 2, pos =(self.posx, self.posy + 18), size = (24,24), name = "removeButton")
+                self.removeButton.SetBitmapLabel(xBitmap)
                
-    
-        def greenPlus(self, event):
-            print "creating new row"
-            self.renderPanel.pushNew(self)
+                #self.Bind(wx.EVT_BUTTON, parentpanel.greenPlus() , self.addButton)
 
-        def redX(self, event):
-            print "removing exisitng row"
-            self.renderPanel.popOld(self)
+                keyName_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (self.posx+ 29 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+                channel_SBOX = wx.StaticBox(self, wx.ID_ANY, "Channel: ",(self.posx+ 144 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+                delay_SBOX =   wx.StaticBox(self, wx.ID_ANY, "Delay: ", (self.posx+ 259 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+                action_SBOX =   wx.StaticBox(self, wx.ID_ANY, "Action: ", (self.posx+ 374 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+        
+                self.keyEntry = wx.TextCtrl(keyName_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER ,name = "keyE")
+                self.channelEntry = wx.TextCtrl(channel_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
+                self.delayEntry = wx.TextCtrl(delay_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
+                self.actionEntry = wx.TextCtrl(action_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "actyionE")
+        
+                #sizer
+                #self.sizer = wx.GridSizer( wx.HORIZONTAL)
+                #self.sizer.Add(self.addButton,1)
+                #self.sizer.Add(self.removeButton,1)
+                #self.sizer.Add(keyName_SBOX,1,wx.GROW)
+                #self.sizer.Add(channel_SBOX,1,wx.GROW)
+                #self.sizer.Add(delay_SBOX,1,wx.GROW)
+                #self.sizer.Add(action_SBOX,1,wx.GROW)
+                #self.renderPanel.mainSizer.Add(self.sizer)
+                #self.renderPanel.SetSizer(self.renderPanel.mainSizer)
+
+                print "success" 
+                #self.Bind(wx.EVT_BUTTON, pushNew, addButton)
+                parentpanel.Bind(wx.EVT_BUTTON, self.greenPlus , self.addButton)
+                parentpanel.Bind(wx.EVT_BUTTON, self.redX , self.removeButton)
+
+                def __del__(self):
+                    print "destroying EntryRow"
+               
+                   
+        
+            def greenPlus(self, event):
+                print "creating new row"
+                self.parentpan.pushNew(self)
+
+
+            def redX(self, event):
+                print "removing exisitng row"
+                self.parentpan.popOld(self)
+             
     
 
     def __init__(self, parent, id=1, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
@@ -949,10 +982,7 @@ class CreateDictionaryWindow(wx.Frame):
         self.SetFocus()
         #self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
         self.panel = self.MyPanel(self,1,pos = (250,250),  size = (200,200) , style = wx.TAB_TRAVERSAL ^ wx.SIMPLE_BORDER)
-        self.fSizer = wx.BoxSizer(wx.VERTICAL)
-        self.fSizer.Add(self.panel,1,wx.EXPAND)
-        self.SetSizer(self.fSizer)
-
+       
 
         #self.Fit()
         #newEntry = self.EntryRow(40,10,self.panel)
