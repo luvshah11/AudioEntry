@@ -837,14 +837,14 @@ class CreateAudioEntryWindow(wx.Frame):
         yaml_dump(self.finalDict)
 
 
-
+        #this is a doubly linked list
 class CreateDictionaryWindow(wx.Frame):
-
+            #list of nodes
     class MyPanel(wx.Panel):
         def __init__(self,parent, id , pos  , size, style ):
             wx.Panel.__init__(self, parent, id, pos, size, style)
             self.SetSize(parent.GetSize())
-            self.numberOfNodes = 0
+            numberOfNodes = 0
             self.listOfNodes = []
             self.listHead = None
             self.frame = parent
@@ -852,22 +852,50 @@ class CreateDictionaryWindow(wx.Frame):
             controlSizer = wx.BoxSizer(wx.HORIZONTAL)
             self.widgetSizer = wx.BoxSizer(wx.VERTICAL)
 
+            #intit list
             newEntry = parent.EntryRow(40,10,self)
             self.listOfNodes.append(newEntry)
-            listHead = self.listOfNodes[0]
-        #    newEntry.addButton.Bind(wx.EVT_BUTTON, self.greenPlus(wx.EVT_BUTTON), newEntry.addButton)
+            self.listHead = self.listOfNodes[0]
+            numberOfNodes += 1
         
-        def greenPlus(self, entry):
+            #
+        def pushNew(self, entry):
             print "green plus pressed"
+            
             print "next",entry.next, "prev", entry.prev
-
+            #goto EOL
+            node = self.listHead
+            while node.next is not None:
+                node = node.next
+            node.next = self.frame.EntryRow(node.posx, node.posy + 50, self)
+            
             
 
+        def popOld(self, entry):
+            print "red X pressed"
+            print "next",entry.next, "prev", entry.prev
 
+            prevNode= entry.prev
+            nextNode = entry.next
+            
 
-    class EntryRow(wx.EvtHandler):
+            if(prevNode is not None):
+                prevNode.next = nextNode
+                nextNode.prev = prevNode
+
+            elif(nextNode is not None):
+                nextNode.prev = None
+
+            while nextNode is not None:
+                nextNode.posy -= 50
+                nextNode = nextNode.next
+            
+            self.listOfNodes.remove(entry)
+            del entry
+           #node
+    class EntryRow():
         def __init__(self, xpos, ypos, parentpanel):
-            wx.EvtHandler.__init__(self)
+            
     
             print "making an EntryRow object"
             self.posx = xpos
@@ -879,30 +907,41 @@ class CreateDictionaryWindow(wx.Frame):
             plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
             xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
     
-            self.addButton = wx.Button(self.renderPanel, 1, pos =(self.posx-10, self.posy + 9), size = (20,14), name = "addButton")
+            self.addButton = wx.Button(self.renderPanel, 1, pos =(self.posx-24, self.posy - 7), size = (24,24), name = "addButton")
             self.addButton.SetBitmapLabel(plusBitMap)
     
-            self.removeButton = wx.Button(self.renderPanel, 2, pos =(self.posx-10, self.posy + 22), size = (20,14), name = "removeButton")
+            self.removeButton = wx.Button(self.renderPanel, 2, pos =(self.posx-24, self.posy + 20), size = (24,24), name = "removeButton")
             self.removeButton.SetBitmapLabel(xBitmap)
     
             #self.Bind(wx.EVT_BUTTON, parentpanel.greenPlus() , self.addButton)
+
+            keyName_SBOX = wx.StaticBox(self.renderPanel, wx.ID_ANY, "Key: ", (self.posx+ 5 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+            channel_SBOX = wx.StaticBox(self.renderPanel, wx.ID_ANY, "Channel: ",(self.posx+ 120 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+            delay_SBOX =   wx.StaticBox(self.renderPanel, wx.ID_ANY, "Delay: ", (self.posx+ 235 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+            action_SBOX =   wx.StaticBox(self.renderPanel, wx.ID_ANY, "Action: ", (self.posx+ 350 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
     
-            self.keyEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 10, self.posy + 10), size = (100,25),name = "keyE")
-            self.channelEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 120, self.posy + 10), size = (100,25),name = "channelE")
-            self.delayEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 230, self.posy + 10), size = (100,25),name = "delayE")
-            self.actionEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 340, self.posy + 10), size = (100,25),name = "actyionE")
+            self.keyEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 10, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER ,name = "keyE")
+            self.channelEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 125, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
+            self.delayEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 240, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
+            self.actionEntry = wx.TextCtrl(self.renderPanel, wx.ID_ANY, pos = (self.posx + 355, self.posy + 10), size = (100,25),style = wx.RAISED_BORDER,name = "actyionE")
     
             print "success" 
             #self.Bind(wx.EVT_BUTTON, pushNew, addButton)
-            parentpanel.Bind(wx.EVT_BUTTON, self.pushNew , self.addButton)
-            parentpanel.Bind(wx.EVT_BUTTON, self.popOld , self.removeButton)
-    
-        def pushNew(self, event):
-            print "creating new row"
-            self.renderPanel.greenPlus(self)
+            parentpanel.Bind(wx.EVT_BUTTON, self.greenPlus , self.addButton)
+            parentpanel.Bind(wx.EVT_BUTTON, self.redX , self.removeButton)
 
-        def popOld(self, event):
+            def __destroy__(self):
+                print "destroying EntryRow"
+           
+               
+    
+        def greenPlus(self, event):
+            print "creating new row"
+            self.renderPanel.pushNew(self)
+
+        def redX(self, event):
             print "removing exisitng row"
+            self.renderPanel.popOld(self)
     
 
     def __init__(self, parent, id=1, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
@@ -923,9 +962,7 @@ class CreateDictionaryWindow(wx.Frame):
         #thi = EntryRow(40,80,self.panel)
         #fou = EntryRow(40,115,self.panel)        
         
-        #keyName_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (30,30), (150,45))
-        #channel_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Channel: ", (190,30), (150,45))
-        #delay_SBOX =   wx.StaticBox(self.panel, wx.ID_ANY, "Delay: ", (350,30), (150,45))
+        
         def __destroy(_):
             print "destroying CAE menu"
             parent.refresh()
@@ -934,8 +971,7 @@ class CreateDictionaryWindow(wx.Frame):
                
         self.Bind(wx.EVT_WINDOW_DESTROY, __destroy)
 
-    def helpMeGod(self, event):
-        print "why has thou forsaken me"
+
 
 
 
@@ -958,4 +994,5 @@ def main():
     app.MainLoop()
 
 if __name__ == '__main__':
+    
     main()
