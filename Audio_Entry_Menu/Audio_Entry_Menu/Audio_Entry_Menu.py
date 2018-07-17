@@ -840,16 +840,18 @@ class CreateAudioEntryWindow(wx.Frame):
         #this is a doubly linked list
 class CreateDictionaryWindow(wx.Frame):
             #list of nodes
-    class MyPanel(wx.Panel):
+    class MyPanel(wx.ScrolledWindow):
         def __init__(self,parent, id , pos  , size, style ):
-            wx.Panel.__init__(self, parent, id, pos, size, style)
+            wx.ScrolledWindow.__init__(self, parent, id, pos, size, style)
             self.SetSize(parent.GetSize())
             numberOfNodes = 0
             self.listOfNodes = []
             self.listHead = None
             self.frame = parent
-            self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+            self.mainsizer = wx.BoxSizer(wx.VERTICAL)
 
+            #test = wx.TextCtrl(self, wx.ID_ANY, "testing")
+            #self.mainsizer.Add(test)
 
             #intit list
             newEntry = self.EntryRow(self,10,10)
@@ -858,8 +860,15 @@ class CreateDictionaryWindow(wx.Frame):
             self.listHead = self.listOfNodes[0]
             numberOfNodes += 1
             
-            self.mainSizer.Add(newEntry,1, wx.GROW)
-            self.SetSizer(self.mainSizer)
+            self.mainsizer.Add(newEntry,1,wx.GROW | wx.EXPAND)
+            
+            self.mainsizer.Fit(self)
+            
+            #self.Refresh()
+            #self.mainsizer.SetSizeHints(self)
+            self.SetSizer(self.mainsizer)
+            self.Fit()
+            #self.Layout()
             #newEntry.Destroy() #destyors the object, use this
 
         
@@ -874,11 +883,11 @@ class CreateDictionaryWindow(wx.Frame):
             node = self.listHead
             while node.next is not None:
                 node = node.next
-            node.next = self.EntryRow(self, 10, 60)
-            self.AddChild(node.next)
-            self.mainSizer.Add(node.next, 1, wx.GROW)
-            self.SetSizer(self.mainSizer)
-            #node.next = self.frame.EntryRow(node.posx, node.posy + 50, self)
+            node.next = self.EntryRow(self,10, node.posy + 60)
+            node.next.Show()
+            self.mainsizer.Add(node.next,1,wx.GROW)
+            #self.SetSizer(self.mainsizer)
+            self.Refresh()
             self.listOfNodes.append(node.next)
             
             
@@ -910,17 +919,18 @@ class CreateDictionaryWindow(wx.Frame):
            #node
         class EntryRow(wx.Panel):
             def __init__(self,parentpanel, xpos, ypos ):
-                super(parentpanel.EntryRow, self).__init__(parentpanel, wx.ID_ANY, (xpos,ypos), size = (10,50), style = wx.TAB_TRAVERSAL | wx.SIMPLE_BORDER )
+                super(parentpanel.EntryRow, self).__init__(parentpanel, wx.ID_ANY, (xpos,ypos), size = (10,50), style = wx.TAB_TRAVERSAL | wx.SIMPLE_BORDER | wx.VSCROLL )
                 #wx.Panel.__init__(parentpanel)
-                self.SetSize(460,50)
-                self.SetSizer(self.Size(), True)
+                self.SetSize(400,50)
+               
                 print "making an EntryRow object"
                 self.posx = xpos
                 self.posy = ypos
                 self.next = None
                 self.prev = None
                 self.parentpan = parentpanel
-
+                self.mysizer = wx.FlexGridSizer(5,1,1)
+                self.mysizer.SetMinSize(450,50)
 
                 plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
                 xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
@@ -932,7 +942,8 @@ class CreateDictionaryWindow(wx.Frame):
 
                 self.removeButton = wx.Button(self, 2, pos =(self.posx, self.posy + 18), size = (24,24), name = "removeButton")
                 self.removeButton.SetBitmapLabel(xBitmap)
-               
+
+              
                 #self.Bind(wx.EVT_BUTTON, parentpanel.greenPlus() , self.addButton)
 
                 keyName_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (self.posx+ 29 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
@@ -944,9 +955,24 @@ class CreateDictionaryWindow(wx.Frame):
                 self.channelEntry = wx.TextCtrl(channel_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
                 self.delayEntry = wx.TextCtrl(delay_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
                 self.actionEntry = wx.TextCtrl(action_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "actyionE")
-        
+                
+                #buttonsizer = wx.BoxSizer(wx.VERTICAL)
+                #buttonsizer.Add(self.addButton)
+                #buttonsizer.Add(self.removeButton)
+                #self.mysizer.Add(buttonsizer)
+
+                #self.mysizer.Add(keyName_SBOX,0)
+                #self.mysizer.Add(channel_SBOX,0)
+                #self.mysizer.Add(delay_SBOX,0)
+                #self.mysizer.Add(action_SBOX,0)
+
+                
+
+                #self.mysizer.Fit(self)
+                #self.SetSizer(self.mysizer)
+                
                 #sizer
-                #self.sizer = wx.GridSizer( wx.HORIZONTAL)
+                #self.sizer = wx.GridSizer()
                 #self.sizer.Add(self.addButton,1)
                 #self.sizer.Add(self.removeButton,1)
                 #self.sizer.Add(keyName_SBOX,1,wx.GROW)
@@ -977,13 +1003,17 @@ class CreateDictionaryWindow(wx.Frame):
              
     
 
-    def __init__(self, parent, id=1, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
+    def __init__(self, parent, id=wx.ID_ANY, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
         super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (580,350))
         self.SetFocus()
         #self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
-        self.panel = self.MyPanel(self,1,pos = (250,250),  size = (200,200) , style = wx.TAB_TRAVERSAL ^ wx.SIMPLE_BORDER)
-       
-
+        self.panel = self.MyPanel(self,wx.ID_ANY,pos = (250,250), size = wx.DefaultSize , style = wx.TAB_TRAVERSAL | wx.VSCROLL)
+        box = wx.BoxSizer(wx.VERTICAL)
+        box.Add(self.panel,1,wx.GROW )
+        box.Fit(self)
+        self.SetSizer(box)
+        self.SetAutoLayout(True)
+        
         #self.Fit()
         #newEntry = self.EntryRow(40,10,self.panel)
         #self.panel.listOfNodes.append(newEntry)
