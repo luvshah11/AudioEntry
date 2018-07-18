@@ -1,6 +1,7 @@
 import wx
 import yaml
 import copy
+from wx.lib.scrolledpanel import ScrolledPanel
 
 def stinr_allign(in_srting):
     return in_srting
@@ -1030,15 +1031,7 @@ class CreateDictionaryWindow(wx.Frame):
             parent.SetFocus()
                
         self.Bind(wx.EVT_WINDOW_DESTROY, __destroy)
-
-
-
-
-
-        
-
-
-
+                              
 def main():
     
     #uncomment below to run legit
