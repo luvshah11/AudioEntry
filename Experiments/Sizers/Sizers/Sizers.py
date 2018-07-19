@@ -26,7 +26,7 @@ class DubList(wx.Frame):
        
         masterSizer = wx.BoxSizer(wx.VERTICAL)
         #self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
-
+        self.nodeNumbers = 0
         #self.listWindow = scrolledpanel(self, wx.ID_ANY, self.Position, self.Size, wx.VSCROLL, "list window")
         self.listWindow = ScrolledPanel(self,wx.ID_ANY, self.GetPosition(),self.GetSize(),wx.TAB_TRAVERSAL | wx.VSCROLL, "list window")
         self.listWindow.SetupScrolling(0,1,0,20,1,1)
@@ -47,8 +47,8 @@ class DubList(wx.Frame):
         #self.mysizer.Add(button, 0,0,1,None)
         #self.mysizer.Add(button0, 0,0,1,None)
 
-        self.mysizer.Add(button,(0,2),(0,0),0, 1,"addButton")
-        self.mysizer.Add(button0,(2,2),(0,0),0, 1,"removeButton")
+        self.mysizer.Add(button,(0,1),(0,0),0, 1,"addButton")
+        self.mysizer.Add(button0,(1,1),(0,0),0, 1,"removeButton")
 
         self.listWindow.SetSizer(self.mysizer)
         self.mysizer.Fit(self.listWindow)
@@ -60,20 +60,86 @@ class DubList(wx.Frame):
         button = event.GetEventObject()
         button = button.GetParent()
         print "middle pop", button.val
+
+        #patch pointers of adjacent Nodes
+        if button.prev is not None:
+            button.prev.next = button.next
+
+        if button.next is not None:
+            button.next.prev = button.prev
+
+        #iter = button.next
+        
+        position = self.mysizer.FindItem(button)        #find GBSizerItem
+        
+        gap = position.GetPos()
+        print "pos COL:",gap.GetCol(),"\nROW:", gap.GetRow()
+        iter = button 
+        self.mysizer.Detach(button)
+
+        #push all the itesm below the target node up one unit
+        while(iter):
+            if(iter.next is not None):
+                newgap = self.mysizer.GetItemPosition(iter.next)
+                self.mysizer.SetItemPosition(iter.next,gap)
+                gap = newgap
+                iter = iter.next
+            else:
+                break
+
         self.listOfNodes.remove(button)
         self.mysizer.FitInside(self.listWindow)
-        self.mysizer.Remove(button)
-        button.Destroy()
+        
         self.mysizer.Layout()
-
+        button.Destroy()
+        
 
 
     def onPush(self,event):
+
+        #get infor for shifter
         button = event.GetEventObject()
         button = button.GetParent()
         print "middle push", button.val
-          
+        namestring = "button" + str(self.nodeNumbers)
+        #get index of node being clicked
+        print "index", 2 + self.listOfNodes.index(button)
+        targetIndex = self.listOfNodes.index(button)
+        targetposition =  self.mysizer.GetItemPosition(button)
+        targetposition.Row +=1
+        #push new node at btome of clicked node, and shift whole list bewlow it, down one Unit 
+        firstNode = self.listOfNodes[targetIndex] # head of list
+
+        #shifter
+        #walk is how many nodes we need to push down, or "walk" to
+        walk = 0
+        while firstNode.next is not None: #iter until eol
+            firstNode = firstNode.next
+            walk +=1
         
+        while walk:
+            lastPos = self.mysizer.GetItemPosition(firstNode)
+            lastPos.row +=1
+            self.mysizer.SetItemPosition(firstNode,lastPos)
+            firstNode = firstNode.prev
+            walk -=1
+
+        #malloc and push
+        create = self.Node(self.listWindow, wx.ID_ANY,namestring, wx.DefaultPosition, wx.DefaultSize, 0, wx.DefaultValidator, namestring, self)
+        if firstNode.next:
+           firstNode.next.prev = create
+           create.next = firstNode.next.prev
+
+        firstNode.next = create
+        create.prev = firstNode
+
+        self.listOfNodes.insert(targetIndex + 1, create)
+        self.nodeNumbers += 1
+        self.mysizer.Add(create,targetposition, (0,0),0,1, namestring)
+        self.mysizer.FitInside(self.listWindow)
+        self.listWindow.ScrollChildIntoView(create)
+        
+
 
     def buttonDown(self, event):
         print "pressed"
@@ -83,10 +149,9 @@ class DubList(wx.Frame):
             firstNode = self.listOfNodes[0] # head of list
             
             while firstNode.next is not None: #iter until eol
-                prev = firstNode.prev
                 firstNode = firstNode.next
                 
-            namestring += str(len(self.listOfNodes))    
+            namestring += str(self.nodeNumbers)    
            #create = Node(self.listWindow, wx.ID_ANY,namestring,firstNode.point + (0,25), wx.DefaultSize, 0, wx.DefaultValidator, namestring)
             create = self.Node(self.listWindow, wx.ID_ANY,namestring,firstNode.point, wx.DefaultSize, 0, wx.DefaultValidator, namestring, self)
             create.val = len(self.listOfNodes)
@@ -99,9 +164,9 @@ class DubList(wx.Frame):
             create = self.Node(self.listWindow, wx.ID_ANY,namestring, wx.DefaultPosition, wx.DefaultSize, 0, wx.DefaultValidator, namestring, self)
             create.val = len(self.listOfNodes)
             create.parent = self
-        
+        self.nodeNumbers += 1
         #self.mysizer.Add(create,0,0,1,namestring) #boxsizer add
-        self.mysizer.Add(create,(1+ len(self.listOfNodes),1 ),(0,0),0,1, namestring)
+        self.mysizer.Add(create,(1+ len(self.listOfNodes),2 ),(0,0),0,1, namestring)
         self.listOfNodes.append(create)
         self.mysizer.FitInside(self.listWindow)
         #self.listWindow.SetFocus()not needed 
