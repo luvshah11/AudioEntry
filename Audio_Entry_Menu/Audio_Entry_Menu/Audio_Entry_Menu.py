@@ -841,112 +841,45 @@ class CreateAudioEntryWindow(wx.Frame):
         #this is a doubly linked list
 class CreateDictionaryWindow(wx.Frame):
             #list of nodes
-    class MyPanel(wx.ScrolledWindow):
-        def __init__(self,parent, id , pos  , size, style ):
-            wx.ScrolledWindow.__init__(self, parent, id, pos, size, style)
-            self.SetSize(parent.GetSize())
-            numberOfNodes = 0
-            self.listOfNodes = []
-            self.listHead = None
-            self.frame = parent
-            self.mainsizer = wx.BoxSizer(wx.VERTICAL)
-
-            #test = wx.TextCtrl(self, wx.ID_ANY, "testing")
-            #self.mainsizer.Add(test)
-
-            #intit list
-            newEntry = self.EntryRow(self,10,10)
-            newEntry.Show()
-            self.listOfNodes.append(newEntry)
-            self.listHead = self.listOfNodes[0]
-            numberOfNodes += 1
-            
-            self.mainsizer.Add(newEntry,1,wx.GROW | wx.EXPAND)
-            
-            self.mainsizer.Fit(self)
-            
-            #self.Refresh()
-            #self.mainsizer.SetSizeHints(self)
-            self.SetSizer(self.mainsizer)
-            self.Fit()
-            #self.Layout()
-            #newEntry.Destroy() #destyors the object, use this
-
-        
-            #test = wx.TextCtrl(self,pos = (10,10), size = (50,50))
-
-            
-            
-        def pushNew(self, entry):
-            print "green plus pressed"
-            print "next",entry.next, "prev", entry.prev
-            #goto EOL
-            node = self.listHead
-            while node.next is not None:
-                node = node.next
-            node.next = self.EntryRow(self,10, node.posy + 60)
-            node.next.Show()
-            self.mainsizer.Add(node.next,1,wx.GROW)
-            #self.SetSizer(self.mainsizer)
-            self.Refresh()
-            self.listOfNodes.append(node.next)
-            
-            
-
-        def popOld(self, entry):
-            print "red X pressed"
-            print "next",entry.next, "prev", entry.prev
-
-            prevNode= entry.prev
-            nextNode = entry.next
-            
-
-            if(prevNode is not None):
-                prevNode.next = nextNode
-                nextNode.prev = prevNode
-
-            elif(nextNode is not None):
-                nextNode.prev = None
-
-            while nextNode is not None:
-                nextNode.posy -= 50
-                nextNode = nextNode.next
-            
-            self.listOfNodes.remove(entry)
-            entry.Destroy()
-            self.Refresh()
-            
-
-           #node
+    class MyPanel(ScrolledPanel):
+        #node
         class EntryRow(wx.Panel):
-            def __init__(self,parentpanel, xpos, ypos ):
-                super(parentpanel.EntryRow, self).__init__(parentpanel, wx.ID_ANY, (xpos,ypos), size = (10,50), style = wx.TAB_TRAVERSAL | wx.SIMPLE_BORDER | wx.VSCROLL )
+            def __init__(self,parentpanel):
+                super(parentpanel.EntryRow, self).__init__(parentpanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style = wx.TAB_TRAVERSAL | wx.SIMPLE_BORDER | wx.VSCROLL )
                 #wx.Panel.__init__(parentpanel)
-                self.SetSize(400,50)
+                #self.SetSize(400,50)
                
-                print "making an EntryRow object"
-                self.posx = xpos
-                self.posy = ypos
+                #print "making an EntryRow object"
+                self.posx = 0
+                self.posy = 0
                 self.next = None
                 self.prev = None
-                self.parentpan = parentpanel
-                self.mysizer = wx.FlexGridSizer(5,1,1)
-                self.mysizer.SetMinSize(450,50)
+                buttonsizer = wx.BoxSizer(wx.VERTICAL)
+                entriesSizer = wx.BoxSizer(wx.HORIZONTAL)
+                masterSizer = wx.BoxSizer(wx.HORIZONTAL)
 
+                self.parentpan = parentpanel
+                #self.mysizer = wx.FlexGridSizer(5,1,1)
+                #self.mysizer.SetMinSize(450,50)
+
+                #set button sizers
                 plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
                 xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
-                
         
                 self.addButton = wx.Button(self, 1, pos =(self.posx, self.posy - 5), size = (24,24), name = "addButton")
                 self.addButton.SetBitmapLabel(plusBitMap)
                 
-
                 self.removeButton = wx.Button(self, 2, pos =(self.posx, self.posy + 18), size = (24,24), name = "removeButton")
                 self.removeButton.SetBitmapLabel(xBitmap)
+                self.addButton.Bind(wx.EVT_BUTTON, self.greenPlus, self.addButton)
+                self.removeButton.Bind(wx.EVT_BUTTON, self.redX, self.removeButton)
+                #parentpanel.Bind(wx.EVT_BUTTON, self.greenPlus , self.addButton)
+                #parentpanel.Bind(wx.EVT_BUTTON, self.redX , self.removeButton)
 
-              
-                #self.Bind(wx.EVT_BUTTON, parentpanel.greenPlus() , self.addButton)
-
+                buttonsizer.Add(self.addButton,0,0)
+                buttonsizer.Add(self.removeButton,0,0)
+                
+                #set entries sizer
                 keyName_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (self.posx+ 29 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
                 channel_SBOX = wx.StaticBox(self, wx.ID_ANY, "Channel: ",(self.posx+ 144 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
                 delay_SBOX =   wx.StaticBox(self, wx.ID_ANY, "Delay: ", (self.posx+ 259 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
@@ -956,72 +889,131 @@ class CreateDictionaryWindow(wx.Frame):
                 self.channelEntry = wx.TextCtrl(channel_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
                 self.delayEntry = wx.TextCtrl(delay_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
                 self.actionEntry = wx.TextCtrl(action_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "actyionE")
-                
-                #buttonsizer = wx.BoxSizer(wx.VERTICAL)
-                #buttonsizer.Add(self.addButton)
-                #buttonsizer.Add(self.removeButton)
-                #self.mysizer.Add(buttonsizer)
 
-                #self.mysizer.Add(keyName_SBOX,0)
-                #self.mysizer.Add(channel_SBOX,0)
-                #self.mysizer.Add(delay_SBOX,0)
-                #self.mysizer.Add(action_SBOX,0)
+                entriesSizer.Add(keyName_SBOX,0,0)
+                entriesSizer.Add(channel_SBOX,0,0)
+                entriesSizer.Add(delay_SBOX,0,0)
+                entriesSizer.Add(action_SBOX,0,0)
 
-                
+                #path up sizers
+                masterSizer.AddStretchSpacer(1)
+                masterSizer.Add(buttonsizer,0,0)
+                masterSizer.Add(entriesSizer,0,0)
+                masterSizer.AddStretchSpacer(1)
+                self.Layout()  
 
-                #self.mysizer.Fit(self)
-                #self.SetSizer(self.mysizer)
-                
-                #sizer
-                #self.sizer = wx.GridSizer()
-                #self.sizer.Add(self.addButton,1)
-                #self.sizer.Add(self.removeButton,1)
-                #self.sizer.Add(keyName_SBOX,1,wx.GROW)
-                #self.sizer.Add(channel_SBOX,1,wx.GROW)
-                #self.sizer.Add(delay_SBOX,1,wx.GROW)
-                #self.sizer.Add(action_SBOX,1,wx.GROW)
-                #self.renderPanel.mainSizer.Add(self.sizer)
-                #self.renderPanel.SetSizer(self.renderPanel.mainSizer)
-
-                print "success" 
-                #self.Bind(wx.EVT_BUTTON, pushNew, addButton)
-                parentpanel.Bind(wx.EVT_BUTTON, self.greenPlus , self.addButton)
-                parentpanel.Bind(wx.EVT_BUTTON, self.redX , self.removeButton)
-
-                def __del__(self):
-                    print "destroying EntryRow"
-               
-                   
+            def __del__(self):
+                print "destroying EntryRow"
+                                  
         
             def greenPlus(self, event):
                 print "creating new row"
+                #parentpanel.pushNew(self)
                 self.parentpan.pushNew(self)
-
-
+            
             def redX(self, event):
                 print "removing exisitng row"
+                #parentpanel.popOld(self)
                 self.parentpan.popOld(self)
-             
+
+        def __init__(self,parent, id , pos  , size, style ):
+            ScrolledPanel.__init__(self, parent, id, pos, size, style)
+            self.SetupScrolling(0,1,0,20,1,1)
+            self.numberOfNodes = 0
+            self.listOfNodes = []
+            self.mainsizer = wx.GridBagSizer(5,5)
+            
+            ##intit list
+            
+            newEntry = self.EntryRow(self)
+            newEntry.Show()
+            self.listOfNodes.append(newEntry)
+            self.numberOfNodes += 1
+            
+            self.mainsizer.Add(newEntry,(0,1),(0,0),0,5,"node0")
+            self.SetSizer(self.mainsizer)
+            self.mainsizer.Layout()
+
+                        
+        def pushNew(self, entry):
+            EntryRowClicked = entry
+            targetIndex = self.listOfNodes.index(entry)
+            targetPosition = self.mainsizer.GetItemPosition(entry)
+            shifterIter = self.listOfNodes[targetIndex]
+
+            #shifter
+            #walk the list from the target position to EOL, count total steps, that will be the total # of shifts
+            walk = 0
+            while shifterIter.next is not None:
+                shifterIter = shifterIter.next
+                walk += 1
+            
+            while walk:
+                lastPos = self.mainsizer.GetItemPosition(shifterIter)
+                lastPos.Row += 1
+                self.mainsizer.SetItemPosition(shifterIter, lastPos)
+                shifterIter = shifterIter.prev
+                walk -= 1
+            
+            #malloc and push new node into list
+            create = self.EntryRow(self)
+            if shifterIter.next:
+                shifterIter.next.prev = create
+                create.next = shifterIter.next
+            
+            shifterIter.next = create
+            create.prev = shifterIter
+
+            #stats and pointer patch
+            self.listOfNodes.insert(targetIndex + 1, create)
+            self.numberOfNodes += 1
+            namestring = "node" + str(self.numberOfNodes)
+            targetPosition.Row += 1
+            self.mainsizer.Add(create, targetPosition, (0,0),0,1,namestring)
+            self.mainsizer.FitInside(self)
+            self.ScrollChildIntoView(create)
+
+        def popOld(self, entry):
+            print "red X pressed"
+            print "next",entry.next, "prev", entry.prev
+            if entry.prev is not None:
+                entry.prev.next = entry.next
+            if entry.next is not None:
+                entry.next.prev = entry.prev
+
+            position = self.mainsizer.FindItem(entry)
+            gap = position.GetPos()
+            iter = entry
+            self.mainsizer.Detach(entry)
+
+            #push all the items below the target UP one Unit
+
+            while(iter):
+                if(iter.next is not None):
+                    newgap = self.mainsizer.GetItemPosition(iter.next)
+                    self.mainsizer.SetItemPosition(iter.next, gap)
+                    gap = newgapiter = iter.next
+                else:
+                    break
+            self.listOfNodes.remove(entry)
+            self.mainsizer.FitInside(self)
+            self.mainsizer.Layout()
+            entry.Destroy()
+                          
     
 
     def __init__(self, parent, id=wx.ID_ANY, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
         super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (580,350))
+
         self.SetFocus()
         #self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
-        self.panel = self.MyPanel(self,wx.ID_ANY,pos = (250,250), size = wx.DefaultSize , style = wx.TAB_TRAVERSAL | wx.VSCROLL)
+        self.panel = self.MyPanel(self,wx.ID_ANY,pos = wx.DefaultPosition, size = self.GetSize() , style = wx.TAB_TRAVERSAL | wx.VSCROLL)
+        dictName = wx.TextCtrl(self, wx.ID_ANY,"Enter Dictionary Name", wx.DefaultPosition, wx.DefaultSize + (200,0),0,wx.DefaultValidator,"chooseName" )
         box = wx.BoxSizer(wx.VERTICAL)
+        box.Add(dictName,0,wx.ALIGN_RIGHT)
         box.Add(self.panel,1,wx.GROW )
-        box.Fit(self)
-        self.SetSizer(box)
-        self.SetAutoLayout(True)
-        
-        #self.Fit()
-        #newEntry = self.EntryRow(40,10,self.panel)
-        #self.panel.listOfNodes.append(newEntry)
-
-        #sec = EntryRow(40,45,self.panel)#down (25{heigt of textctr} + 10 for space)
-        #thi = EntryRow(40,80,self.panel)
-        #fou = EntryRow(40,115,self.panel)        
+        self.SetSizerAndFit(box,False)
+        self.panel.SetAutoLayout(1)
         
         
         def __destroy(_):

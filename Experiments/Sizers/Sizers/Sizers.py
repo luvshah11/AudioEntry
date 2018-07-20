@@ -73,7 +73,7 @@ class DubList(wx.Frame):
         position = self.mysizer.FindItem(button)        #find GBSizerItem
         
         gap = position.GetPos()
-        print "pos COL:",gap.GetCol(),"\nROW:", gap.GetRow()
+ 
         iter = button 
         self.mysizer.Detach(button)
 
@@ -128,7 +128,7 @@ class DubList(wx.Frame):
         create = self.Node(self.listWindow, wx.ID_ANY,namestring, wx.DefaultPosition, wx.DefaultSize, 0, wx.DefaultValidator, namestring, self)
         if firstNode.next:
            firstNode.next.prev = create
-           create.next = firstNode.next.prev
+           create.next = firstNode.next
 
         firstNode.next = create
         create.prev = firstNode
@@ -138,11 +138,11 @@ class DubList(wx.Frame):
         self.mysizer.Add(create,targetposition, (0,0),0,1, namestring)
         self.mysizer.FitInside(self.listWindow)
         self.listWindow.ScrollChildIntoView(create)
-        
+        print self.nodeNumbers
 
 
     def buttonDown(self, event):
-        print "pressed"
+        print "LIST: push pressed"
         namestring = "button"
         # a list
         if len(self.listOfNodes) is not 0:
@@ -174,10 +174,10 @@ class DubList(wx.Frame):
         #self.listWindow.Refresh() not needed
         #self.listWindow.Update()  not needed
         #self.mysizer.Layout()     not needed
-
+        print self.nodeNumbers
 
     def button0Down(self, event):
-        print "popping"
+        print "LIST: pop pressed"
         if len(self.listOfNodes) is not 0: 
             lastNode = self.listOfNodes[len(self.listOfNodes) - 1] #grab last node
             try:
