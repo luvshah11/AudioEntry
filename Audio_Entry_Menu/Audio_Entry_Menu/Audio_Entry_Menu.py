@@ -248,21 +248,23 @@ class MainWindow(wx.Frame):
 
     def buttonEventHandler(self, event):
         button = event.GetEventObject()
-      
-        if button.GetName() == "playButton":
-            #playButtonFunc
-            print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
-            self.playbttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])         
-           
-        if button.GetName() == "editButton":
-            #editButtonFunc
-            print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
-            self.editBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])            
-        
-        if button.GetName() == "deleteBttn":
-            #deleteButtonFunc
-            print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
-            self.dletBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])  
+        try:
+            if button.GetName() == "playButton":
+                #playButtonFunc
+                print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
+                self.playbttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])         
+               
+            if button.GetName() == "editButton":
+                #editButtonFunc
+                print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
+                self.editBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])         
+                
+            if button.GetName() == "deleteBttn":
+                #deleteButtonFunc
+                print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
+                self.dletBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])  
+        except:
+            print "error nothing selcted"
 
 
 class EditSubWindow (wx.Frame):
@@ -519,7 +521,10 @@ class EditSubWindow (wx.Frame):
         else:
             
             status = ""
+
             #Robust data check - DID YOU FEED ME BAD DATA??
+
+
             if(type(str(self.keyEntry.GetValue())) is not str):
                status = " Keys(str) "
             if(type(str(self.fileEntry.GetValue())) is not str):
@@ -703,8 +708,8 @@ class CreateAudioEntryWindow(wx.Frame):
         #Status Bar
         self.isKeyEntered = False
         self.isFileEntered = False
-        status = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE, "helooooo")
-        self.SetStatusBar(status)
+        self.status = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE, "helooooo")
+        self.SetStatusBar(self.status)
         self.SetStatusText("Enter data and press OK | Key/File are required, other data fields can be left blank")
 
 
@@ -785,58 +790,90 @@ class CreateAudioEntryWindow(wx.Frame):
         print selection 
         stagingDict = {}
         status = ""
-        #1. create a dict to hold the key, file, vol, duck, unduck
-        print self.keyEntry.IsModified()
-        if(self.keyEntry.IsModified()and self.keyEntry.GetLineLength(1) > 1):
-            stagingDict["key"] = str(self.keyEntry.GetValue())
-            status += "Key &"
-        else:
-            print "ERROR: NO KEY"
-            self.SetStatusText("ERROR: You must enter a Key name")
-            return
-        
-        if(self.fileEntry.IsModified() and self.fileEntry.GetLineLength(1) > 1):
-            stagingDict["file"] = str(self.fileEntry.GetValue())
-            status = status + " File "
-        else:
-            print "ERROR: NO FILE"
-            self.SetStatusText("ERROR: You must enter a File name")
-            return
 
-        if(self.VolEntry.IsModified() and self.VolEntry.GetLineLength(1) > 1):
-            stagingDict["volume"] = int(self.VolEntry.GetValue())
-            status = status + "& volume "
-        else:
-            print "NO VOLUME ENTERED, NO VOLUME WRITTEN"
+         #Robust data check - DID YOU FEED ME BAD DATA?
 
-        
-        if(self.duckEntry.IsModified() and self.duckEntry.GetLineLength(1) > 1):
-            stagingDict["duck"] = float(self.duckEntry.GetValue())
-            status = status + "& duck "
-        else:
-            print "NO DUCK ENTERED, NO DUCK WRITTEN"
-        
-        if(self.unduckEntry.IsModified()  and self.unduckEntry.GetLineLength(1) > 1):
-            stagingDict["unduck_duration_offset"] = float(self.unduckEntry.GetValue())
-            status = status + "& unduck "
+
+        if(type(str(self.keyEntry.GetValue())) is not str):
+           status = " Keys(str) "
+        if(type(str(self.fileEntry.GetValue())) is not str):
+           status += " File(str) "
+
+        if(str(self.VolEntry.GetValue()) != 'None' and str(self.VolEntry.GetValue()) != ''):
+            try:
+                type(int(self.VolEntry.GetValue())) is not int 
+            except:
+                status += " Volume(int) "
+        if(str(self.duckEntry.GetValue()) != "None" and str(self.duckEntry.GetValue()) != ''):
+            try:
+                type(float(self.duckEntry.GetValue())) is not float
+            except:
+                status += " Duck(float) "
+        if(str(self.unduckEntry.GetValue()) != "None" and str(self.unduckEntry.GetValue()) != ''):
+            try:
+                type(float(self.unduckEntry.GetValue())) is not float
+            except:
+                status += " Unduck(float) "
+
+        if status is "":
+            #1. create a dict to hold the key, file, vol, duck, unduck
+            print self.keyEntry.IsModified()
+            if(self.keyEntry.IsModified()and self.keyEntry.GetLineLength(1) > 1):
+                stagingDict["key"] = str(self.keyEntry.GetValue())
+                status += "Key &"
+            else:
+                print "ERROR: NO KEY"
+                self.SetStatusText("ERROR: You must enter a Key name")
+                return
+            
+            if(self.fileEntry.IsModified() and self.fileEntry.GetLineLength(1) > 1):
+                stagingDict["file"] = str(self.fileEntry.GetValue())
+                status = status + " File "
+            else:
+                print "ERROR: NO FILE"
+                self.SetStatusText("ERROR: You must enter a File name")
+                return
+
+            if(self.VolEntry.IsModified() and self.VolEntry.GetLineLength(1) > 1):
+                stagingDict["volume"] = int(self.VolEntry.GetValue())
+                status = status + "& volume "
+            else:
+                print "NO VOLUME ENTERED, NO VOLUME WRITTEN"
+
+            
+            if(self.duckEntry.IsModified() and self.duckEntry.GetLineLength(1) > 1):
+                stagingDict["duck"] = float(self.duckEntry.GetValue())
+                status = status + "& duck "
+            else:
+                print "NO DUCK ENTERED, NO DUCK WRITTEN"
+            
+            if(self.unduckEntry.IsModified()  and self.unduckEntry.GetLineLength(1) > 1):
+                stagingDict["unduck_duration_offset"] = float(self.unduckEntry.GetValue())
+                status = status + "& unduck "
+                print stagingDict
+            else:
+                print "NO UNDUCK ENTERED, NO UNDUCK WRITTEN"
+
             print stagingDict
+
+            status = "Data entered: " + status
+            self.SetStatusText(status)
+
+            print self.finalDict["Audio"][selection]
+            self.finalDict["Audio"][selection].append(stagingDict)
+            print self.finalDict["Audio"][selection]
+
+            #set all text fields to false
+            self.refreshAllFields()
+            #2. Append the dict to the list selected from listChoice
+            yaml_dump(self.finalDict)
+            self.status.SetBackgroundColour("Green")
+            status = "DONE Entry Updated "
         else:
-            print "NO UNDUCK ENTERED, NO UNDUCK WRITTEN"
-
-        print stagingDict
-
-        status = "Data entered: " + status
+            self.status.SetBackgroundColour("Red")
+            status = "ERROR: Bad data at field(s): " + status
+       
         self.SetStatusText(status)
-
-        print self.finalDict["Audio"][selection]
-        self.finalDict["Audio"][selection].append(stagingDict)
-        print self.finalDict["Audio"][selection]
-
-        #set all text fields to false
-        self.refreshAllFields()
-        #2. Append the dict to the list selected from listChoice
-        yaml_dump(self.finalDict)
-
 
         #this is a doubly linked list
 class CreateDictionaryWindow(wx.Frame):
@@ -845,13 +882,13 @@ class CreateDictionaryWindow(wx.Frame):
         #node
         class EntryRow(wx.Panel):
             def __init__(self,parentpanel):
-                super(parentpanel.EntryRow, self).__init__(parentpanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style = wx.TAB_TRAVERSAL | wx.SIMPLE_BORDER | wx.VSCROLL )
+                super(parentpanel.EntryRow, self).__init__(parentpanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style = wx.TAB_TRAVERSAL )
                 #wx.Panel.__init__(parentpanel)
                 #self.SetSize(400,50)
                
                 #print "making an EntryRow object"
                 self.posx = 0
-                self.posy = 0
+                self.posy = 10
                 self.next = None
                 self.prev = None
                 buttonsizer = wx.BoxSizer(wx.VERTICAL)
@@ -866,10 +903,10 @@ class CreateDictionaryWindow(wx.Frame):
                 plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
                 xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
         
-                self.addButton = wx.Button(self, 1, pos =(self.posx, self.posy - 5), size = (24,24), name = "addButton")
+                self.addButton = wx.Button(self, 1, pos =(self.posx, self.posy + 18), size = (24,24), name = "addButton")
                 self.addButton.SetBitmapLabel(plusBitMap)
                 
-                self.removeButton = wx.Button(self, 2, pos =(self.posx, self.posy + 18), size = (24,24), name = "removeButton")
+                self.removeButton = wx.Button(self, 2, pos =(self.posx, self.posy- 5 ), size = (24,24), name = "removeButton")
                 self.removeButton.SetBitmapLabel(xBitmap)
                 self.addButton.Bind(wx.EVT_BUTTON, self.greenPlus, self.addButton)
                 self.removeButton.Bind(wx.EVT_BUTTON, self.redX, self.removeButton)
@@ -900,7 +937,14 @@ class CreateDictionaryWindow(wx.Frame):
                 masterSizer.Add(buttonsizer,0,0)
                 masterSizer.Add(entriesSizer,0,0)
                 masterSizer.AddStretchSpacer(1)
-                self.Layout()  
+                self.Layout()
+
+
+            def clearAllEntries(self):
+                self.keyEntry.Clear()
+                self.channelEntry.Clear()
+                self.delayEntry.Clear()
+                self.actionEntry.Clear()
 
             def __del__(self):
                 print "destroying EntryRow"
@@ -909,7 +953,9 @@ class CreateDictionaryWindow(wx.Frame):
             def greenPlus(self, event):
                 print "creating new row"
                 #parentpanel.pushNew(self)
+                object = event.GetEventObject()
                 self.parentpan.pushNew(self)
+
             
             def redX(self, event):
                 print "removing exisitng row"
@@ -920,21 +966,42 @@ class CreateDictionaryWindow(wx.Frame):
             ScrolledPanel.__init__(self, parent, id, pos, size, style)
             self.SetupScrolling(0,1,0,20,1,1)
             self.numberOfNodes = 0
+            self.nameOfDict = ""
+            self.par = parent
             self.listOfNodes = []
             self.mainsizer = wx.GridBagSizer(5,5)
-            
+            self.dictEntryszier = wx.BoxSizer(wx.HORIZONTAL)
             ##intit list
             
             newEntry = self.EntryRow(self)
-            newEntry.Show()
+            dictStatic = wx.StaticBoxSizer(wx.HORIZONTAL, self,"Enter Dictionary Name")
+            self.dictName = wx.TextCtrl(self,1,"", wx.DefaultPosition + (0,25), wx.DefaultSize + (100,0),wx.TE_PROCESS_ENTER,wx.DefaultValidator,"chooseName" )
+            self.save = wx.Button(self,wx.ID_ANY, "Save && Export",wx.DefaultPosition + (0,100), wx.DefaultSize,wx.BU_EXACTFIT, wx.DefaultValidator, "saveButton")
             self.listOfNodes.append(newEntry)
             self.numberOfNodes += 1
-            
-            self.mainsizer.Add(newEntry,(0,1),(0,0),0,5,"node0")
+
+            self.save.Bind(wx.EVT_BUTTON, self.saveNewDict)
+            dictStatic.Add(self.dictName, 1, wx.ALL, 1)
+            self.dictEntryszier.Add(dictStatic,1,wx.ALL, 1)
+            self.dictEntryszier.Add(self.save,1,3, 1)
+            self.mainsizer.Add(self.dictEntryszier, (0,1), (0,0), 0,0)
+            self.mainsizer.Add(newEntry,(1,1),(0,0),0,5,"node0")
+            #self.mainsizer.Add(dictName, (0,2), (0,0),0,5,"textctrl")
             self.SetSizer(self.mainsizer)
             self.mainsizer.Layout()
 
-                        
+        def saveNewDict(self, event):
+            print "entering name"
+            if wx.MessageBox("Are you sure?", "All changes are permanent", wx.ICON_QUESTION | wx.YES_NO) != wx.YES:
+                print "Nothing wirtten to disc"
+            else:
+                self.nameOfDict = self.dictName.GetValue()
+                finalListofDicts = []
+                finalDict = {}
+
+
+                
+
         def pushNew(self, entry):
             EntryRowClicked = entry
             targetIndex = self.listOfNodes.index(entry)
@@ -972,35 +1039,44 @@ class CreateDictionaryWindow(wx.Frame):
             self.mainsizer.Add(create, targetPosition, (0,0),0,1,namestring)
             self.mainsizer.FitInside(self)
             self.ScrollChildIntoView(create)
+            self.par.SetStatusText("Number of Nodes: " + str(self.numberOfNodes))
 
         def popOld(self, entry):
-            print "red X pressed"
-            print "next",entry.next, "prev", entry.prev
-            if entry.prev is not None:
-                entry.prev.next = entry.next
-            if entry.next is not None:
-                entry.next.prev = entry.prev
+            if len(self.listOfNodes) > 1:
+                print "red X pressed"
+                print "next",entry.next, "prev", entry.prev
+                if entry.prev is not None:
+                    entry.prev.next = entry.next
+                if entry.next is not None:
+                    entry.next.prev = entry.prev
 
-            position = self.mainsizer.FindItem(entry)
-            gap = position.GetPos()
-            iter = entry
-            self.mainsizer.Detach(entry)
+                position = self.mainsizer.FindItem(entry)
+                gap = position.GetPos()
+                iter = entry
+                self.mainsizer.Detach(entry)
 
-            #push all the items below the target UP one Unit
+                #push all the items below the target UP one Unit
 
-            while(iter):
-                if(iter.next is not None):
-                    newgap = self.mainsizer.GetItemPosition(iter.next)
-                    self.mainsizer.SetItemPosition(iter.next, gap)
-                    gap = newgapiter = iter.next
-                else:
-                    break
-            self.listOfNodes.remove(entry)
-            self.mainsizer.FitInside(self)
-            self.mainsizer.Layout()
-            entry.Destroy()
-                          
-    
+                while(iter):
+                    if(iter.next is not None):
+                        newgap = self.mainsizer.GetItemPosition(iter.next)
+                        self.mainsizer.SetItemPosition(iter.next, gap)
+                        gap = newgap
+                        iter = iter.next
+                    else:
+                        break
+                self.listOfNodes.remove(entry)
+                self.mainsizer.FitInside(self)
+                self.mainsizer.Layout()
+                entry.Destroy()
+                self.SetFocus()
+                self.numberOfNodes -=1
+                self.par.SetStatusText("Number of Nodes: " + str(self.numberOfNodes))
+            else:
+                print "single node left, clearing only"
+                entry.clearAllEntries()
+
+        
 
     def __init__(self, parent, id=wx.ID_ANY, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
         super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (580,350))
@@ -1008,12 +1084,14 @@ class CreateDictionaryWindow(wx.Frame):
         self.SetFocus()
         #self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
         self.panel = self.MyPanel(self,wx.ID_ANY,pos = wx.DefaultPosition, size = self.GetSize() , style = wx.TAB_TRAVERSAL | wx.VSCROLL)
-        dictName = wx.TextCtrl(self, wx.ID_ANY,"Enter Dictionary Name", wx.DefaultPosition, wx.DefaultSize + (200,0),0,wx.DefaultValidator,"chooseName" )
+       
         box = wx.BoxSizer(wx.VERTICAL)
-        box.Add(dictName,0,wx.ALIGN_RIGHT)
-        box.Add(self.panel,1,wx.GROW )
+       
+        box.Add(self.panel,1,wx.GROW)
         self.SetSizerAndFit(box,False)
         self.panel.SetAutoLayout(1)
+        self.statusBar = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE)
+        self.SetStatusBar(self.statusBar)
         
         
         def __destroy(_):
