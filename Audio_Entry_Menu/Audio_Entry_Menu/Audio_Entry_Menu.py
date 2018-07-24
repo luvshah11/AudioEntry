@@ -783,22 +783,19 @@ class CreateAudioEntryWindow(wx.Frame):
         self.okButton.Disable()
         self.isKeyEntered = False
         self.isFileEntered = False
-
-
+        
     def addToDict(self, event):
         selection = self.key_list[self.listChoice.GetCurrentSelection()] #effects, fanfare, muslice, voice <----choose one
         print selection 
         stagingDict = {}
         status = ""
 
-         #Robust data check - DID YOU FEED ME BAD DATA?
-
-
+        #Robust data check - DID YOU FEED ME BAD DATA?
+         
         if(type(str(self.keyEntry.GetValue())) is not str):
            status = " Keys(str) "
         if(type(str(self.fileEntry.GetValue())) is not str):
            status += " File(str) "
-
         if(str(self.VolEntry.GetValue()) != 'None' and str(self.VolEntry.GetValue()) != ''):
             try:
                 type(int(self.VolEntry.GetValue())) is not int 
@@ -948,6 +945,7 @@ class CreateDictionaryWindow(wx.Frame):
                 self.channelEntry.Clear()
                 self.delayEntry.Clear()
                 self.actionEntry.Clear()
+                self.Refresh()
 
             def __del__(self):
                 print "destroying EntryRow"
@@ -971,6 +969,7 @@ class CreateDictionaryWindow(wx.Frame):
             self.numberOfNodes = 0
             self.nameOfDict = ""
             self.par = parent
+            #self.parStatus = self.par.statusBar
             self.listOfNodes = []
             self.mainsizer = wx.GridBagSizer(5,5)
             self.dictEntryszier = wx.BoxSizer(wx.HORIZONTAL)
@@ -994,62 +993,116 @@ class CreateDictionaryWindow(wx.Frame):
             self.mainsizer.Layout()
 
         def saveNewDict(self, event):
+            isWritable = True
             print "entering name"
             if wx.MessageBox("Are you sure?", "All changes are permanent", wx.ICON_QUESTION | wx.YES_NO) != wx.YES:
                 print "Nothing wirtten to disc"
             else:
                 #append a new LIST of DICTS to the [Dictionary] dictionary 
+
                 self.nameOfDict = self.dictName.GetValue()
                 finalListofDicts = []
                 finalDict = {}
-                final_structure = self.par.parent.input_structure
+                final_structure = self.par.input_structure
                 Dictionaries = final_structure["Audio"]["Dictionaries"]
                 print Dictionaries
-
-                #Robust check?
+                
                 status = ""
-
-            #Robust data check - DID YOU FEED ME BAD DATA??
-
-
-                if(type(str(node.keyEntry.GetValue())) is not str):
-                   status = " Keys(str) "
-                if(type(int(node.channelEntry.GetValue())) is not int):
-                   status += " Channel(int) "
-                if(str(self.volEntry.GetValue()) != 'None' and str(self.volEntry.GetValue()) != ''):
-                    try:
-                        type(int(self.volEntry.GetValue())) is not int 
-                    except:
-                        status += " Volume(int) "
-                if(str(self.duckEntry.GetValue()) != "None" and str(self.duckEntry.GetValue()) != ''):
-                    try:
-                        type(float(self.duckEntry.GetValue())) is not float
-                    except:
-                        status += " Duck(float) "
-                if(str(self.unDuckEntry.GetValue()) != "None" and str(self.unDuckEntry.GetValue()) != ''):
-                    try:
-                        type(float(self.unDuckEntry.GetValue())) is not float
-                    except:
-                        status += " Unduck(float) "
-
-
-
-                if(status is ""):
-
                 x = 0
                 while x < self.numberOfNodes:
                     node = self.listOfNodes[x]
-                    finalDict["key"] = str(node.keyEntry.GetValue())
-                    finalDict["channel"] = int(node.channelEntry.GetValue())
-                    finalDict["delay"] = float(node.delayEntry.GetValue())
-                    finalDict["action"] = float(node.actionEntry.GetValue())
-                    finalDict["tag"]    = str(node.tagEntry.GetValue())
-                    finalListofDicts.append(copy.deepcopy(finalDict))
-                    x +=1
-                print finalListofDicts
-                Dictionaries[str(self.nameOfDict)] = finalListofDicts
-                yaml_dump(final_structure)
+                    #Robust data check - DID YOU FEED ME BAD DATA??
+                    if self.nameOfDict == '':
+                        isWritable = False
+                        self.dictName.SetBackgroundColour("Red")
+                    else:
+                        self.dictName.SetBackgroundColour("White")
 
+                    if(type(str(node.keyEntry.GetValue())) is not str) or (node.keyEntry.GetValue() == ''):
+                       status = " Keys(str) "
+                       node.keyEntry.SetBackgroundColour("Red")
+                       isWritable = False
+                    else:
+                        node.keyEntry.SetBackgroundColour("white")
+                        
+                    try:
+                        if(type(int(node.channelEntry.GetValue())) is not int):
+                           status += " Channel(int) "
+                           node.channelEntry.SetBackgroundColour("Red")
+                           isWritable = False
+                        else:
+                            print "good channel"
+                            node.channelEntry.SetBackgroundColour("white")
+                    except:
+                        status += " Channel(int) "
+                        node.channelEntry.SetBackgroundColour("Red")
+                        isWritable = False
+
+                    try:
+                        if(type(float(node.delayEntry.GetValue())) is not float):
+                            status += " Delay(int) "
+                            node.delayEntry.SetBackgroundColour("Red")
+                            isWritable = False
+                        else:
+                            node.delayEntry.SetBackgroundColour("white")
+                    except:
+                            status += " Delay(int) "
+                            node.delayEntry.SetBackgroundColour("Red")
+                            isWritable = False
+                    try:
+                        if(type(float(node.actionEntry.GetValue())) is not float):
+                            status += " action(float) "
+                            node.actionEntry.SetBackgroundColour("Red")
+                            isWritable = False
+                        else:
+                            node.actionEntry.SetBackgroundColour("white")
+                    except:
+                        status += " action(float) "
+                        node.actionEntry.SetBackgroundColour("Red")
+                        isWritable = False
+
+                    if(type(str(node.tagEntry.GetValue())) is not str) or (node.tagEntry.GetValue() == ''):         
+                        status += " tag(string) "
+                        node.tagEntry.SetBackgroundColour("Red")
+                        isWritable = False
+                    else:
+                        node.tagEntry.SetBackgroundColour("white")
+
+                    if(status is "" and isWritable):
+                        node.keyEntry.SetBackgroundColour("white")
+                        node.channelEntry.SetBackgroundColour("white")
+                        node.delayEntry.SetBackgroundColour("white")
+                        node.actionEntry.SetBackgroundColour("white")
+                        node.tagEntry.SetBackgroundColour("white")
+                        finalDict["key"] = str(node.keyEntry.GetValue())
+                        finalDict["channel"] = int(node.channelEntry.GetValue())
+                        finalDict["delay"] = float(node.delayEntry.GetValue())
+                        finalDict["action"] = float(node.actionEntry.GetValue())
+                        finalDict["tag"]    = str(node.tagEntry.GetValue())
+                        finalListofDicts.append(copy.deepcopy(finalDict))
+                        x +=1
+                    else:
+                        x += 1
+
+                #real quick, set the first status bar message first
+                firstStatus = "Number of Nodes: " + str(self.numberOfNodes)
+                if status is "":
+                    print finalListofDicts
+                    Dictionaries[str(self.nameOfDict)] = finalListofDicts
+                    yaml_dump(final_structure)
+                    self.par.statusBar.SetBackgroundColour("Green")
+                    self.par.SetStatusText(firstStatus +"\t|\t"+ "DONE:Dictionary Entry Added ")
+                    node.keyEntry.SetBackgroundColour("white")
+                    node.channelEntry.SetBackgroundColour("white")
+                    node.delayEntry.SetBackgroundColour("white")
+                    node.actionEntry.SetBackgroundColour("white")
+                    node.tagEntry.SetBackgroundColour("white")
+                else:
+                    #self.par.statusBar.SetBackgroundColor("Red")
+                    #self.SetBackgroundColour("Red")
+                    self.par.statusBar.SetBackgroundColour("Red")
+                    self.par.SetStatusText(firstStatus +"\t|\t"+ "ERROR: Bad data at field(s): " + status)
+                self.Refresh()
                 
 
         def pushNew(self, entry):
@@ -1089,6 +1142,7 @@ class CreateDictionaryWindow(wx.Frame):
             self.mainsizer.Add(create, targetPosition, (0,0),0,1,namestring)
             self.mainsizer.FitInside(self)
             self.ScrollChildIntoView(create)
+            self.par.statusBar.SetBackgroundColour("white")
             self.par.SetStatusText("Number of Nodes: " + str(self.numberOfNodes))
 
         def popOld(self, entry):
@@ -1121,9 +1175,14 @@ class CreateDictionaryWindow(wx.Frame):
                 entry.Destroy()
                 self.SetFocus()
                 self.numberOfNodes -=1
+                self.par.statusBar.SetBackgroundColour("White")
                 self.par.SetStatusText("Number of Nodes: " + str(self.numberOfNodes))
             else:
                 print "single node left, clearing only"
+                self.par.statusBar.SetBackgroundColour("red")
+                self.par.SetStatusText("Number of Nodes: " + str(self.numberOfNodes))
+                
+                self.Show()
                 entry.clearAllEntries()
 
         
@@ -1131,20 +1190,18 @@ class CreateDictionaryWindow(wx.Frame):
     def __init__(self, parent, id=wx.ID_ANY, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
         super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (700,350))
 
-        self.parent = parent
-
         self.SetFocus()
         #self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
         self.panel = self.MyPanel(self,wx.ID_ANY,pos = wx.DefaultPosition, size = self.GetSize() , style = wx.TAB_TRAVERSAL | wx.VSCROLL)
-       
+
         box = wx.BoxSizer(wx.VERTICAL)
-       
+
         box.Add(self.panel,1,wx.GROW)
         self.SetSizerAndFit(box,False)
         self.panel.SetAutoLayout(1)
         self.statusBar = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE)
         self.SetStatusBar(self.statusBar)
-        
+        self.input_structure  = parent.input_structure
         
         def __destroy(_):
             print "destroying CAE menu"
