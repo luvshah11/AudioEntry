@@ -920,17 +920,20 @@ class CreateDictionaryWindow(wx.Frame):
                 keyName_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (self.posx+ 29 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
                 channel_SBOX = wx.StaticBox(self, wx.ID_ANY, "Channel: ",(self.posx+ 144 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
                 delay_SBOX =   wx.StaticBox(self, wx.ID_ANY, "Delay: ", (self.posx+ 259 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-                action_SBOX =   wx.StaticBox(self, wx.ID_ANY, "Action: ", (self.posx+ 374 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+                action_SBOX =  wx.StaticBox(self, wx.ID_ANY, "Action: ", (self.posx+ 374 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+                tag_SBOX = wx.StaticBox(self, wx.ID_ANY, "Tag: ", (self.posx + 489,self.posy-6), (110,50),wx.SUNKEN_BORDER)
         
                 self.keyEntry = wx.TextCtrl(keyName_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER ,name = "keyE")
                 self.channelEntry = wx.TextCtrl(channel_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
                 self.delayEntry = wx.TextCtrl(delay_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
                 self.actionEntry = wx.TextCtrl(action_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "actyionE")
+                self.tagEntry = wx.TextCtrl(tag_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "tagE")
 
                 entriesSizer.Add(keyName_SBOX,0,0)
                 entriesSizer.Add(channel_SBOX,0,0)
                 entriesSizer.Add(delay_SBOX,0,0)
                 entriesSizer.Add(action_SBOX,0,0)
+                entriesSizer.Add(tag_SBOX,0,0)
 
                 #path up sizers
                 masterSizer.AddStretchSpacer(1)
@@ -995,10 +998,57 @@ class CreateDictionaryWindow(wx.Frame):
             if wx.MessageBox("Are you sure?", "All changes are permanent", wx.ICON_QUESTION | wx.YES_NO) != wx.YES:
                 print "Nothing wirtten to disc"
             else:
+                #append a new LIST of DICTS to the [Dictionary] dictionary 
                 self.nameOfDict = self.dictName.GetValue()
                 finalListofDicts = []
                 finalDict = {}
+                final_structure = self.par.parent.input_structure
+                Dictionaries = final_structure["Audio"]["Dictionaries"]
+                print Dictionaries
 
+                #Robust check?
+                status = ""
+
+            #Robust data check - DID YOU FEED ME BAD DATA??
+
+
+                if(type(str(node.keyEntry.GetValue())) is not str):
+                   status = " Keys(str) "
+                if(type(int(node.channelEntry.GetValue())) is not int):
+                   status += " Channel(int) "
+                if(str(self.volEntry.GetValue()) != 'None' and str(self.volEntry.GetValue()) != ''):
+                    try:
+                        type(int(self.volEntry.GetValue())) is not int 
+                    except:
+                        status += " Volume(int) "
+                if(str(self.duckEntry.GetValue()) != "None" and str(self.duckEntry.GetValue()) != ''):
+                    try:
+                        type(float(self.duckEntry.GetValue())) is not float
+                    except:
+                        status += " Duck(float) "
+                if(str(self.unDuckEntry.GetValue()) != "None" and str(self.unDuckEntry.GetValue()) != ''):
+                    try:
+                        type(float(self.unDuckEntry.GetValue())) is not float
+                    except:
+                        status += " Unduck(float) "
+
+
+
+                if(status is ""):
+
+                x = 0
+                while x < self.numberOfNodes:
+                    node = self.listOfNodes[x]
+                    finalDict["key"] = str(node.keyEntry.GetValue())
+                    finalDict["channel"] = int(node.channelEntry.GetValue())
+                    finalDict["delay"] = float(node.delayEntry.GetValue())
+                    finalDict["action"] = float(node.actionEntry.GetValue())
+                    finalDict["tag"]    = str(node.tagEntry.GetValue())
+                    finalListofDicts.append(copy.deepcopy(finalDict))
+                    x +=1
+                print finalListofDicts
+                Dictionaries[str(self.nameOfDict)] = finalListofDicts
+                yaml_dump(final_structure)
 
                 
 
@@ -1079,7 +1129,9 @@ class CreateDictionaryWindow(wx.Frame):
         
 
     def __init__(self, parent, id=wx.ID_ANY, title="", pos = (250,250), size = (580,350) , style = ~wx.RESIZE_BORDER, name = ""):
-        super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (580,350))
+        super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (700,350))
+
+        self.parent = parent
 
         self.SetFocus()
         #self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")

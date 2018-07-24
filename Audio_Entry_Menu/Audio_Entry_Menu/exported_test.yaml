@@ -1,5 +1,11 @@
 Audio:
   Dictionaries:
+    !!python/unicode 'deafultRow':
+    - action: !!python/unicode 'FROU'
+      channel: !!python/unicode 'TWO'
+      delay: !!python/unicode 'THRE'
+      key: !!python/unicode 'ONE'
+      tag: !!python/unicode 'FIVE'
     houdini_letter:
     - channel: 3
       key: SMBullet_EndSuccess
@@ -41,7 +47,7 @@ Audio:
     key: match_sequence
   - file: ultimate_mission.wav
     key: ultimate_mission
-    volume: 9001
+    volume: 1.2
   Voice:
   - duck: 0.51
     file: Gen_Aud_Houdini01.wav
