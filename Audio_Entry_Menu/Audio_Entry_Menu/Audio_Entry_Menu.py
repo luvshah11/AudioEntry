@@ -140,7 +140,14 @@ class MainWindow(wx.Frame):
             x = 0
             for x < len(key_List):
                 if(len(input) > len(key_List[x])):
+                    print"list element is smaller"
+                    score = 0
 
+                    #for eache letter in key count the similarities 
+                    score = difflib.SequenceMatcher(None,input, key_List[x]).ratio()
+                else:
+                    print "input is smaller"
+                x += 1
         else:
 
             
