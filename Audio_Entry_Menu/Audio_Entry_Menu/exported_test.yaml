@@ -1,26 +1,5 @@
 Audio:
   Dictionaries:
-    Test:
-    - action: 123.0
-      channel: 123
-      delay: 123.0
-      key: first
-      tag: one
-    - action: 456.0
-      channel: 456
-      delay: 456.0
-      key: second
-      tag: two
-    - action: 789.0
-      channel: 789
-      delay: 789.0
-      key: third
-      tag: three
-    - action: 741.0
-      channel: 741
-      delay: 741.0
-      key: fourth
-      tag: four
     houdini_letter:
     - channel: 3
       key: SMBullet_EndSuccess

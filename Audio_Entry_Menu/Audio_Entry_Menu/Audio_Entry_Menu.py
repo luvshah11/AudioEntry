@@ -1,7 +1,9 @@
 import wx
 import yaml
 import copy
+import difflib
 from wx.lib.scrolledpanel import ScrolledPanel
+
 
 def stinr_allign(in_srting):
     return in_srting
@@ -29,6 +31,7 @@ class MainWindow(wx.Frame):
         self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "mainPanel")
         #self.SetScrollbar(self)
         #members
+        self.vertBoxSizer = wx.BoxSizer(wx.VERTICAL)
         self.holding_list = []
         self.channelList = []
         self.finalKeyList = []
@@ -77,7 +80,71 @@ class MainWindow(wx.Frame):
         self.makeAudioPanel(self.holding_list)
         self.makeToolBar()
         self.makeButtons()
+        self.makeSearchBar()
+        #self.makesearchResults()
+        self.SetSizer(self.vertBoxSizer)
+        self.Layout()
+
+    def makeSearchBar(self):
+        print "making search bar"
+        self.vertBoxSizer.Add(0,50,0)
+        horStaticBoxizer = wx.BoxSizer( wx.HORIZONTAL)
+        staticbox = wx.StaticBoxSizer(wx.HORIZONTAL, self.panel, "Search:")
+        horStaticBoxizer.Add(30,0,0)
+        choiceList = ["key","file", "tag"]
+        self.typeChoiceBox = wx.Choice(self.panel, 2,wx.DefaultPosition,wx.DefaultSize,choiceList, 0, wx.DefaultValidator, "typeChoiceBox")
+        staticbox.Add(self.typeChoiceBox,0,0)
+        searchBar = wx.SearchCtrl(self.panel, 1, "",wx.DefaultPosition,wx.DefaultSize + (391,0), wx.TE_PROCESS_ENTER, wx.DefaultValidator, "searchBar")
+        staticbox.Add(20,0,0)
+        staticbox.Add(searchBar,0,0,0)
     
+
+        searchBar.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.searchForKey)
+        #horStaticBoxizer.SetDimension((wx.DefaultPosition),(1000,35))
+        horStaticBoxizer.Add(staticbox)
+        self.vertBoxSizer.Add(horStaticBoxizer)
+
+    def searchForKey(self, event):
+        #for every key press, check for seach results in each dictionary.
+        print "searching for key"
+        input = event.GetEventObject()
+        input = input.GetValue()
+        print input
+
+        #get slection
+        print self.typeChoiceBox.GetString(self.typeChoiceBox.GetSelection())
+        typeFromChoice = self.typeChoiceBox.GetString(self.typeChoiceBox.GetSelection())
+        #create 3 lists of strings, key, file and tag
+        key_List = []
+        file_List = []
+        tag_List = []
+
+        if(typeFromChoice):
+            for audio in self.input_structure:
+                print audio
+                for audioKeys in self.input_structure[audio]:
+                    print audioKeys
+                    if audioKeys == "Dictionaries":
+                        break
+                    else:
+                        for node in self.input_structure[audio][audioKeys]:
+                            print node["key"]
+                            print node["file"]
+                            print node[typeFromChoice]
+                            key_List.append(node["key"])
+                            file_List.append(node["file"])
+                            try:
+                                tag_List.append(node["tag"])
+                            except:
+                                print "no tag found at key:", node["key"]
+            x = 0
+            for x < len(key_List):
+                if(len(input) > len(key_List[x])):
+
+        else:
+
+            
+
 
     def makeToolBar(self):
         #create a menu bar you typcally see at the top
@@ -129,10 +196,23 @@ class MainWindow(wx.Frame):
         yaml_dump(self.input_structure)
 
     def makeAudioPanel(self, in_string):
+        #add a space between content and tool bar
+        self.vertBoxSizer.Add(0,50,0)
+        
+        #sizer pre-start
+        self.horBoxSizer = wx.BoxSizer(wx.HORIZONTAL)
+
         choicebox_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Key: ", (430,36), (390,45))
         channel_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Channel: ", (20,36), (390,45))
-        self.channelbox = wx.Choice(self.panel,1, (25,50), (380,25), in_string)
-        self.choicebox = wx.Choice(self.panel,1,(435,50), (380,25))
+        self.channelbox = wx.Choice(channel_SBOX,1, wx.DefaultPosition + (5,15), (380,25), in_string)
+        self.choicebox = wx.Choice(choicebox_SBOX,1,wx.DefaultPosition+ (5,15), (380,25))
+        
+        self.horBoxSizer.Add(25,0,0)
+        self.horBoxSizer.Add(channel_SBOX,1,0)
+        self.horBoxSizer.Add(choicebox_SBOX,1,0)
+
+        self.vertBoxSizer.Add(self.horBoxSizer,0,0)
+
         self.Bind(wx.EVT_CHOICE, self.channelPanelScript, self.channelbox)
         self.choicebox.Bind(wx.EVT_CHOICE, self.choicePanelScript, self.choicebox)
  
@@ -151,9 +231,6 @@ class MainWindow(wx.Frame):
         self.finalFileList.sort()
         self.choicebox.SetItems(self.finalFileList)
         
-
-
-
     def choicePanelScript(self,event):
         print self.choicebox.GetCurrentSelection()
         sub_list = self.input_structure["Audio"][self.holding_list[self.channelbox.GetCurrentSelection()]]
@@ -166,10 +243,12 @@ class MainWindow(wx.Frame):
 
     def makeButtons(self):
         print "making buttons"
-        playButton = wx.Button(self.panel, 1, "Play", (830,50), (35,25), name = "playButton")
-        editButton = wx.Button(self.panel, 1, "Edit", (875,50), (35,25), name = "editButton")
-        deleteBttn = wx.Button(self.panel, 1, "Delete", (920,50), (45,25), name = "deleteBttn")        
-
+        playButton = wx.Button(self.panel, 1, "Play",  wx.DefaultPosition + (0,5),(35,50), name = "playButton")
+        editButton = wx.Button(self.panel, 1, "Edit",  wx.DefaultPosition+(0,15),(35,50), name = "editButton")
+        deleteBttn = wx.Button(self.panel, 1, "Delete", wx.DefaultPosition+(0,15), (45,50), name = "deleteBttn")        
+        self.horBoxSizer.Add(playButton,0,0)
+        self.horBoxSizer.Add(editButton,0,0)
+        self.horBoxSizer.Add(deleteBttn,0,0)
         #bind script to buttons
         self.Bind(wx.EVT_BUTTON, self.buttonEventHandler, playButton)
     
