@@ -88,21 +88,54 @@ class MainWindow(wx.Frame):
     def makeSearchBar(self):
         print "making search bar"
         self.vertBoxSizer.Add(0,50,0)
-        horStaticBoxizer = wx.BoxSizer( wx.HORIZONTAL)
+        vertSizer = wx.BoxSizer(wx.VERTICAL)
+        horBoxizer = wx.BoxSizer( wx.HORIZONTAL)
         staticbox = wx.StaticBoxSizer(wx.HORIZONTAL, self.panel, "Search:")
-        horStaticBoxizer.Add(30,0,0)
+        horBoxizer.Add(25,0,0)
         choiceList = ["key","file", "tag"]
         self.typeChoiceBox = wx.Choice(self.panel, 2,wx.DefaultPosition,wx.DefaultSize,choiceList, 0, wx.DefaultValidator, "typeChoiceBox")
         staticbox.Add(self.typeChoiceBox,0,0)
-        searchBar = wx.SearchCtrl(self.panel, 1, "",wx.DefaultPosition,wx.DefaultSize + (391,0), wx.TE_PROCESS_ENTER, wx.DefaultValidator, "searchBar")
+        searchBar = wx.SearchCtrl(self.panel, 1, "",wx.DefaultPosition,wx.DefaultSize + (315,0), wx.TE_PROCESS_ENTER, wx.DefaultValidator, "searchBar")
         staticbox.Add(20,0,0)
         staticbox.Add(searchBar,0,0,0)
-    
+        self.resultsList = wx.ListBox(self.panel,wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize + (391,50), [], wx.LB_NEEDED_SB, wx.DefaultValidator, "results")
+        self.resultsList.Bind(wx.EVT_LISTBOX_DCLICK, self.onListBoxSelect, self.resultsList)
 
         searchBar.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.searchForKey)
+        searchBar.Bind(wx.EVT_TEXT_ENTER, self.searchForKey)
         #horStaticBoxizer.SetDimension((wx.DefaultPosition),(1000,35))
-        horStaticBoxizer.Add(staticbox)
-        self.vertBoxSizer.Add(horStaticBoxizer)
+        vertSizer.Add(staticbox)
+        vertSizer.Add(self.resultsList)
+        horBoxizer.Add(vertSizer)
+        self.vertBoxSizer.Add(horBoxizer)
+    
+    def onListBoxSelect(self, event):
+        print "woowweee u doubleclicked the list box"
+        obj = event.GetEventObject()
+        print obj.GetSelection()
+        selectionNode = self.listOfCandidates[obj.GetSelection()]
+        print selectionNode
+        channel = ""
+        #find channel
+        sub_dicts = self.input_structure["Audio"]
+        if("Dictionaries" in  sub_dicts):
+            sub_dicts.pop("Dictionaries")
+        print sub_dicts
+        listOfKeys = sub_dicts.keys()
+        for x in range(len(listOfKeys)):
+            dicts = sub_dicts[listOfKeys[x]]
+            for y in range(len(dicts)):
+                if selectionNode["file"] in dicts[y]["file"]:
+                    channel = listOfKeys[x]
+                    print channel
+
+
+        self.channelbox.SetSelection(x)
+        self.listy = []
+        self.listy.append(selectionNode["file"])
+        self.finalFileList = self.listy
+        self.choicebox.SetItems(self.listy)
+        self.choicebox.SetSelection(0)
 
     def searchForKey(self, event):
         #for every key press, check for seach results in each dictionary.
@@ -118,38 +151,61 @@ class MainWindow(wx.Frame):
         key_List = []
         file_List = []
         tag_List = []
+        self.listOfCandidates = []
+        listOfCandStrings = []
 
-        if(typeFromChoice):
+        if(typeFromChoice != ''):
             for audio in self.input_structure:
                 print audio
                 for audioKeys in self.input_structure[audio]:
                     print audioKeys
                     if audioKeys == "Dictionaries":
-                        break
+                        print"sorry"
                     else:
+                        #populate a list of strings to search trhough
                         for node in self.input_structure[audio][audioKeys]:
-                            print node["key"]
-                            print node["file"]
-                            print node[typeFromChoice]
-                            key_List.append(node["key"])
-                            file_List.append(node["file"])
                             try:
-                                tag_List.append(node["tag"])
+                             
+                                if(self.KMP_algo(node[typeFromChoice],input)):
+                                    listOfCandStrings.append(node[typeFromChoice])
+                                    self.listOfCandidates.append(node)
+                                else:
+                                    print"no match in node"
                             except:
                                 print "no tag found at key:", node["key"]
-            x = 0
-            for x < len(key_List):
-                if(len(input) > len(key_List[x])):
-                    print"list element is smaller"
-                    score = 0
+                            
+        self.resultsList.SetItems(listOfCandStrings)
+        print self.listOfCandidates
+        #self.resultsList.EnsureVisible()
 
-                    #for eache letter in key count the similarities 
-                    score = difflib.SequenceMatcher(None,input, key_List[x]).ratio()
-                else:
-                    print "input is smaller"
-                x += 1
-        else:
 
+    def KMP_algo(self,text, pattern):
+
+        # allow indexing into pattern and protect against change during yield
+        text = str(text.lower())
+        pattern = str(pattern.lower())
+        pattern = list(pattern)
+
+        # build table of shift amounts
+        shifts = [1] * (len(pattern) + 1)
+        shift = 1
+        for pos in range(len(pattern)):
+            while shift <= pos and pattern[pos] != pattern[pos-shift]:
+                shift += shifts[pos-shift]
+            shifts[pos+1] = shift
+
+        # do the actual search
+        x = 0
+        startPos = 0
+        matchLen = 0
+        for c in text:
+            while matchLen == len(pattern) or matchLen >= 0 and pattern[matchLen] != c:
+                startPos += shifts[matchLen]
+                matchLen -= shifts[matchLen]
+            matchLen += 1
+            if matchLen == len(pattern):
+                x+=1
+        return x
             
 
 
@@ -243,9 +299,12 @@ class MainWindow(wx.Frame):
         sub_list = self.input_structure["Audio"][self.holding_list[self.channelbox.GetCurrentSelection()]]
         print sub_list
         print sub_list[self.choicebox.GetCurrentSelection()]
-        print "\nYou selected: ",self.finalFileList[self.choicebox.GetCurrentSelection()]
-        print self.choicebox.GetSelection()
-        self.finalFileSelection = self.finalFileList[self.choicebox.GetSelection()]
+        try:
+            print "\nYou selected: ",self.finalFileList[self.choicebox.GetCurrentSelection()]
+            print self.choicebox.GetSelection()
+            self.finalFileSelection = self.finalFileList[self.choicebox.GetSelection()]
+        except:
+            self.finalFileSelection = self.listy[0]
         #print sub_list[self.finalFileSelection]
 
     def makeButtons(self):
@@ -265,7 +324,10 @@ class MainWindow(wx.Frame):
         x = 0
         key_list = self.input_structure["Audio"].keys()
         key_list = key_list[:-1]
-        sub_list = self.input_structure["Audio"][key_list[self.channelbox.GetCurrentSelection()]]
+        try:
+            sub_list = self.input_structure["Audio"][key_list[self.channelbox.GetCurrentSelection()]]
+        except:
+            sub_list = self.input_structure["Audio"]["Fanfare"]
         displayString = []
         while x < len(sub_list):
             self.finalFileList.append(sub_list[x]["file"])
@@ -343,8 +405,10 @@ class MainWindow(wx.Frame):
             if button.GetName() == "editButton":
                 #editButtonFunc
                 print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
-                self.editBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])         
-                
+                try:
+                    self.editBttnFunc(self.finalFileList[self.choicebox.GetCurrentSelection()])         
+                except:
+                    self.editBttnFunc(self.listy[0])
             if button.GetName() == "deleteBttn":
                 #deleteButtonFunc
                 print "Button pressed: ", button.GetLabel(), " \nButton Name: ", button.GetName()
@@ -381,7 +445,7 @@ class EditSubWindow (wx.Frame):
         else:
             print "no"
 
-        if parent.choicebox.CurrentSelection > -1:
+        if parent.choicebox.CurrentSelection > -1 or len(parent.listy):
             self.finalFile = parent.finalFileSelection
             isSelected = True
             isFiredOff = False
@@ -759,7 +823,7 @@ class CreateAudioEntryWindow(wx.Frame):
         self.finalDict = parent.input_structure
         temp = self.finalDict["Audio"]
         self.key_list = self.finalDict["Audio"].keys()
-        self.key_list = self.key_list[:-1]
+        self.key_list.pop(4)
 
         #list
         self.listChoice = wx.Choice(self.panel,1, (125,30), (350,25), self.key_list)
