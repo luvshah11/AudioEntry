@@ -1,4 +1,20 @@
 Audio:
+  Dictionaries:
+    houdini_letter:
+    - channel: 3
+      key: SMBullet_EndSuccess
+    - channel: 1
+      delay: 0.75
+      key: houdini_letter
+    now_showing_terror:
+    - channel: 3
+      key: Movies_Activated
+    - channel: 1
+      delay: 0.75
+      key: now_showing
+    - channel: 1
+      delay: 1
+      key: terror_next
   Effects:
   - duck: 0.51
     file: MSHU_RockNRoll.wav
@@ -26,6 +42,8 @@ Audio:
   - file: ultimate_mission.wav
     key: ultimate_mission
     volume: 1.2
+  - file: brah
+    key: sup
   Voice:
   - duck: 0.51
     file: Gen_Aud_Houdini01.wav

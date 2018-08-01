@@ -118,8 +118,9 @@ class MainWindow(wx.Frame):
         channel = ""
         #find channel
         sub_dicts = self.input_structure["Audio"]
-        if("Dictionaries" in  sub_dicts):
-            sub_dicts.pop("Dictionaries")
+        temp = copy.deepcopy(sub_dicts)
+        temp.pop("Dictionaries")
+        sub_dicts = temp
         print sub_dicts
         listOfKeys = sub_dicts.keys()
         for x in range(len(listOfKeys)):
@@ -133,8 +134,9 @@ class MainWindow(wx.Frame):
         self.channelbox.SetSelection(x)
         self.listy = []
         self.listy.append(selectionNode["file"])
-        self.finalFileList = self.listy
-        self.choicebox.SetItems(self.listy)
+        self.finalFileList = copy.deepcopy(self.listy)
+        self.finalFileSelection = self.listy[0]
+        self.choicebox.SetItems(self.finalFileList)
         self.choicebox.SetSelection(0)
 
     def searchForKey(self, event):
@@ -305,6 +307,7 @@ class MainWindow(wx.Frame):
             self.finalFileSelection = self.finalFileList[self.choicebox.GetSelection()]
         except:
             self.finalFileSelection = self.listy[0]
+            print "pause"
         #print sub_list[self.finalFileSelection]
 
     def makeButtons(self):
@@ -323,28 +326,29 @@ class MainWindow(wx.Frame):
         self.finalFileList = []
         x = 0
         key_list = self.input_structure["Audio"].keys()
-        key_list = key_list[:-1]
-        try:
-            sub_list = self.input_structure["Audio"][key_list[self.channelbox.GetCurrentSelection()]]
-        except:
-            sub_list = self.input_structure["Audio"]["Fanfare"]
-        displayString = []
-        while x < len(sub_list):
-            self.finalFileList.append(sub_list[x]["file"])
-            x += 1
-        print "sucess"
-        self.finalFileList.sort()
-        self.choicebox.SetItems(self.finalFileList)
-        self.channelbox.SetSelection(wx.NOT_FOUND)
-        self.choicebox.SetSelection(wx.NOT_FOUND)
-        self.choicebox.Clear()
-        print "end"
+        #key_list = key_list[:-1]
+        if(len(key_list)>4):
+            copy_key_list = copy.deepcopy(key_list)
+            sub_list = copy_key_list[:-1]
+        else:
+            sub_list = key_list
+        #displayString = []
+        #while x < len(sub_list):
+        #    self.finalFileList.append(sub_list[x]["file"])
+        #    x += 1
+        #print "sucess"
+        #self.finalFileList.sort()
+        #self.choicebox.SetItems(self.finalFileList)
+        #self.channelbox.SetSelection(wx.NOT_FOUND)
+        #self.choicebox.SetSelection(wx.NOT_FOUND)
+        #self.choicebox.Clear()
+        #print "end"
 
     def playbttnFunc(self, file):
         print "playing file", file
 
     def editBttnFunc(self, file):
-        print "editting file", self.input_structure
+        #print "editting file", self.input_structure
         #open a new window to edit an entry
         self.Disable()
         editWindow = EditSubWindow(self)
@@ -445,8 +449,16 @@ class EditSubWindow (wx.Frame):
         else:
             print "no"
 
-        if parent.choicebox.CurrentSelection > -1 or len(parent.listy):
-            self.finalFile = parent.finalFileSelection
+        if parent.choicebox.CurrentSelection > -1:
+            #if(parent.finalFileSelection != None):
+            #    self.finalFile = parent.finalFileSelection
+            #elif parent.listy[0] != None:
+            #    self.finalFile = parent.listy[0]
+            if(len(parent.choicebox.GetStrings()) == 1 ):
+                self.finalFile = parent.listy[0]
+            elif(len(parent.choicebox.GetStrings())):
+                self.finalFile = parent.finalFileSelection
+                
             isSelected = True
             isFiredOff = False
             x = 0
@@ -814,34 +826,38 @@ class EditSubWindow (wx.Frame):
 class CreateAudioEntryWindow(wx.Frame):
 
     def __init__(self, parent, id=1, title="", pos= wx.DefaultPosition, size = wx.DefaultSize, style = ~wx.RESIZE_BORDER, name = ""):
-        super(CreateAudioEntryWindow, self).__init__(parent, title = "Create Audio Entry", pos = (250,250), size = (580,350))
+        super(CreateAudioEntryWindow, self).__init__(parent, title = "Create Audio Entry", pos = (250,250), size = (580,450))
         self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
 
-        self.SetBackgroundColour('Gray')
+        #important data
+        self.panel.SetBackgroundColour('Gray')
         parent.Disable()
         self.SetFocus() 
         self.finalDict = parent.input_structure
         temp = self.finalDict["Audio"]
         self.key_list = self.finalDict["Audio"].keys()
-        self.key_list.pop(4)
+        ver_Box = wx.BoxSizer(wx.VERTICAL)
 
-        #list
-        self.listChoice = wx.Choice(self.panel,1, (125,30), (350,25), self.key_list)
+        #defaults for presest
+        #Fanfare
+        self.default_F_Vol = "1"
+        self.default_F_Duck = "0.5"
+        self.default_F_UnDuck = "-.5"
 
-        #entries
-        
-        self.keyEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,66), size = (350,25),name = "keyE")
-        self.fileEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,121), size = (350,25), name= "fileE")
-        self.VolEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,176), size = (90,25))
-        self.duckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (125,231), size = (90,25))
-        self.unduckEntry = wx.TextCtrl(self.panel, wx.ID_ANY, pos = (255,231), size = (220,25))
-        
-        #disable for now, enable once you make a selection in listCHoice
-        self.keyEntry.Disable()
-        self.fileEntry.Disable()
-        self.VolEntry.Disable()
-        self.duckEntry.Disable()
-        self.unduckEntry.Disable()
+        #effects
+        self.default_E_Vol = "1"
+        self.default_E_Duck = "0.5"
+        self.default_E_UnDuck = "-.5"
+
+        #music
+        self.default_M_Vol = "1"
+        self.default_M_Duck = str(None)
+        self.default_M_UnDuck = str(None)
+
+        #voice
+        self.default_V_Vol = str(None)
+        self.default_V_Duck = "0.5"
+        self.default_V_UnDuck = "-.5"
 
         #text labels
         list_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "List: ", (120,16), (360,45))
@@ -852,10 +868,86 @@ class CreateAudioEntryWindow(wx.Frame):
         unduck_SBOX = wx.StaticBox(self.panel, wx.ID_ANY, "Unduck Duration Offset: ", (250,217), (230,45))
 
         #buttons
-        self.okButton = wx.Button(self.panel, 1, "OK", (425,176), (50,25), name = "okButton")
+        self.okButton = wx.Button(self.panel, 1, "Save", (425,176), (50,45), name = "okButton")
+        self.testButton = wx.Button(self.panel, 2, "Test", wx.DefaultPosition, (50,45), name = "testButton")
+        self.presetsButton = wx.Button(self.panel, 3, "Presets...", wx.DefaultPosition, (50,45), name = "presetsButton")
         self.okButton.Disable()
 
-        #Status Bar
+        #list
+        self.listChoice = wx.Choice(list_SBOX,1,(3, 15), (350,25), self.key_list)
+        hor_listChoice_boxsizer = wx.BoxSizer(wx.HORIZONTAL)
+        hor_listChoice_boxsizer.AddSpacer(75)
+        hor_listChoice_boxsizer.Add(list_SBOX)
+        hor_listChoice_boxsizer.AddSpacer(1)
+
+        #entries
+        hor_Box_key = wx.BoxSizer(wx.HORIZONTAL)
+        hor_Box_file = wx.BoxSizer(wx.HORIZONTAL)
+        hor_Box_vol = wx.BoxSizer(wx.HORIZONTAL)
+        hor_Box_duck = wx.BoxSizer(wx.HORIZONTAL)
+
+        hor_Box_key.AddSpacer(75)
+        self.keyEntry = wx.TextCtrl(keyName_SBOX, wx.ID_ANY, pos = (3, 15), size = (350,25),name = "keyE")
+        hor_Box_key.Add(keyName_SBOX)
+        hor_Box_key.AddSpacer(0)
+
+        hor_Box_file.AddSpacer(75)
+        self.fileEntry = wx.TextCtrl(fileName_SBOX, wx.ID_ANY,  pos = (3, 15), size = (350,25), name= "fileE")
+        hor_Box_file.Add(fileName_SBOX) 
+        hor_Box_file.AddSpacer(1)
+
+        hor_Box_vol.AddSpacer(75)
+        self.VolEntry = wx.TextCtrl(volume_SBOX, wx.ID_ANY,  pos = (3, 15), size = (90,25))
+        hor_Box_vol.Add(volume_SBOX)
+        hor_Box_vol.AddSpacer(35)
+        hor_Box_vol.Add(self.presetsButton)
+        hor_Box_vol.AddSpacer(35)
+        hor_Box_vol.Add(self.testButton)
+        hor_Box_vol.AddSpacer(35)
+        hor_Box_vol.Add(self.okButton)
+
+        hor_Box_duck.AddSpacer(75)
+        self.duckEntry = wx.TextCtrl(duck_SBOX, wx.ID_ANY,  pos = (3, 15), size = (90,25))
+        self.unduckEntry = wx.TextCtrl(unduck_SBOX, wx.ID_ANY,  pos = (3, 15), size = (220,25))
+        hor_Box_duck.Add(duck_SBOX)
+        hor_Box_duck.AddSpacer(25)
+        hor_Box_duck.Add(unduck_SBOX)
+        hor_Box_duck.AddSpacer(1)        
+
+        #disable for now, enable once you make a selection in listCHoice
+        self.keyEntry.Disable()
+        self.fileEntry.Disable()
+        self.VolEntry.Disable()
+        self.duckEntry.Disable()
+        self.unduckEntry.Disable()
+
+  #sizer
+        #listrow
+        ver_Box.AddSpacer(25)
+        ver_Box.Add(hor_listChoice_boxsizer)
+
+        #key row
+        ver_Box.AddSpacer(25)
+        ver_Box.Add(hor_Box_key)
+
+        #file row
+        ver_Box.AddSpacer(25)
+        ver_Box.Add(hor_Box_file)
+
+        #vol & button row
+        ver_Box.AddSpacer(25)
+        ver_Box.Add(hor_Box_vol)
+
+        #duck & unduck row
+        ver_Box.AddSpacer(25)
+        ver_Box.Add(hor_Box_duck)
+        ver_Box.AddSpacer(25)
+
+        #set sizer
+        self.panel.SetSizer(ver_Box)
+        self.panel.Fit()
+
+        #Status Bar    
         self.isKeyEntered = False
         self.isFileEntered = False
         self.status = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE, "helooooo")
@@ -866,6 +958,7 @@ class CreateAudioEntryWindow(wx.Frame):
         #bind list box to function, to enable text feilds 
         self.Bind(wx.EVT_CHOICE, self.enableTextCtrl, self.listChoice)
         self.Bind(wx.EVT_BUTTON, self.addToDict, self.okButton)
+        self.Bind(wx.EVT_BUTTON, self.presetsMenu, self.presetsButton)
 
         def __destroy(_):
                 print "destroying CAE menu"
@@ -876,9 +969,73 @@ class CreateAudioEntryWindow(wx.Frame):
         self.Bind(wx.EVT_WINDOW_DESTROY, __destroy)  
         self.Bind(wx.EVT_TEXT,self.enableButton, self.keyEntry)
         self.Bind(wx.EVT_TEXT,self.enableButton, self.fileEntry)
-        #disable OK button until Key and File are modified
+
+    def testFunc(self, event):
+        print "testing entry"
         
+
+    def presetsMenu(self, event):
+        print "change presets"
+        presetWindow = wx.Dialog(self, wx.ID_ANY, "Change Default Presets", wx.DefaultPosition, wx.DefaultSize, wx.DEFAULT_DIALOG_STYLE, "presetsWindow")
+        presetWindow_Sizer = wx.BoxSizer(wx.VERTICAL)
+
+        sbs1 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow, "Fanfare")
+        sbs2 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow, "Effects")
+        sbs3 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow, "Music")
+        sbs4 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow, "Voice")
+
+        row0 = wx.BoxSizer(wx.HORIZONTAL)
+        row1 = wx.BoxSizer(wx.HORIZONTAL)
+        row2 = wx.BoxSizer(wx.HORIZONTAL)
+        row3 = wx.BoxSizer(wx.HORIZONTAL)
+        row4 = wx.BoxSizer(wx.HORIZONTAL)
+
+        volSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "Volume:")
+        duckSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "Duck:")
+        unduckSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "UnDuck:")
+        row0.AddMany([volSTEXT, (duckSTEXT), (unduckSTEXT)])
+
+        #textctrl
+        #fanfare: vol, duck, undukc
+        r1_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_Vol)
+        r1_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_Duck)
+        r1_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_UnDuck)
+        row1.AddMany([(r1_vol),(r1_duc),(r1_udk)])
+        #music: vol
+        r2_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_Vol)
+        r2_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_Duck)
+        r2_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_UnDuck)
+        row2.AddMany([r2_vol,r2_duc,r2_udk])
+
+        #voice: duck, unduck
+        r3_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_Vol)
+        r3_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_Duck)
+        r3_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_UnDuck)
+        row3.AddMany([r3_vol,r3_duc,r3_udk])
+
+        #effect: none
+        r4_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_Vol)
+        r4_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_Duck)
+        r4_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_UnDuck)
+        row4.AddMany([r4_vol,r4_duc,r4_udk])
+
+        presetWindow_Sizer.AddSpacer(15)
+        presetWindow_Sizer.Add(row0)
+        presetWindow_Sizer.AddSpacer(15)
+        presetWindow_Sizer.Add(row1)
+        presetWindow_Sizer.AddSpacer(15)
+        presetWindow_Sizer.Add(row2)
+        presetWindow_Sizer.AddSpacer(15)
+        presetWindow_Sizer.Add(row3)
+        presetWindow_Sizer.AddSpacer(15)
+        presetWindow_Sizer.Add(row4, wx.LEFT | wx.RIGHT | wx.BOTTOM, 30)
+
+        presetWindow.SetSizer(presetWindow_Sizer)
+        presetWindow.Fit()
+        presetWindow.Show()
+
     def enableButton(self, event):
+        #disable OK button until Key and File are modified  
         box = event.GetEventObject()
         print box.GetName()
         if(box.GetName() == 'keyE'):
@@ -893,18 +1050,62 @@ class CreateAudioEntryWindow(wx.Frame):
         if (self.fileEntry.GetLineLength(1) < 1):
             self.isFileEntered = False
 
-        if(self.isKeyEntered and self.isFileEntered):
+        if(self.isKeyEntered and self.isFileEntered and self.key_list[self.listChoice.GetSelection()] != "Dictionaries"):
             self.okButton.Enable()
         else:
             self.okButton.Disable()
 
     def enableTextCtrl(self, event):
+
+        if(self.key_list[self.listChoice.GetSelection()] == "Music"):
+            self.VolEntry.Enable()
+            self.VolEntry.SetValue(self.default_M_Vol)
+            self.duckEntry.Disable()
+            self.duckEntry.Clear()
+            self.unduckEntry.Disable()
+            self.unduckEntry.Clear()
+
+        elif(self.key_list[self.listChoice.GetSelection()] == "Voice"):
+            self.VolEntry.Disable()
+            self.VolEntry.Clear()
+            self.duckEntry.Enable()
+            self.duckEntry.SetValue(self.default_V_Duck)
+            self.unduckEntry.Enable()
+            self.unduckEntry.SetValue(self.default_V_UnDuck)
+
+        elif(self.key_list[self.listChoice.GetSelection()] == "Fanfare"):
+            self.VolEntry.Enable()
+            self.VolEntry.SetValue(self.default_F_Vol)
+            self.duckEntry.Enable()
+            self.duckEntry.SetValue(self.default_F_Duck)
+            self.unduckEntry.Enable()
+            self.unduckEntry.SetValue(self.default_F_UnDuck)
+
+        elif(self.key_list[self.listChoice.GetSelection()] == "Effects"):
+            self.VolEntry.Enable()
+            self.VolEntry.SetValue(self.default_E_Vol)
+            self.duckEntry.Disable()
+            self.duckEntry.Clear()
+            self.unduckEntry.Enable()
+            self.unduckEntry.SetValue(self.default_E_UnDuck)
+
+        if(self.key_list[self.listChoice.GetSelection()] == "Dictionaries"):
+            #nothing sbhould work if u chose dictionary
+            self.VolEntry.Disable()
+            self.VolEntry.Clear()
+            self.duckEntry.Disable()
+            self.duckEntry.Clear()
+            self.unduckEntry.Disable()
+            self.unduckEntry.Clear()
+            self.keyEntry.Disable()
+            self.fileEntry.Disable()
+            self.okButton.Disable()
+
+        elif(self.keyEntry.GetLineLength(1) > 1 and self.fileEntry.GetLineLength(1) > 1):
+            self.okButton.Enable()
+
         self.keyEntry.Enable()
         self.fileEntry.Enable()
-        self.VolEntry.Enable()
-        self.duckEntry.Enable()
-        self.unduckEntry.Enable()
-
 
         print self.keyEntry.GetValue()
         print self.keyEntry.IsModified()
