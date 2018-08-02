@@ -2,6 +2,7 @@ import wx
 import yaml
 import copy
 import difflib
+import wave
 from wx.lib.scrolledpanel import ScrolledPanel
 
 
@@ -33,7 +34,6 @@ class MainWindow(wx.Frame):
         #members
         self.vertBoxSizer = wx.BoxSizer(wx.VERTICAL)
         self.holding_list = []
-        self.channelList = []
         self.finalKeyList = []
         self.finalFileList = []
         self.finalKeySelection = None
@@ -44,7 +44,7 @@ class MainWindow(wx.Frame):
         #StaticText(parent, id=ID_ANY, label="", pos=DefaultPosition, size=DefaultSize, style=0, name=StaticTextNameStr)
         text = wx.StaticText(self.panel, wx.ID_ANY, "\t\t\t\t\tSound(s) Menu", (1,1), (350,35))
         #load the YAML to Mem and into list of strings
-        file_path = "test.yml"
+        file_path = "yaml/test.yml"
         
         self.input_structure = yaml_loader(file_path)
         in_keys = self.input_structure["Audio"].keys()
@@ -76,8 +76,9 @@ class MainWindow(wx.Frame):
      
         #default constructions
         self.holding_list = Audio_keys.keys()
-        self.holding_list = self.holding_list[:-1]
-        self.makeAudioPanel(self.holding_list)
+        self.channel_list = copy.deepcopy(self.holding_list)
+        self.channel_list = self.channel_list[:-1]
+        self.makeAudioPanel(self.channel_list)
         self.makeToolBar()
         self.makeButtons()
         self.makeSearchBar()
@@ -98,7 +99,7 @@ class MainWindow(wx.Frame):
         searchBar = wx.SearchCtrl(self.panel, 1, "",wx.DefaultPosition,wx.DefaultSize + (315,0), wx.TE_PROCESS_ENTER, wx.DefaultValidator, "searchBar")
         staticbox.Add(20,0,0)
         staticbox.Add(searchBar,0,0,0)
-        self.resultsList = wx.ListBox(self.panel,wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize + (391,50), [], wx.LB_NEEDED_SB, wx.DefaultValidator, "results")
+        self.resultsList = wx.ListBox(self.panel,wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize + (391,100), [], wx.LB_NEEDED_SB, wx.DefaultValidator, "results")
         self.resultsList.Bind(wx.EVT_LISTBOX_DCLICK, self.onListBoxSelect, self.resultsList)
 
         searchBar.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.searchForKey)
@@ -122,16 +123,16 @@ class MainWindow(wx.Frame):
         temp.pop("Dictionaries")
         sub_dicts = temp
         print sub_dicts
-        listOfKeys = sub_dicts.keys()
+        listOfKeys = self.channel_list
         for x in range(len(listOfKeys)):
             dicts = sub_dicts[listOfKeys[x]]
             for y in range(len(dicts)):
                 if selectionNode["file"] in dicts[y]["file"]:
-                    channel = listOfKeys[x]
+                    channel = x 
                     print channel
 
 
-        self.channelbox.SetSelection(x)
+        self.channelbox.SetSelection(channel)
         self.listy = []
         self.listy.append(selectionNode["file"])
         self.finalFileList = copy.deepcopy(self.listy)
@@ -322,7 +323,7 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.buttonEventHandler, playButton)
     
     def refresh(self):
-        self.choicebox.Clear()
+        #self.choicebox.Clear()
         self.finalFileList = []
         x = 0
         key_list = self.input_structure["Audio"].keys()
@@ -330,6 +331,7 @@ class MainWindow(wx.Frame):
         if(len(key_list)>4):
             copy_key_list = copy.deepcopy(key_list)
             sub_list = copy_key_list[:-1]
+            print sub_list
         else:
             sub_list = key_list
         #displayString = []
@@ -346,6 +348,8 @@ class MainWindow(wx.Frame):
 
     def playbttnFunc(self, file):
         print "playing file", file
+
+
 
     def editBttnFunc(self, file):
         #print "editting file", self.input_structure
@@ -843,17 +847,14 @@ class CreateAudioEntryWindow(wx.Frame):
         self.default_F_Vol = "1"
         self.default_F_Duck = "0.5"
         self.default_F_UnDuck = "-.5"
-
         #effects
         self.default_E_Vol = "1"
         self.default_E_Duck = "0.5"
         self.default_E_UnDuck = "-.5"
-
         #music
         self.default_M_Vol = "1"
         self.default_M_Duck = str(None)
         self.default_M_UnDuck = str(None)
-
         #voice
         self.default_V_Vol = str(None)
         self.default_V_Duck = "0.5"
@@ -975,6 +976,7 @@ class CreateAudioEntryWindow(wx.Frame):
         
 
     def presetsMenu(self, event):
+       
         print "change presets"
         presetWindow = wx.Dialog(self, wx.ID_ANY, "Change Default Presets", wx.DefaultPosition, wx.DefaultSize, wx.DEFAULT_DIALOG_STYLE, "presetsWindow")
         presetWindow_Sizer = wx.BoxSizer(wx.VERTICAL)
@@ -985,54 +987,79 @@ class CreateAudioEntryWindow(wx.Frame):
         sbs4 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow, "Voice")
 
         row0 = wx.BoxSizer(wx.HORIZONTAL)
-        row1 = wx.BoxSizer(wx.HORIZONTAL)
-        row2 = wx.BoxSizer(wx.HORIZONTAL)
-        row3 = wx.BoxSizer(wx.HORIZONTAL)
-        row4 = wx.BoxSizer(wx.HORIZONTAL)
+        row1 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow, "Fanfare")
+        row2 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow, "Music")
+        row3 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow,"Voice")
+        row4 = wx.StaticBoxSizer(wx.HORIZONTAL, presetWindow,"Effectgs")
 
-        volSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "Volume:")
-        duckSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "Duck:")
-        unduckSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "UnDuck:")
-        row0.AddMany([volSTEXT, (duckSTEXT), (unduckSTEXT)])
+        volSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "Volume")
+        duckSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "Duck")
+        unduckSTEXT = wx.StaticText(presetWindow, wx.ID_ANY, "UnDuck")
+        row0.AddMany([(volSTEXT,0, wx.LEFT|wx.RIGHT,17), (duckSTEXT,0,wx.LEFT|wx.RIGHT,20), (unduckSTEXT,0,wx.LEFT|wx.RIGHT,15)])
 
         #textctrl
         #fanfare: vol, duck, undukc
-        r1_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_Vol)
-        r1_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_Duck)
-        r1_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_UnDuck)
-        row1.AddMany([(r1_vol),(r1_duc),(r1_udk)])
+        r1_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_Vol, wx.DefaultPosition, (50,23))
+        r1_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_Duck, wx.DefaultPosition, (50,23))
+        r1_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_F_UnDuck, wx.DefaultPosition, (50,23))
+        row1.AddMany([(r1_vol, 0, wx.LEFT|wx.RIGHT,15),(r1_duc,0, wx.RIGHT, 15),(r1_udk,0,wx.RIGHT, 15)])
         #music: vol
-        r2_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_Vol)
-        r2_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_Duck)
-        r2_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_UnDuck)
-        row2.AddMany([r2_vol,r2_duc,r2_udk])
-
+        r2_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_Vol, wx.DefaultPosition, (50,23))
+        r2_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_Duck, wx.DefaultPosition, (50,23))
+        r2_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_M_UnDuck, wx.DefaultPosition, (50,23))
+        row2.AddMany([(r2_vol, 0, wx.LEFT|wx.RIGHT,15),(r2_duc,0, wx.RIGHT, 15),(r2_udk,0,wx.RIGHT, 15)])
         #voice: duck, unduck
-        r3_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_Vol)
-        r3_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_Duck)
-        r3_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_UnDuck)
-        row3.AddMany([r3_vol,r3_duc,r3_udk])
+        r3_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_Vol, wx.DefaultPosition, (50,23))
+        r3_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_Duck, wx.DefaultPosition, (50,23))
+        r3_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_V_UnDuck, wx.DefaultPosition, (50,23))
+        row3.AddMany([(r3_vol, 0, wx.LEFT|wx.RIGHT,15),(r3_duc,0, wx.RIGHT, 15),(r3_udk,0,wx.RIGHT, 15)])
 
         #effect: none
-        r4_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_Vol)
-        r4_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_Duck)
-        r4_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_UnDuck)
-        row4.AddMany([r4_vol,r4_duc,r4_udk])
+        r4_vol = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_Vol, wx.DefaultPosition, (50,23))
+        r4_duc = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_Duck, wx.DefaultPosition, (50,23))
+        r4_udk = wx.TextCtrl(presetWindow, wx.ID_ANY, self.default_E_UnDuck, wx.DefaultPosition, (50,23))
+        row4.AddMany([(r4_vol, 0, wx.LEFT|wx.RIGHT,15),(r4_duc,0, wx.RIGHT, 15),(r4_udk,0,wx.RIGHT, 15)])
+
+        #button
+        ok = wx.Button(presetWindow, wx.ID_ANY,"Apply", wx.DefaultPosition, (50,23) )
+        def presetWindowOK(event):
+            print"preset window ok pressed"
+            self.default_F_Vol = r1_vol.GetValue()
+            self.default_F_Duck= r1_duc.GetValue()
+            self.default_F_UnDuck= r1_udk.GetValue()
+            
+            self.default_M_Vol = r2_vol.GetValue()
+            self.default_M_Duck= r2_duc.GetValue()
+            self.default_M_UnDuck= r2_udk.GetValue()
+            
+            self.default_V_Vol = r3_vol.GetValue()
+            self.default_V_Duck= r3_duc.GetValue()
+            self.default_V_UnDuck= r3_udk.GetValue()
+            
+            self.default_E_Vol = r4_vol.GetValue()
+            self.default_E_Duck= r4_duc.GetValue()
+            self.default_E_UnDuck= r4_udk.GetValue()
+            print self.default_F_Vol
+            
+        ok.Bind(wx.EVT_BUTTON, presetWindowOK, ok)
 
         presetWindow_Sizer.AddSpacer(15)
-        presetWindow_Sizer.Add(row0)
+        presetWindow_Sizer.Add(row0,0, wx.LEFT|wx.RIGHT, 15)
         presetWindow_Sizer.AddSpacer(15)
-        presetWindow_Sizer.Add(row1)
+        presetWindow_Sizer.Add(row1,0, wx.LEFT|wx.RIGHT, 15)
         presetWindow_Sizer.AddSpacer(15)
-        presetWindow_Sizer.Add(row2)
+        presetWindow_Sizer.Add(row2,0, wx.LEFT|wx.RIGHT, 15)
         presetWindow_Sizer.AddSpacer(15)
-        presetWindow_Sizer.Add(row3)
+        presetWindow_Sizer.Add(row3,0, wx.LEFT|wx.RIGHT, 15)
         presetWindow_Sizer.AddSpacer(15)
-        presetWindow_Sizer.Add(row4, wx.LEFT | wx.RIGHT | wx.BOTTOM, 30)
-
+        presetWindow_Sizer.Add(row4,0, wx.LEFT|wx.RIGHT|wx.BOTTOM, 15)
+        presetWindow_Sizer.Add(ok, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 25)
+        
         presetWindow.SetSizer(presetWindow_Sizer)
         presetWindow.Fit()
         presetWindow.Show()
+
+        
 
     def enableButton(self, event):
         #disable OK button until Key and File are modified  
@@ -1242,7 +1269,6 @@ class CreateDictionaryWindow(wx.Frame):
                 buttonsizer = wx.BoxSizer(wx.VERTICAL)
                 entriesSizer = wx.BoxSizer(wx.HORIZONTAL)
                 masterSizer = wx.BoxSizer(wx.HORIZONTAL)
-
                 self.parentpan = parentpanel
                 #self.mysizer = wx.FlexGridSizer(5,1,1)
                 #self.mysizer.SetMinSize(450,50)
@@ -1251,10 +1277,10 @@ class CreateDictionaryWindow(wx.Frame):
                 plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
                 xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
         
-                self.addButton = wx.Button(self, 1, pos =(self.posx, self.posy + 18), size = (24,24), name = "addButton")
+                self.addButton = wx.Button(self, 10, pos =(self.posx, self.posy + 18), size = (24,24), name = "addButton")
                 self.addButton.SetBitmapLabel(plusBitMap)
                 
-                self.removeButton = wx.Button(self, 2, pos =(self.posx, self.posy- 5 ), size = (24,24), name = "removeButton")
+                self.removeButton = wx.Button(self, 20, pos =(self.posx, self.posy- 5 ), size = (24,24), name = "removeButton")
                 self.removeButton.SetBitmapLabel(xBitmap)
                 self.addButton.Bind(wx.EVT_BUTTON, self.greenPlus, self.addButton)
                 self.removeButton.Bind(wx.EVT_BUTTON, self.redX, self.removeButton)
@@ -1268,19 +1294,24 @@ class CreateDictionaryWindow(wx.Frame):
                 keyName_SBOX = wx.StaticBox(self, wx.ID_ANY, "Key: ", (self.posx+ 29 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
                 channel_SBOX = wx.StaticBox(self, wx.ID_ANY, "Channel: ",(self.posx+ 144 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
                 delay_SBOX =   wx.StaticBox(self, wx.ID_ANY, "Delay: ", (self.posx+ 259 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-                action_SBOX =  wx.StaticBox(self, wx.ID_ANY, "Action: ", (self.posx+ 374 ,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-                tag_SBOX = wx.StaticBox(self, wx.ID_ANY, "Tag: ", (self.posx + 489,self.posy-6), (110,50),wx.SUNKEN_BORDER)
-        
+                action_SBOX =  wx.StaticBox(self, wx.ID_ANY, "Action: ", (self.posx+ 374 ,self.posy-6),(200,50),wx.SUNKEN_BORDER)
+                tag_SBOX = wx.StaticBox(self, wx.ID_ANY, "Tag: ", (self.posx + 579,self.posy-6), (110,50),wx.SUNKEN_BORDER)
+                
+                #create "action" list
+                actions = ["ONLY IF CHANNEL AVAILABLE","FORCE","QUEUED", "FRONT OF QUEUE" ]
+
+                #create entries
                 self.keyEntry = wx.TextCtrl(keyName_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER ,name = "keyE")
                 self.channelEntry = wx.TextCtrl(channel_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
                 self.delayEntry = wx.TextCtrl(delay_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
-                self.actionEntry = wx.TextCtrl(action_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "actyionE")
+                self.actionEntry = wx.ComboBox(action_SBOX, wx.ID_ANY,"", (3,15), (190,25), actions , wx.RAISED_BORDER|wx.CB_READONLY, wx.DefaultValidator, "actyionE")
                 self.tagEntry = wx.TextCtrl(tag_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "tagE")
 
+                #puyt entries into sizer
                 entriesSizer.Add(keyName_SBOX,0,0)
                 entriesSizer.Add(channel_SBOX,0,0)
                 entriesSizer.Add(delay_SBOX,0,0)
-                entriesSizer.Add(action_SBOX,0,0)
+                entriesSizer.Add(action_SBOX,100,wx.EXPAND,100)
                 entriesSizer.Add(tag_SBOX,0,0)
 
                 #path up sizers
@@ -1295,11 +1326,12 @@ class CreateDictionaryWindow(wx.Frame):
                 self.keyEntry.Clear()
                 self.channelEntry.Clear()
                 self.delayEntry.Clear()
-                self.actionEntry.Clear()
+                #self.actionEntry.Clear()
                 self.Refresh()
 
             def __del__(self):
                 print "destroying EntryRow"
+                self.Destroy()
                                   
         
             def greenPlus(self, event):
@@ -1523,7 +1555,8 @@ class CreateDictionaryWindow(wx.Frame):
                 self.listOfNodes.remove(entry)
                 self.mainsizer.FitInside(self)
                 self.mainsizer.Layout()
-                entry.Destroy()
+                #entry.Destroy()
+                entry.__del__()
                 self.SetFocus()
                 self.numberOfNodes -=1
                 self.par.statusBar.SetBackgroundColour("White")
@@ -1534,6 +1567,7 @@ class CreateDictionaryWindow(wx.Frame):
                 self.par.SetStatusText("Number of Nodes: " + str(self.numberOfNodes))
                 
                 self.Show()
+                self.par.statusBar.SetBackgroundColour("red")
                 entry.clearAllEntries()
 
         
@@ -1554,13 +1588,13 @@ class CreateDictionaryWindow(wx.Frame):
         self.SetStatusBar(self.statusBar)
         self.input_structure  = parent.input_structure
         
-        def __destroy(_):
+        def __del__():
             print "destroying CAE menu"
             parent.refresh()
             parent.Enable()
             parent.SetFocus()
                
-        self.Bind(wx.EVT_WINDOW_DESTROY, __destroy)
+        self.Bind(wx.EVT_WINDOW_DESTROY, __del__)
                               
 def main():
     

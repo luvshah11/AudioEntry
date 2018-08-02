@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectTarget>
+    <TargetProject>521a5ed7-c737-41de-8ecc-7f003900002c</TargetProject>
+    <FriendlyName>Audio_Entry_Menu</FriendlyName>
+  </ProjectTarget>
+  <Reports>
+    <Report>
+      <Filename>C:\Users\Pinballtest\AppData\Local\Temp\Audio_Entry_Menu_20180802.vsp</Filename>
+    </Report>
+    <Report>
+      <Filename>C:\Users\Pinballtest\AppData\Local\Temp\Audio_Entry_Menu_20180802(1).vsp</Filename>
+    </Report>
+  </Reports>
+</ProfilingTarget>

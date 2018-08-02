@@ -16,10 +16,19 @@ Audio:
       delay: 1
       key: terror_next
   Effects:
+  - duck: 0.51
+    file: MSHU_RockNRoll.wav
+    key: MSHU_RockNRoll
+    unduck_duration_offset: -.5
+    volume: 1
   - duck: 0.5
     file: Gen_ShooterLane.wav
     key: shooter_sound
     volume: 1.1
+  - file: Boom.wav
+    key: Boom
+    unduck_duration_offset: -0.5
+    volume: 123
   Fanfare:
   - duck: 0.51
     file: SMCards_Activated.wav
@@ -42,7 +51,8 @@ Audio:
     file: Gen_Aud_Houdini01.wav
     key: aud_houdini_1
     volume: 1
-  - duck: 0.51
-    file: Gen_Aud_Houdini02.wav
-    key: aud_houdini_2
-    volume: 1
+  - duck: 123.0
+    file: test
+    key: test
+    unduck_duration_offset: 123.0
+    volume: 123
