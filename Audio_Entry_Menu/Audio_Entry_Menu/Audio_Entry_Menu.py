@@ -1274,8 +1274,8 @@ class CreateDictionaryWindow(wx.Frame):
                 #self.mysizer.SetMinSize(450,50)
 
                 #set button sizers
-                plusBitMap = wx.Bitmap("greenplus1.png", wx.BITMAP_TYPE_PNG)
-                xBitmap = wx.Bitmap("redx1.png", wx.BITMAP_TYPE_PNG)
+                plusBitMap = wx.Bitmap("png/greenplus1.png", wx.BITMAP_TYPE_PNG)
+                xBitmap = wx.Bitmap("png/redx1.png", wx.BITMAP_TYPE_PNG)
         
                 self.addButton = wx.Button(self, 10, pos =(self.posx, self.posy + 18), size = (24,24), name = "addButton")
                 self.addButton.SetBitmapLabel(plusBitMap)
@@ -1299,10 +1299,10 @@ class CreateDictionaryWindow(wx.Frame):
                 
                 #create "action" list
                 actions = ["ONLY IF CHANNEL AVAILABLE","FORCE","QUEUED", "FRONT OF QUEUE" ]
-
+                channels = parentpanel.key_list
                 #create entries
                 self.keyEntry = wx.TextCtrl(keyName_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER ,name = "keyE")
-                self.channelEntry = wx.TextCtrl(channel_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "channelE")
+                self.channelEntry = wx.ComboBox(channel_SBOX, wx.ID_ANY,"", pos = (3,15), size = (100,25),choices =channels, style = wx.RAISED_BORDER|wx.CB_READONLY,name = "channelE")
                 self.delayEntry = wx.TextCtrl(delay_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "delayE")
                 self.actionEntry = wx.ComboBox(action_SBOX, wx.ID_ANY,"", (3,15), (190,25), actions , wx.RAISED_BORDER|wx.CB_READONLY, wx.DefaultValidator, "actyionE")
                 self.tagEntry = wx.TextCtrl(tag_SBOX, wx.ID_ANY, pos = (3,15), size = (100,25),style = wx.RAISED_BORDER,name = "tagE")
@@ -1346,7 +1346,7 @@ class CreateDictionaryWindow(wx.Frame):
                 #parentpanel.popOld(self)
                 self.parentpan.popOld(self)
 
-        def __init__(self,parent, id , pos  , size, style ):
+        def __init__(self,parent, id , pos  , size, style, in_struct ):
             ScrolledPanel.__init__(self, parent, id, pos, size, style)
             self.SetupScrolling(0,1,0,20,1,1)
             self.numberOfNodes = 0
@@ -1356,8 +1356,11 @@ class CreateDictionaryWindow(wx.Frame):
             self.listOfNodes = []
             self.mainsizer = wx.GridBagSizer(5,5)
             self.dictEntryszier = wx.BoxSizer(wx.HORIZONTAL)
-            ##intit list
+            #intit list
             
+            in_stru = in_struct
+            self.key_list = copy.deepcopy(in_stru["Audio"].keys())
+            self.key_list = self.key_list[:-1]
             newEntry = self.EntryRow(self)
             dictStatic = wx.StaticBoxSizer(wx.HORIZONTAL, self,"Enter Dictionary Name")
             self.dictName = wx.TextCtrl(self,1,"", wx.DefaultPosition + (0,25), wx.DefaultSize + (100,0),wx.TE_PROCESS_ENTER,wx.DefaultValidator,"chooseName" )
@@ -1409,17 +1412,29 @@ class CreateDictionaryWindow(wx.Frame):
                         node.keyEntry.SetBackgroundColour("white")
                         
                     try:
-                        if(type(int(node.channelEntry.GetValue())) is not int):
-                           status += " Channel(int) "
-                           node.channelEntry.SetBackgroundColour("Red")
-                           isWritable = False
+                        if(node.channelEntry.GetSelection() < 0):
+                            status += "Channel"
+                            node.channelEntry.SetBackgroundColour("Red")
+                            isWritable = False
                         else:
                             print "good channel"
-                            node.channelEntry.SetBackgroundColour("white")
+                            node.channelEntry.SetBackgroundColour("White")
                     except:
-                        status += " Channel(int) "
+                        status += "Channel"
                         node.channelEntry.SetBackgroundColour("Red")
                         isWritable = False
+                    #try:
+                    #    if(type(int(node.channelEntry.GetValue())) is not int):
+                    #       status += " Channel(int) "
+                    #       node.channelEntry.SetBackgroundColour("Red")
+                    #       isWritable = False
+                    #    else:
+                    #        print "good channel"
+                    #        node.channelEntry.SetBackgroundColour("white")
+                    #except:
+                    #    status += " Channel(int) "
+                    #    node.channelEntry.SetBackgroundColour("Red")
+                    #    isWritable = False
 
                     try:
                         if(type(float(node.delayEntry.GetValue())) is not float):
@@ -1433,16 +1448,28 @@ class CreateDictionaryWindow(wx.Frame):
                             node.delayEntry.SetBackgroundColour("Red")
                             isWritable = False
                     try:
-                        if(type(float(node.actionEntry.GetValue())) is not float):
-                            status += " action(float) "
+                        print node.actionEntry.GetSelection()
+                        if(node.actionEntry.GetSelection() < 0):
+                            status += "Action"
                             node.actionEntry.SetBackgroundColour("Red")
                             isWritable = False
                         else:
-                            node.actionEntry.SetBackgroundColour("white")
+                            node.actionEntry.SetBackgroundColour("White")
                     except:
-                        status += " action(float) "
+                        status += "Action"
                         node.actionEntry.SetBackgroundColour("Red")
-                        isWritable = False
+                        iisWritable = False
+                    #try:
+                    #    if(type(float(node.actionEntry.GetValue())) is not float):
+                    #        status += " action(float) "
+                    #        node.actionEntry.SetBackgroundColour("Red")
+                    #        isWritable = False
+                    #    else:
+                    #        node.actionEntry.SetBackgroundColour("white")
+                    #except:
+                    #    status += " action(float) "
+                    #    node.actionEntry.SetBackgroundColour("Red")
+                    #    isWritable = False
 
                     if(type(str(node.tagEntry.GetValue())) is not str) or (node.tagEntry.GetValue() == ''):         
                         status += " tag(string) "
@@ -1458,9 +1485,9 @@ class CreateDictionaryWindow(wx.Frame):
                         node.actionEntry.SetBackgroundColour("white")
                         node.tagEntry.SetBackgroundColour("white")
                         finalDict["key"] = str(node.keyEntry.GetValue())
-                        finalDict["channel"] = int(node.channelEntry.GetValue())
+                        finalDict["channel"] = str(node.channelEntry.GetStringSelection())
                         finalDict["delay"] = float(node.delayEntry.GetValue())
-                        finalDict["action"] = float(node.actionEntry.GetValue())
+                        finalDict["action"] = str(node.actionEntry.GetStringSelection())
                         finalDict["tag"]    = str(node.tagEntry.GetValue())
                         finalListofDicts.append(copy.deepcopy(finalDict))
                         x +=1
@@ -1568,6 +1595,7 @@ class CreateDictionaryWindow(wx.Frame):
                 
                 self.Show()
                 self.par.statusBar.SetBackgroundColour("red")
+                self.Fit()
                 entry.clearAllEntries()
 
         
@@ -1576,8 +1604,9 @@ class CreateDictionaryWindow(wx.Frame):
         super(CreateDictionaryWindow, self).__init__(parent, title = "Create Dictionary", pos = (250,250), size = (700,350))
 
         self.SetFocus()
+        self.input_structure  = parent.input_structure
         #self.panel = wx.Panel(self, 1,pos = wx.DefaultPosition, size= self.GetSize(), style = wx.TAB_TRAVERSAL, name= "panel for edit")
-        self.panel = self.MyPanel(self,wx.ID_ANY,pos = wx.DefaultPosition, size = self.GetSize() , style = wx.TAB_TRAVERSAL | wx.VSCROLL)
+        self.panel = self.MyPanel(self,wx.ID_ANY,pos = wx.DefaultPosition, size = self.GetSize() , style = wx.TAB_TRAVERSAL | wx.VSCROLL, in_struct= parent.input_structure)
 
         box = wx.BoxSizer(wx.VERTICAL)
 
@@ -1586,7 +1615,7 @@ class CreateDictionaryWindow(wx.Frame):
         self.panel.SetAutoLayout(1)
         self.statusBar = wx.StatusBar(self, 1, wx.STB_DEFAULT_STYLE)
         self.SetStatusBar(self.statusBar)
-        self.input_structure  = parent.input_structure
+        
         
         def __del__():
             print "destroying CAE menu"

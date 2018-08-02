@@ -15,7 +15,18 @@ Audio:
     - channel: 1
       delay: 1
       key: terror_next
+    test:
+    - action: FORCE
+      channel: Fanfare
+      delay: 132.0
+      key: sdfg
+      tag: asdf
   Effects:
+  - duck: 0.51
+    file: MSHU_RockNRoll.wav
+    key: MSHU_RockNRoll
+    unduck_duration_offset: -.5
+    volume: 1
   - duck: 0.5
     file: Gen_ShooterLane.wav
     key: shooter_sound
