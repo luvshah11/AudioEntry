@@ -1624,9 +1624,39 @@ class CreateDictionaryWindow(wx.Frame):
             parent.SetFocus()
                
         self.Bind(wx.EVT_WINDOW_DESTROY, __del__)
-                              
-def main():
+
+##################################################################################
+#                         proc
+##################################################################################
+class testGame(procgame.game.SkeletonGame):
+    def __init__(self):
+        # THESE MUST BE DEFINED for SkeletonGame
+        self.curr_file_path = curr_file_path
+        super(testGame, self).__init__('config/houdini.yaml', self.curr_file_path)
+
     
+
+def main():
+    """ run this testcase from the SampleGame folder (w/ sound asssets!), via:
+        $ python ../procgame/sound.py
+    """
+    import procgame
+
+
+
+    #import houdini
+    import procgame.game.SkeletonGame
+    curr_file_path = os.path.abspath("./")
+    print curr_file_path
+
+    dots_w = 1360
+    dots_h = 768
+
+
+    print 'create game'
+    g = testGame()
+
+    g.sound = SoundController(g,100)
     #uncomment below to run legit
     #test out reading YAML
 
